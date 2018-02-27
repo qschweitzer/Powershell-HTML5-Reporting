@@ -1,0 +1,44 @@
+{% Get-content assets\header.html -Raw %}
+
+
+<div class="ui grid container">
+    <div class="two column row">
+        <div class="ui secondary menu">
+            <a class="item active" data-tab="first">Création VM</a>
+            <a class="item" data-tab="second">Supression</a>
+        </div>
+        <div class="ui bottom attached tab blurring segment active" data-tab="first">
+            <div class="ui dimmer">
+                <div class="ui indeterminate text loader">Requête en cours de traitement</div>
+            </div>
+            <form class="ui form" action="/loadProcesses" method="get">
+                <h4 class="ui dividing header">Informations</h4>
+                <div class="required four wide field">
+                    <label>Get-Process</label>
+                    <div class="ui labeled input">
+                        <div class="ui label">
+
+                        </div>
+                        <input type="text" name="ProcessName" placeholder="process name..." value="">
+                    </div>
+                </div>
+                <div class="four wide field">
+                    <label>My computer: {{ $env:computername }}</label>
+                    <div class="ui list">
+{% ((Get-Process).ProcessName | select -Unique) |% {
+write-output '<div class="item">' $_ '</div>'
+}
+%}
+                    </div>
+                </div>
+                <button id="query" class="ui button teal" type="submit">Inventaire</button>
+                <div class="ui error message"></div>
+            </form>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="second">
+            Second
+        </div>
+    </div>
+</div>
+
+{% Get-content assets\footer.html -Raw %}
