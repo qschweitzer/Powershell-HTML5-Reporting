@@ -6,7 +6,7 @@ HTML files are using Semantic-UI framework, actually.
 First idea is to create a simple local webserver, using the Tiberriver256 tool:
 http://tiberriver256.github.io/powershell/gui/html/PowerShell-HTML-GUI-Pt3/
 
-## Tag format to build HTML files that powershell can use understand
+## Tag format to build HTML files that powershell can understand
 Adding to it a system to read some HTML files with a new tag format that can be understand by the Powershell.
 
 Like twig file, HTML can include some tag, actually two only:
