@@ -1,4 +1,49 @@
+Function New-PWFAppBuild {
+    <#
+    .SYNOPSIS
+    WebServer and pages building function.
+    .DESCRIPTION
+    WebServer and pages building function.
+    .PARAMETER ListeningPort
+    Port on which you want to listen to access your app.
+    .PARAMETER PageBlocks
+    Refer to the Github link to build the PageBlocks part.
+    .EXAMPLE
+    New-PWFAppBuild -ListeningPort 8000 -PageBlocks { Switch($Pages) {default{ New-PWFPage...}}}
+    .LINK
+    https://github.com/qschweitzer/PoshWebFramework
+    #>
+    param(
+        [Parameter(Mandatory=$true,Position=0)]
+        $ListeningPort=8000,
+        $PageBlocks        
+    )
+
+    Start-PoshWebGUI -ListingPort $ListeningPort -ScriptBlock {
+        #switching between urls
+        try {.$PageBlocks} catch {$_.Exception.Message}
+    }
+
+}
 Function New-PWFPage{
+    <#
+    .SYNOPSIS
+    Create a new HTML page.
+    .DESCRIPTION
+    Create a new HTML page with pre-configured settings, and an empty body tag which will contain other blocks.
+    .PARAMETER Title
+    Title of your WebPage.
+    .PARAMETER Content
+    The Content is a scriptblock that will contain next blocks parts.
+    .PARAMETER Charset
+    Choose your Web Charset encoding.
+    .PARAMETER Container
+    If added, this parameter will configure the page to have a Container div. Refer to Materialize to understand all the concept of container. https://materializecss.com/getting-started.html
+    .EXAMPLE
+    New-PWFPage { New-PWFRow -Content {}}
+    .LINK
+    https://github.com/qschweitzer/PoshWebFramework
+    #>
     param(
         [Parameter(Mandatory=$true,Position=0)]
         $Title,
@@ -35,6 +80,11 @@ Function New-PWFPage{
         try {$output += .$Content} catch {$_.Exception.Message}
     
     $output += @"
+    <div class="fixed-action-btn">
+        <a href="/theend" class="btn-floating btn-large red">
+            <i class="large material-icons">stop</i>
+        </a>
+    </div>
     </div>
         <footer>
             <script>
@@ -42,6 +92,10 @@ Function New-PWFPage{
                 `$(document).ready(function(){
                 `$('.tabs').tabs();
                 });
+                `$(document).ready(function(){
+                    `$('.fixed-action-btn').floatingActionButton();
+                  });
+                        
             </script>
         </footer>
     </body>
@@ -52,8 +106,20 @@ Function New-PWFPage{
 return $output
 }
 Function New-PWFRow{
+    <#
+    .SYNOPSIS
+    Create a new HTML div with Row class.
+    .DESCRIPTION
+    Create a new HTML div with Row class.
+    .PARAMETER Content
+    The Content is a scriptblock that will contain next blocks parts.
+    .EXAMPLE
+    New-PWFRow -Content { ... }
+    .LINK
+    https://github.com/qschweitzer/PoshWebFramework
+    #>
     param(
-        [Parameter(Mandatory=$true,Position=1)]
+        [Parameter(Mandatory=$true,Position=0)]
         $Content
     )
 
@@ -71,14 +137,28 @@ return $output
 }
 
 Function New-PWFColumn{
+    <#
+    .SYNOPSIS
+    Create a new HTML div with col class.
+    .DESCRIPTION
+    Create a new HTML div with col class.
+    .PARAMETER Size
+    This is a parameter to set the size of your Column. Refer to Materialize Grid system.
+    .PARAMETER Content
+    The Content is a scriptblock that will contain next blocks parts.
+    .EXAMPLE
+    New-PWFColumn -Size 6 -Content { ... }
+    .LINK
+    https://github.com/qschweitzer/PoshWebFramework
+    #>
     param(
-        [Parameter(Mandatory=$true,Position=1)]
-        $Content,
-        $Scale="12"
+        [Parameter(Mandatory=$true,Position=0)]
+        $Size="12",
+        $Content        
     )
 
     $output = @"
-        <div class="col m$($Scale)">
+        <div class="col m$($Size)">
 "@
         $(try {$output += .$Content} catch {$_.Exception.Message})
 
@@ -90,16 +170,32 @@ return $output
 
 }
 Function New-PWFForm{
+    <#
+    .SYNOPSIS
+    Create a new HTML form.
+    .DESCRIPTION
+    Create a new HTML form.
+    .PARAMETER Size
+    This is a parameter to set the size of your Column. Refer to Materialize.
+    .PARAMETER ActionPage
+    Precise wich page this form will redirect to after validation. Ex: -ActionPage ResultPage --> http://localhost:8000/ResultPage
+    .PARAMETER Content
+    The Content is a scriptblock that will contain next blocks parts.
+    .EXAMPLE
+    New-PWFForm -Size 6 -Content { ... }
+    .LINK
+    https://github.com/qschweitzer/PoshWebFramework
+    #>
     param(
         [Parameter(Mandatory=$true,Position=1)]
-        $Content,
+        $Size="12",
         $ActionPage,
-        $Scale="12"
+        $Content
     )
 
     $output = @"
         <div class="row">
-        <form class="col s$($Scale)" action="/$($ActionPage)" method="get">
+        <form class="col s$($Size)" action="/$($ActionPage)" method="get">
 "@
         $(try {$output += .$Content} catch {$_.Exception.Message})
 
@@ -113,6 +209,62 @@ Function New-PWFForm{
 }
 
 Function New-PWFFormInput {
+    <#
+    .SYNOPSIS
+    Create a new HTML form.
+    .DESCRIPTION
+    Create a new HTML form.
+    .PARAMETER Text
+    Switch parameter. Use it to create this input type.
+    .PARAMETER Email
+    Switch parameter. Use it to create this input type.
+    .PARAMETER Password
+    Switch parameter. Use it to create this input type.
+    .PARAMETER TextArea
+    Switch parameter. Use it to create this input type.
+    .PARAMETER File
+    Switch parameter. Use it to create this input type.
+    .PARAMETER Checkbox
+    Switch parameter. Use it to create this input type.
+    .PARAMETER Radio
+    Switch parameter. Use it to create this input type.
+    .PARAMETER Label
+    Add text to describe what your input is. Like "Enter your Email"
+    .PARAMETER IDName
+    This is the Unique ID and Name which will be used to valide input and form.
+    .PARAMETER PlaceHolder
+    If you want to help your users with a short text in your input. Only for Text, Email.
+    .PARAMETER Size
+    The size of your input, refer to grid system of Materialize.
+    .PARAMETER IconPrefix
+    If you want to add a Prefix on your input.
+    .PARAMETER disabled
+    To disable this Input.
+    .PARAMETER checked
+    Default checked.
+    .PARAMETER multiple
+    Multiple select.
+    .PARAMETER Label1
+    Left text of the switch.
+    .PARAMETER Label2
+    Right text of the switch.
+    .PARAMETER filledin
+    Checkbox style. Refer to Materialize Checkbox.
+    .PARAMETER withgap
+    Radio style. Refer to Materialize radio.
+    .PARAMETER min
+    Minimum value of the range.
+    .PARAMETER max
+    Maximum value of the range.
+    .PARAMETER OptionLabelListObject
+    Object to use to create Select.
+    .PARAMETER Required
+    Input is required.
+    .EXAMPLE
+    New-PWFFormInput -Text -Label "First Name" -IDName "FirstName" -Size 6 -Required
+    .LINK
+    https://github.com/qschweitzer/PoshWebFramework
+    #>
     param(
         [parameter(Position=0, Mandatory=$true, ParameterSetName="text")]
         [switch]$Text,
@@ -147,7 +299,7 @@ Function New-PWFFormInput {
         [parameter(Position=2, Mandatory=$false, ParameterSetName="checkbox")]
         [parameter(Position=2, Mandatory=$false, ParameterSetName="radio")]
         $PlaceHolder="",
-        $Scale="12",
+        $Size="12",
         $IconPrefix,
         [switch]$disabled,
         [switch]$checked,
@@ -178,44 +330,51 @@ Function New-PWFFormInput {
         [parameter(
         Mandatory=$true,
         ParameterSetName="select")]
-        $OptionLabelListObject
+        $OptionLabelListObject,
+        
+        [parameter(Mandatory=$false, ParameterSetName="textarea")]
+        [parameter(Mandatory=$false, ParameterSetName="password")]
+        [parameter(Mandatory=$false, ParameterSetName="email")]
+        [parameter(Mandatory=$false, ParameterSetName="text")]
+        [parameter(Mandatory=$false, ParameterSetName="file")]
+        [switch]$Required
     )
-    if(!($Scale)){$Scale="12"}
+    if(!($Size)){$Size="12"}
 
     switch($PsCmdlet.ParameterSetName){
-
+        
         "text"{
             $output=@"
-            <div class="input-field col s$($Scale)">
+            <div class="input-field col s12 m$Size">
                 $(if($IconPrefix){write-output '<i class="material-icons prefix">'$IconPrefix'</i>'})
-                <input placeholder="$($PlaceHolder)" id="$($IDName)" name="$($IDName)" type="text" class="validate">
+                <input $(if($PlaceHolder){write-output 'placeholder="'$PlaceHolder'"'}) id="$($IDName)" name="$($IDName)" type="text" class="validate" $(if($Required){write-output 'required="" aria-required="true"'})>
                 <label for="$($IDName)">$($Label)</label>
             </div>
 "@
         }
         "email"{
             $output=@"
-            <div class="input-field col s$($Scale)">
+            <div class="input-field col s12 m$Size">
                 $(if($IconPrefix){write-output '<i class="material-icons prefix">'$IconPrefix'</i>'})
-                <input placeholder="$($PlaceHolder)" id="$($IDName)" name="$($IDName)" type="email" class="validate">
+                <input $(if($PlaceHolder){write-output 'placeholder="'$PlaceHolder'"'}) id="$($IDName)" name="$($IDName)" type="email" class="validate" $(if($Required){write-output 'required="" aria-required="true"'})>
                 <label for="$($IDName)">$($Label)</label>
             </div>
 "@
         }
         "password"{
             $output=@"
-            <div class="input-field col s$($Scale)">
+            <div class="input-field col s12 m$Size">
                 $(if($IconPrefix){write-output '<i class="material-icons prefix">'$IconPrefix'</i>'})
-                <input placeholder="$($PlaceHolder)" id="$($IDName)" name="$($IDName)" type="password" class="validate">
+                <input $(if($PlaceHolder){write-output 'placeholder="'$PlaceHolder'"'}) id="$($IDName)" name="$($IDName)" type="password" class="validate" $(if($Required){write-output 'required="" aria-required="true"'})>
                 <label for="$($IDName)">$($Label)</label>
             </div>
 "@
         }
         "textarea"{
             $output=@"
-            <div class="input-field col s$($Scale)">
+            <div class="input-field col s12 m$Size">
                 $(if($IconPrefix){write-output '<i class="material-icons prefix">'$IconPrefix'</i>'})
-                <textarea id="$($IDName)" name="$($IDName)" class="materialize-textarea">
+                <textarea id="$($IDName)" name="$($IDName)" class="materialize-textarea" $(if($Required){write-output 'required="" aria-required="true"'})>
                 <label for="$($IDName)">$($Label)</label>
             </div>
 "@
@@ -228,7 +387,7 @@ Function New-PWFFormInput {
                     <input type="file" $(if($Multiple){write-output "multiple"})>
                 </div>
                 <div class="file-path-wrapper">
-                    <input id="$($IDName)" name="$($IDName)" class="file-path validate" type="text">
+                    <input id="$($IDName)" name="$($IDName)" class="file-path validate" type="text" $(if($Required){write-output 'required="" aria-required="true"'})>
                 </div>
             </div>
 "@
@@ -281,89 +440,79 @@ Function New-PWFFormInput {
     return $output
 }
 
-Function New-PWFComponent{
+Function New-PWFCard{
     param(
-        [parameter(Position=0, Mandatory=$true, ParameterSetName="card")]
-        [switch]$Card,
 
-        [parameter(Position=1, Mandatory=$true, ParameterSetName="card")]
+        [parameter(Position=0, Mandatory=$true)]
         [ValidateSet("Basic", "Image", "FABs", "Horizontal", "Reveal", "Panel")]
         [string]$CardType,
+        $Size,
 
-        [parameter(Position=2, Mandatory=$true, ParameterSetName="card")]
+        [parameter(Position=1, Mandatory=$true)]
         [string]$CardTitle,
         [string]$CardContent,
 
-        [parameter(Position=3, Mandatory=$false, ParameterSetName="card")]
+        [parameter(Position=2, Mandatory=$false)]
         [string]$CardLink1,
         [string]$CardLinkLabel1,
         [string]$CardLink2,
         [string]$CardLinkLabel2,
         [string]$CardImgLink,
-
-        [Parameter(Mandatory=$true,Position=5)]
-        $Scale
+        [string]$BackgroundColor="teal",
+        [String]$TextColor="white"
 
     )
-    if(!($Scale)){$Scale="12"}
+    if(!($Size)){$Size="12"}
 
-    switch($PsCmdlet.ParameterSetName){
-
-        "card"{
-
-            switch($CardType){
-                "basic"{
-                    $output = @"
-                    <div class="col m$($scale)">
-                        <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                                <span class="card-title">$($CardTitle)</span>
-                                <p>$($CardContent)</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="$($CardLink1)">$($CardLinkLabel1)</a>
-                                <a href="$($CardLink2)">$($CardLinkLabel2)</a>
-                            </div>
-                        </div>
+    switch($CardType){
+        "basic"{
+            $output = @"
+            <div class="col s12 m$($Size)">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <span class="card-title">$($CardTitle)</span>
+                        <p>$($CardContent)</p>
                     </div>
-"@
-                }
-                "image"{
-                    $output = @"
-                    <div class="col m$($scale)">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="$($CardImgLink)">
-                                <span class="card-title">$($CardTitle)</span>
-                            </div>
-                            <div class="card-content">
-                                <p>$($CardContent)</p>
-                            </div>
-                            <div class="card-action">
-                                $(if($CardLink1){ Write-Output '<a href="'$CardLink1'">'$CardLinkLabel1'</a>'})
-                                $(if($CardLink2){ Write-Output '<a href="'$CardLink2'">'$CardLinkLabel2'</a>'})
-                            </div>
-                        </div>
+                    <div class="card-action">
+                        <a href="$($CardLink1)">$($CardLinkLabel1)</a>
+                        <a href="$($CardLink2)">$($CardLinkLabel2)</a>
                     </div>
+                </div>
+            </div>
 "@
-                }
-                "panel"{
-                    $output = @"
-                    <div class="row">
-                        <div class="col s12 m5">
-                            <div class="card-panel teal">
-                                <span class="white-text">$($CardContent)
-                                </span>
-                            </div>
-                        </div>
+        }
+        "image"{
+            $output = @"
+            <div class="col s12 m$Size">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="$($CardImgLink)">
+                        <span class="card-title">$($CardTitle)</span>
                     </div>
+                    <div class="card-content">
+                        <p>$($CardContent)</p>
+                    </div>
+                    <div class="card-action">
+                        $(if($CardLink1){ Write-Output '<a href="'$CardLink1'">'$CardLinkLabel1'</a>'})
+                        $(if($CardLink2){ Write-Output '<a href="'$CardLink2'">'$CardLinkLabel2'</a>'})
+                    </div>
+                </div>
+            </div>
 "@
-                }
-            }#End Sub Switch
-
+        }
+        "panel"{
+            $output = @"
+            <div class="row">
+                <div class="col s12 m$Size">
+                    <div class="card-panel $BackgroundColor">
+                        <span class="$TextColor-text">$($CardContent)
+                        </span>
+                    </div>
+                </div>
+            </div>
+"@
         }
     }#End Switch
-
     return $output
 }
 
@@ -373,24 +522,24 @@ Function New-PWFFormSubmitButton{
         [string]$Label,
         
         [Parameter(Mandatory=$false,Position=1)]
-        $Scale,
+        $Size,
 
-        [Parameter(Mandatory=$false,Position=1)]
+        [Parameter(Mandatory=$false,Position=2)]
         [switch]$Disabled,
         [String]$IconName,
         [switch]$Flat,
         [switch]$Float
     )
 
-    switch($Scale){
-        "Large"{$Scale="btn-large"}
-        "Small"{$Scale="btn-small"}
-        "Flat"{$Scale="btn-flat"}
-        default{$Scale=""}
+    switch($Size){
+        "Large"{$Size="btn-large"}
+        "Small"{$Size="btn-small"}
+        "Flat"{$Size="btn-flat"}
+        default{$Size=""}
     }
 
     $output = @"
-        <button class="$(if($Float){ write-output 'btn-floating'}) btn waves-effect waves-light $(if($Flat){ write-output 'btn-flat'}) $($Scale) $(if($disabled){ write-output ' disabled'})" type="submit" name="action">$($Label)
+        <button class="$(if($Float){ write-output 'btn-floating'}) btn waves-effect waves-light $(if($Flat){ write-output 'btn-flat'}) $($Size) $(if($disabled){ write-output ' disabled'})" type="submit" name="action">$($Label)
             $(if($IconName){ write-output '<i class="material-icons right">'$IconName'</i>'})
         </button>
 "@
@@ -401,11 +550,10 @@ Function New-PWFFormSubmitButton{
 
 Function New-PWFButton{
     param(
-        [Parameter(Mandatory=$true,Position=0)]
-        [string]$Label,
         
-        [Parameter(Mandatory=$false,Position=1)]
-        $Scale,
+        [Parameter(Mandatory=$false,Position=0)]
+        [string]$Label,
+        [string]$Size,
 
         [Parameter(Mandatory=$false,Position=1)]
         [switch]$Flat,
@@ -414,14 +562,14 @@ Function New-PWFButton{
         [String]$IconName
     )
 
-    switch($Scale){
-        "Large"{$Scale="btn-large"}
-        "Small"{$Scale="btn-small"}
-        default{$Scale=""}
+    switch($Size){
+        "Large"{$Size="btn-large"}
+        "Small"{$Size="btn-small"}
+        default{$Size=""}
     }
 
     $output = @"
-        <button class="$(if($Float){ write-output 'btn-floating'}) btn waves-effect waves-light $(if($Flat){ write-output 'btn-flat'}) $($Scale) $(if($disabled){ write-output 'disabled'})">$($Label)
+        <button class="$(if($Float){ write-output 'btn-floating'}) btn waves-effect waves-light $(if($Flat){ write-output 'btn-flat'}) $($Size) $(if($disabled){ write-output 'disabled'})">$($Label)
             $(if($IconName){ write-output '<i class="material-icons right">'$IconName'</i>'})
         </button>
 "@
@@ -433,30 +581,93 @@ Function New-PWFButton{
 Function New-PWFCollection{
     param(
         [Parameter(Mandatory=$true,Position=0)]
-        [string]$Label,
+        $CollectionArray,
         
         [Parameter(Mandatory=$false,Position=1)]
-        $Scale,
+        [string]$CollectionColName,
+        [string]$HeaderLabel,
+        [string]$LinksColName
+    )
+    
+    if($CollectionColName){$OriginalCollection = $CollectionArray ; $CollectionArray = $CollectionArray.([string]$CollectionColName)}
 
-        [Parameter(Mandatory=$false,Position=1)]
-        [switch]$Flat,
-        [switch]$Float,
-        [switch]$Disabled,
-        [String]$IconName
+    if($LinksColName){
+        $output = @"
+            <div class="collection $(if($HeaderLabel){ write-output 'with-header'})">
+                $(if($HeaderLabel){ write-output '<div class="collection-header"><h4>'$HeaderLabel'</h4></div>'})
+                $($index=0)
+                $($CollectionArray | ForEach-Object { write-output '<a href="'($OriginalCollection[$index].([string]$LinksColName).Trim())'" class="collection-item">'$_.Trim()'</a>'}; $index++)
+            </div>
+"@
+    }else{
+        $output = @"
+            <ul class="collection $(if($HeaderLabel){ write-output 'with-header'})">
+                $(if($HeaderLabel){ write-output '<li class="collection-header"><h4>'$HeaderLabel'</h4></li>'})
+                $($CollectionArray | ForEach-Object { write-output '<li class="collection-item">'$_.Trim()'</li>'})
+            </ul>
+"@
+    }
+    return $output
+
+}
+
+Function New-PWFFlowText{
+    param(
+        [Parameter(Mandatory=$true,Position=0)]
+        [string]$YourText
     )
 
-    switch($Scale){
-        "Large"{$Scale="btn-large"}
-        "Small"{$Scale="btn-small"}
-        default{$Scale=""}
-    }
-
     $output = @"
-        <button class="$(if($Float){ write-output 'btn-floating'}) btn waves-effect waves-light $(if($Flat){ write-output 'btn-flat'}) $($Scale) $(if($disabled){ write-output 'disabled'})">$($Label)
-            $(if($IconName){ write-output '<i class="material-icons right">'$IconName'</i>'})
-        </button>
+        <p class="flow-text">$YourText</p>
 "@
 
     return $output
 
+}
+
+Function New-PWFIcon{
+    param(
+        [Parameter(Mandatory=$true,Position=0)]
+        [string]$IconName,
+
+        [Parameter(Mandatory=$false,Position=1)]
+        [string]$Size
+    )
+
+    $output = @"
+        <i class="$(if($Size){write-output $Size}) material-icons">$IconName</i>
+"@
+
+    return $output
+
+}
+
+Function New-PWFBlockQuote{
+    param(
+        [Parameter(Mandatory=$true,Position=0)]
+        [string]$YourText
+    )
+
+    $output = @"
+        <blockquote>
+            $YourText
+        </blockquote>
+"@
+
+    return $output
+
+}
+
+Function New-PWFHeader{
+    param(
+        [Parameter(Mandatory=$true,Position=0)]
+        [string]$HeaderText,
+        [ValidateSet(1,2,3,4,5,6)]
+        [int]$Size
+    )
+
+    $output = @"
+        <h$Size>$Headertext</h$Size>
+"@
+    return $output
 }

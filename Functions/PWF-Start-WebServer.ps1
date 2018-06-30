@@ -1,8 +1,20 @@
 Function Start-PoshWebGUI
 {
+<#
+.SYNOPSIS
+A little webserver.
+.DESCRIPTION
+A little web server., originaly writed by TibeRiver256 and edited by MrTrez.
+.EXAMPLE
+Start-PoshWebGUI -ListeningPort 8080 - ScriptBlock {#some code}
+.PARAMETER ScriptBlock
+Please read the 3 posts about it on http://tiberriver256.github.io/powershell/gui/html/PowerShell-HTML-GUI-Pt1/ that is the real author of most of this code.
+.LINK
+http://tiberriver256.github.io/powershell/gui/html/PowerShell-HTML-GUI-Pt1/
+#>
     param(
         [parameter(Mandatory=$true)]
-        $ListingPort="8000",
+        $ListeningPort,
         $ScriptBlock        
     )
     # We create a scriptblock that waits for the server to launch and then opens a web browser control
@@ -69,7 +81,6 @@ Function Start-PoshWebGUI
     {
         do
         {
-
                 $Context.Response.Close()
                 $Context = $SimpleServer.GetContext()
 
@@ -77,18 +88,42 @@ Function Start-PoshWebGUI
     }
 
     # Creating a friendly way to shutdown the server
-    if($Context.Request.Url.LocalPath -eq "/kill")
+    if($Context.Request.Url.LocalPath -eq "/theend")
     {
 
-                $Context.Response.Close()
-                $SimpleServer.Stop()
-                break
+        $Result = New-PWFPage -Title "Bye Bye" -Container -Content {
+            New-PWFRow -Content {
+                New-PWFColumn -Size 12 -Content {
+                    New-PWFHeader -HeaderText ((New-PWFIcon -IconName mood -Size large) + " See you next time!") -Size 1
+                }
+            }
+        }
+        # We convert the result to bytes from ASCII encoded text
+        $buffer = [System.Text.Encoding]::UTF8.GetBytes($Result)
 
+        # We need to let the browser know how many bytes we are going to be sending
+        $context.Response.ContentLength64 = $buffer.Length
+
+        # We send the response back to the browser
+        $context.Response.OutputStream.Write($buffer, 0, $buffer.Length)
+
+        # We close the response to let the browser know we are done sending the response
+        $Context.Response.Close()
+
+        $SimpleServer.Stop()
+        break
+
+    }
+
+    if(($Context.Request.Url.LocalPath) -like "/*"){
+        #Convert Requested form input's names into variables with their own value
+        New-RequestVars -AllKeys ($Context.Request.QueryString.AllKeys) -QueryString ($Context.Request.QueryString)
     }
 
     #$Context.Request
     # Handling different URLs
     $StartPerfCalc = (Get-Date).Millisecond
+    $Pages = $Context.Request.Url.LocalPath
     $result = try {.$ScriptBlock} catch {$_.Exception.Message}
 
     if($result -ne $null) {
