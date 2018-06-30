@@ -201,7 +201,7 @@ Function New-PWFAppBuild {
         $PageBlocks        
     )
 
-    Start-PoshWebGUI -ListingPort $ListeningPort -ScriptBlock {
+    Start-PoshWebGUI -ListeningPort $ListeningPort -ScriptBlock {
         #switching between urls
         try {.$PageBlocks} catch {$_.Exception.Message}
     }
