@@ -25,7 +25,7 @@ http://tiberriver256.github.io/powershell/gui/html/PowerShell-HTML-GUI-Pt1/
         {
 
             try {
-                $url="http://localhost:$ListingPort/"
+                $url="http://localhost:$ListeningPort/"
                 $Test = New-Object System.Net.WebClient
                 $Test.DownloadString($url);
             }
@@ -57,7 +57,7 @@ http://tiberriver256.github.io/powershell/gui/html/PowerShell-HTML-GUI-Pt1/
 
     # Tell the HttpListener what port to listen on
     #    As long as we use localhost we don't need admin rights. To listen on externally accessible IP addresses we will need admin rights
-    $SimpleServer.Prefixes.Add("http://localhost:$ListingPort/")
+    $SimpleServer.Prefixes.Add("http://localhost:$ListeningPort/")
 
     # Start up the server
     $SimpleServer.Start()
