@@ -1,3 +1,4 @@
+![My image](qschweitzer.github.com/poshwebframework/img/header.jpg)
 # Powershell Web Framework
 The idea is to create a simple tool to build web GUI for your scripts.
 You can run this locally.
