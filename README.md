@@ -2,7 +2,7 @@
 # Powershell Web Framework
 The idea is to create a simple tool to build web GUI for your scripts.
 You can run this locally.
-**I've not tested it on "server mode". It's actually a very bad idea, don't use it in production. There is no security implemented, anybody could access it.**
+**I've not tested it on "server mode". Don't use it in production. There is no security implemented, anybody could access it.**
 
 ## Local Web Server
 Based on a simple local webserver, using the Tiberriver256 tool:
