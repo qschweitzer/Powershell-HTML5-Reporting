@@ -4,7 +4,7 @@ Get-ChildItem ".\Functions" | Select-Object * | foreach{
 
 New-PWFAppBuild -ListeningPort 3030 -PageBlocks{
     switch($Pages){
-        "/loadProcess" {
+        "/ResultForm" {
             Write-Host $firstName -BackgroundColor Red
             New-PWFPage -Title "ResultPage" -Container -Content {
                 New-PWFRow -Content {
@@ -21,7 +21,7 @@ New-PWFAppBuild -ListeningPort 3030 -PageBlocks{
                 New-PWFRow -Content {
                     New-PWFColumn -Size 6 -Content {
                         New-PWFHeader -HeaderText "Form Test" -Size 1
-                        New-PWFForm -Size 12 -ActionPage "loadProcess" -Content {
+                        New-PWFForm -Size 12 -ActionPage "ResultForm" -Content {
                             New-PWFFormInput -Text -Label "First Name" -IDName "FirstName" -Size 6 -Required
                             New-PWFFormInput -Text -Label "Name" -IDName "Name" -Size 6
                             New-PWFFormInput -Email -Label "Email" -IDName "Email" -Size 12
