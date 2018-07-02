@@ -19,7 +19,7 @@ Function New-PWFAppBuild {
         $PageBlocks        
     )
 
-    Start-PoshWebGUI -ListingPort $ListeningPort -ScriptBlock {
+    Start-PoshWebGUI -ListeningPort $ListeningPort -ScriptBlock {
         #switching between urls
         try {.$PageBlocks} catch {$_.Exception.Message}
     }
@@ -668,6 +668,46 @@ Function New-PWFHeader{
 
     $output = @"
         <h$Size>$Headertext</h$Size>
+"@
+    return $output
+}
+
+Function New-PWFTable{
+    param(
+        [Parameter(Mandatory=$true,Position=0)]
+        $ToTable,
+
+        [Parameter(Mandatory=$false,Position=1)]
+        $SelectProperties,
+        [switch]$Striped,
+        [switch]$Highlight,
+        [switch]$Centered,
+        [switch]$Responsive
+
+        # Classes: class="striped highlight centered responsive-table"
+    )
+    if($SelectProperties){
+        $AllColumnsHeader = ( $ToTable | Select-Object $SelectProperties | Get-Member | Where-Object { $_.MemberType -match "Noteproperty"}).Name
+    }
+    else{
+        $AllColumnsHeader = ($ToTable | Get-Member ).Name
+    }
+    Write-Host $AllColumnsHeader
+    $output = @"
+        <table class="$(if($Striped){Write-Output 'striped'}) $(if($Highlight){Write-Output 'highlight'}) $(if($Centered){Write-Output 'centered'}) $(if($Responsive){Write-Output 'responsive-table'})">
+        <thead>
+        <tr>
+            $($AllColumnsHeader | ForEach-Object { Write-Output '<th>' $_ '</th>' })
+        </tr>
+        </thead>
+
+        <tbody>
+        $($ToTable | ForEach-Object {$Row = $_;`
+        Write-Output "<tr>"
+        $AllColumnsHeader | ForEach-Object { Write-Output '<td>' ($Row.$_) '</td>' }
+        Write-Output "</tr>"})
+        </tbody>
+    </table>
 "@
     return $output
 }

@@ -50,6 +50,9 @@ New-PWFAppBuild -ListeningPort 3030 -PageBlocks{
                         New-PWFIcon -IconName "ac_unit" -Size large
                     }
                 }
+                New-PWFRow -Content {
+                    New-PWFTable -ToTable (Get-WinUserLanguageList) -Striped -Responsive
+                }
             }
         }
     }
