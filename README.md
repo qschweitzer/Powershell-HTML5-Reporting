@@ -86,7 +86,7 @@ All of IDName on the URL are converted to Variable with the value associated.
 Like: IDName is FirstName. You type "Peter" in the form and validate it. Then a Variable is created: $FirstName, it's value is "Peter".
 
 7. Well, I let you testing that and tell me what you want about it :)
-I will continue to add some functionnalities from Materialize.
+I will continue to add some features from Materialize.
 
 ## How to stop that?
 Simply use the **Red stop** button on the bottom right corner. Each page build with New-PWFPage contain this button.
