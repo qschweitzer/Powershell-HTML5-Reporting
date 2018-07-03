@@ -31,8 +31,7 @@ Ok good, now you have the main code to build all your pages.
 The Switch statement is used to manage the different pages, default is the...default page. You can't change is name to "index" or other. The default page have to stay default page, actually. Maybe in future it could be changed, actually I don't know how.
 
 Other pages have to be declared like `"/PageTwo"{}`
-
-**Access to your page with http://localhost:8000**
+** Access to your page with http://localhost:8000 **
 
 3. Build the default page
 
