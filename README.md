@@ -1,4 +1,6 @@
 ![My image](https://cdn.rawgit.com/qschweitzer/PoshWebFramework/dfb0010e/Header.jpg)
+[Download .PS1][1]
+[1]:{{ site.url }}/PWF-Functions.ps1
 # Powershell Web Framework
 The idea is to create a simple tool to build web GUI for your scripts.
 You can run this locally.
