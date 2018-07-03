@@ -15,6 +15,7 @@ Ok, importation done.
 
 2. Start building the App
 Add new lines:
+
 ```
 New-PWFAppBuild -ListeningPort 8000 -PageBlocks{
   switch($Pages){
@@ -24,6 +25,7 @@ New-PWFAppBuild -ListeningPort 8000 -PageBlocks{
   }
 }
 ```
+
 Choose your ListeningPort ;)
 Ok good, now you have the main code to build all your pages.
 The Switch statement is used to manage the different pages, default is the...default page. You can't change is name to "index" or other. The default page have to stay default page, actually. Maybe in future it could be changed, actually I don't know how.
@@ -33,6 +35,7 @@ Other pages have to be declared like `"/PageTwo"{}`
 **Access to your page with http://localhost:8000**
 
 3. Build the default page
+
 ```
 New-PWFPage -Title "Hello" -Container -Content {
 <add some code>
@@ -40,6 +43,7 @@ New-PWFPage -Title "Hello" -Container -Content {
 ```
 
 4. Test a Hello
+
 ```
 New-PWFPage -Title "Hello" -Container -Content {
   New-PWFHeader -HeaderText "Form Test" -Size 1
@@ -47,6 +51,7 @@ New-PWFPage -Title "Hello" -Container -Content {
 ```
 
 5. Building a form
+
 ```
 New-PWFRow -Content {
   New-PWFColumn -Size 6 -Content {
@@ -66,6 +71,7 @@ Start your web server and Wow ! :)
 But if you validate your form, it will fail with a blank page because the response page isn't configured.
 
 6. Build the response page
+
 ```
 "/ResultForm" {
   Write-Host $firstName -BackgroundColor Red
