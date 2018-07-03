@@ -31,16 +31,19 @@ Ok good, now you have the main code to build all your pages.
 The Switch statement is used to manage the different pages, default is the...default page. You can't change is name to "index" or other. The default page have to stay default page, actually. Maybe in future it could be changed, actually I don't know how.
 
 Other pages have to be declared like `"/PageTwo"{}`
-** Access to your page with http://localhost:8000 **
 
+**Access to your page with http://localhost:8000**
+
+{:start="3"}
 3. Build the default page
 
 ```
-New-PWFPage -Title "Hello" -Container -Content {
-<add some code>
-}
+   New-PWFPage -Title "Hello" -Container -Content {
+   <add some code>
+   }
 ```
 
+{:start="4"}
 4. Test a Hello
 
 ```
@@ -49,6 +52,7 @@ New-PWFPage -Title "Hello" -Container -Content {
 }
 ```
 
+{:start="5"}
 5. Building a form
 
 ```
@@ -69,6 +73,7 @@ New-PWFRow -Content {
 Start your web server and Wow ! :)
 But if you validate your form, it will fail with a blank page because the response page isn't configured.
 
+{:start="6"}
 6. Build the response page
 
 ```
@@ -90,6 +95,7 @@ As you can see, we use the var $firstname that refer to the IDName on the form.
 All of IDName on the URL are converted to Variable with the value associated.
 Like: IDName is FirstName. You type "Peter" in the form and validate it. Then a Variable is created: $FirstName, it's value is "Peter".
 
+{:start="7"}
 7. Well, I let you testing that and tell me what you want about it :)
 I will continue to add some features from Materialize.
 
