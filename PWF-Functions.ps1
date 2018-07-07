@@ -276,8 +276,10 @@ Function New-PWFPage{
                 });
                 `$(document).ready(function(){
                     `$('.fixed-action-btn').floatingActionButton();
-                  });
-                        
+                });
+                `$(document).ready(function(){
+                    `$('select').formSelect();
+                });        
             </script>
         </footer>
     </body>
@@ -462,6 +464,8 @@ Function New-PWFFormInput {
         [switch]$Checkbox,
         [parameter(Position=0, Mandatory=$true, ParameterSetName="radio")]
         [switch]$Radio,
+        [parameter(Position=0, Mandatory=$true, ParameterSetName="select")]
+        [switch]$Select,
 
         [parameter(Position=1, Mandatory=$true, ParameterSetName="textarea")]
         [parameter(Position=1, Mandatory=$true, ParameterSetName="password")]
@@ -470,56 +474,59 @@ Function New-PWFFormInput {
         [parameter(Position=1, Mandatory=$true, ParameterSetName="file")]
         [parameter(Position=1, Mandatory=$true, ParameterSetName="checkbox")]
         [parameter(Position=1, Mandatory=$true, ParameterSetName="radio")]
+        [parameter(Position=1, Mandatory=$true, ParameterSetName="select")]
         $Label,
         $IDName,
-
-        [parameter(Position=2, Mandatory=$false, ParameterSetName="text")]
-        [parameter(Position=2, Mandatory=$false, ParameterSetName="email")]
-        [parameter(Position=2, Mandatory=$false, ParameterSetName="password")]
-        [parameter(Position=2, Mandatory=$false, ParameterSetName="textarea")]
-        [parameter(Position=2, Mandatory=$false, ParameterSetName="file")]
-        [parameter(Position=2, Mandatory=$false, ParameterSetName="checkbox")]
-        [parameter(Position=2, Mandatory=$false, ParameterSetName="radio")]
-        $PlaceHolder="",
-        $Size="12",
-        $IconPrefix,
-        [switch]$disabled,
-        [switch]$checked,
-        [switch]$multiple,
-
-        [parameter(
-        Mandatory=$true,
-        ParameterSetName="switch")]
+        
+        [parameter(Mandatory=$true, Position=2, ParameterSetName="switch")]
         [string]$Label1,
+        [parameter(Mandatory=$true, Position=2, ParameterSetName="switch")]
         [string]$Label2,
 
-        [parameter(
-        Mandatory=$false,
-        ParameterSetName="checkbox")]
+        [parameter(Mandatory=$true, Position=2, ParameterSetName="checkbox")]
         [switch]$filledin,
 
         [parameter(
         Mandatory=$false,
+        Position=2,
         ParameterSetName="radio")]
         [switch]$withgap,
 
-        [parameter(
-        Mandatory=$true,
-        ParameterSetName="range")]
+        [parameter(Mandatory=$true, Position=2, ParameterSetName="range")]
         [int]$min,
+        [parameter(Mandatory=$true, Position=2, ParameterSetName="range")]
         [int]$max,
 
-        [parameter(
-        Mandatory=$true,
-        ParameterSetName="select")]
-        $OptionLabelListObject,
+        [parameter(Mandatory=$true, Position=2, ParameterSetName="select")]
+        $ObjectList,
+        $Property,
+
+        [parameter(Position=3, Mandatory=$false, ParameterSetName="text")]
+        [parameter(Position=3, Mandatory=$false, ParameterSetName="email")]
+        [parameter(Position=3, Mandatory=$false, ParameterSetName="password")]
+        [parameter(Position=3, Mandatory=$false, ParameterSetName="textarea")]
+        [parameter(Position=3, Mandatory=$false, ParameterSetName="file")]
+        [parameter(Position=3, Mandatory=$false, ParameterSetName="checkbox")]
+        [parameter(Position=3, Mandatory=$false, ParameterSetName="radio")]
+        [parameter(Position=3, Mandatory=$false, ParameterSetName="select")]
+        $PlaceHolder="",
+        $Size="12",
+        [switch]$disabled,
+        [switch]$checked,
+        [switch]$multiple,
         
-        [parameter(Mandatory=$false, ParameterSetName="textarea")]
-        [parameter(Mandatory=$false, ParameterSetName="password")]
-        [parameter(Mandatory=$false, ParameterSetName="email")]
-        [parameter(Mandatory=$false, ParameterSetName="text")]
-        [parameter(Mandatory=$false, ParameterSetName="file")]
-        [switch]$Required
+        [parameter(Mandatory=$false, Position=4, ParameterSetName="textarea")]
+        [parameter(Mandatory=$false, Position=4, ParameterSetName="password")]
+        [parameter(Mandatory=$false, Position=4, ParameterSetName="email")]
+        [parameter(Mandatory=$false, Position=4, ParameterSetName="text")]
+        [parameter(Mandatory=$false, Position=4, ParameterSetName="file")]
+        [parameter(Mandatory=$false, Position=4, ParameterSetName="select")]
+        [switch]$Required,
+
+        [parameter(Mandatory=$false, Position=5, ParameterSetName="text")]
+        [parameter(Mandatory=$false, Position=5, ParameterSetName="email")]
+        [parameter(Mandatory=$false, Position=5, ParameterSetName="password")]
+        $IconPrefix
     )
     if(!($Size)){$Size="12"}
 
@@ -614,14 +621,40 @@ Function New-PWFFormInput {
 
 "@
         }
-        "select"{}
-
-
-
+        "select"{
+            $ObjectList = ($ObjectList).$Property
+            $output = @"
+            <div class="input-field col s12 m$Size">
+                <select Name="$IDName" $(if($Multiple){Write-Output "multiple"}) $(if($Disabled){Write-Output "disabled"})>
+                $(if($PlaceHolder){ Write-Output '<option value="" disabled selected>'$PlaceHolder'</option>'})
+                $($ObjectList | ForEach-Object { Write-Output '<option value="'$_'">'$_'</option>'})
+                </select>
+                <label>$Label</label>
+            </div>
+"@
+        }
     }
     return $output
 }
 
+Function New-PWFSelect{
+    param(
+        [Parameter(Mandatory=$true,Position=0)]
+        $ObjectList,
+
+        [Parameter(Mandatory=$true,Position=1)]
+        $Label,
+        $Property,
+
+        [Parameter(Mandatory=$false,Position=2)]
+        $PlaceHolder,
+        [int]$Size,
+        [switch]$Disabled,
+        [switch]$Multiple
+    )
+    
+    return $output
+}
 Function New-PWFCard{
     param(
 
@@ -874,7 +907,7 @@ Function New-PWFTable{
     else{
         $AllColumnsHeader = ($ToTable | Get-Member ).Name
     }
-    Write-Host $AllColumnsHeader
+
     $output = @"
         <table class="$(if($Striped){Write-Output 'striped'}) $(if($Highlight){Write-Output 'highlight'}) $(if($Centered){Write-Output 'centered'}) $(if($Responsive){Write-Output 'responsive-table'})">
         <thead>
