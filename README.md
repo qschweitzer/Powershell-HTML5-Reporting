@@ -100,5 +100,5 @@ Like: IDName is FirstName. You type "Peter" in the form and validate it. Then a 
 I will continue to add some features from Materialize.
 
 ## How to stop that?
-Simply use the **Red stop** button on the bottom right corner. Each page build with New-PWFPage contain this button.
+Simply use the **Red stop** button on the bottom right corner. Each page built with New-PWFPage contains this button.
 You also can stop it by using this kind of Url, with your custom port: http://localhost:8000/theend
