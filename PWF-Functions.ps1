@@ -338,12 +338,22 @@ Function New-PWFColumn{
     param(
         [Parameter(Mandatory=$true,Position=0)]
         $Size="12",
-        $Content        
+        $Content,
+
+        [Parameter(Mandatory=$false)]
+        [string]$Align
     )
 
-    $output = @"
+    if($Align){
+        $output = @"
+        <div class="$($Align)-align col m$($Size)">
+"@
+    }else{
+        $output = @"
         <div class="col m$($Size)">
 "@
+    }
+    
         $(try {$output += .$Content} catch {$_.Exception.Message})
 
     $output += @"
@@ -673,8 +683,8 @@ Function New-PWFCard{
         [string]$CardLink2,
         [string]$CardLinkLabel2,
         [string]$CardImgLink,
-        [string]$BackgroundColor="teal",
-        [String]$TextColor="white"
+        [string]$BackgroundColor="blue-grey darken-1",
+        [String]$TextColor="white-text"
 
     )
     if(!($Size)){$Size="12"}
@@ -683,8 +693,8 @@ Function New-PWFCard{
         "basic"{
             $output = @"
             <div class="col s12 m$($Size)">
-                <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
+                <div class="card $($BackgroundColor)">
+                    <div class="card-content $($TextColor)">
                         <span class="card-title">$($CardTitle)</span>
                         <p>$($CardContent)</p>
                     </div>
@@ -699,7 +709,7 @@ Function New-PWFCard{
         "image"{
             $output = @"
             <div class="col s12 m$Size">
-                <div class="card">
+                <div class="card $($BackgroundColor)">
                     <div class="card-image">
                         <img src="$($CardImgLink)">
                         <span class="card-title">$($CardTitle)</span>
