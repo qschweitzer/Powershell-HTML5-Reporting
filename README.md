@@ -38,17 +38,29 @@ Other pages have to be declared like `"/PageTwo"{}`
 3. Build the default page
 
 ```
-   New-PWFPage -Title "Hello" -Container -Content {
-   <add some code>
-   }
+New-PWFAppBuild -ListeningPort 8000 -PageBlocks{
+  switch($Pages){
+    default{
+       New-PWFPage -Title "Hello" -Container -Content {
+        <add some code>
+       }
+    }
+  }
+}
 ```
 
 {:start="4"}
 4. Test a Hello
 
 ```
-New-PWFPage -Title "Hello" -Container -Content {
-  New-PWFHeader -HeaderText "Form Test" -Size 1
+New-PWFAppBuild -ListeningPort 8000 -PageBlocks{
+  switch($Pages){
+    default{
+       New-PWFPage -Title "Hello" -Container -Content {
+        New-PWFHeader -HeaderText "Form Test" -Size 1
+      }
+    }
+  }
 }
 ```
 
@@ -56,15 +68,24 @@ New-PWFPage -Title "Hello" -Container -Content {
 5. Building a form
 
 ```
-New-PWFRow -Content {
-  New-PWFColumn -Size 6 -Content {
-    New-PWFHeader -HeaderText "Form Test" -Size 1
-    New-PWFForm -Size 12 -ActionPage "ResultForm" -Content {
-        New-PWFFormInput -Text -Label "First Name" -IDName "FirstName" -Size 6 -Required
-        New-PWFFormInput -Text -Label "Name" -IDName "Name" -Size 6
-        New-PWFFormInput -Email -Label "Email" -IDName "Email" -Size 12
-        New-PWFFormInput -Password -Label "Password" -IDName "Password" -Size 6
-        New-PWFFormSubmitButton -Label "Validate" -Size Large -IconName "start"
+New-PWFAppBuild -ListeningPort 8000 -PageBlocks{
+  switch($Pages){
+    default{
+       New-PWFPage -Title "Hello" -Container -Content {
+        New-PWFHeader -HeaderText "Form Test" -Size 1
+        New-PWFRow -Content {
+          New-PWFColumn -Size 6 -Content {
+            New-PWFHeader -HeaderText "Form Test" -Size 1
+            New-PWFForm -Size 12 -ActionPage "ResultForm" -Content {
+                New-PWFFormInput -Text -Label "First Name" -IDName "FirstName" -Size 6 -Required
+                New-PWFFormInput -Text -Label "Name" -IDName "Name" -Size 6
+                New-PWFFormInput -Email -Label "Email" -IDName "Email" -Size 12
+                New-PWFFormInput -Password -Label "Password" -IDName "Password" -Size 6
+                New-PWFFormSubmitButton -Label "Validate" -Size Large -IconName "start"
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -77,14 +98,35 @@ But if you validate your form, it will fail with a blank page because the respon
 6. Build the response page
 
 ```
-"/ResultForm" {
-  Write-Host $firstName -BackgroundColor Red
-  New-PWFPage -Title "ResultPage" -Container -Content {
-    New-PWFRow -Content {
-      New-PWFColumn -Size 6 -Content {
-        New-PWFHeader -HeaderText "Hi $firstname !" -Size 1
-        New-PWFFlowText -YourText "This is What I know about you"
-        New-PWFCard -CardType Basic -Size 12 -CardTitle ($firstname + " " + $name) -CardContent ("Your Email: "+$email+" Your Password: nonono, I can't display that ;)")
+New-PWFAppBuild -ListeningPort 8000 -PageBlocks{
+  switch($Pages){
+    default{
+       New-PWFPage -Title "Hello" -Container -Content {
+        New-PWFHeader -HeaderText "Form Test" -Size 1
+        New-PWFRow -Content {
+          New-PWFColumn -Size 6 -Content {
+            New-PWFHeader -HeaderText "Form Test" -Size 1
+            New-PWFForm -Size 12 -ActionPage "ResultForm" -Content {
+                New-PWFFormInput -Text -Label "First Name" -IDName "FirstName" -Size 6 -Required
+                New-PWFFormInput -Text -Label "Name" -IDName "Name" -Size 6
+                New-PWFFormInput -Email -Label "Email" -IDName "Email" -Size 12
+                New-PWFFormInput -Password -Label "Password" -IDName "Password" -Size 6
+                New-PWFFormSubmitButton -Label "Validate" -Size Large -IconName "start"
+            }
+          }
+        }
+      }
+    }
+    "/ResultForm" {
+      Write-Host $firstName -BackgroundColor Red
+      New-PWFPage -Title "ResultPage" -Container -Content {
+        New-PWFRow -Content {
+          New-PWFColumn -Size 6 -Content {
+            New-PWFHeader -HeaderText "Hi $firstname !" -Size 1
+            New-PWFFlowText -YourText "This is What I know about you"
+            New-PWFCard -CardType Basic -Size 12 -CardTitle ($firstname + " " + $name) -CardContent ("Your Email: "+$email+" Your Password: nonono, I can't display that ;)")
+          }
+        }
       }
     }
   }
@@ -100,5 +142,5 @@ Like: IDName is FirstName. You type "Peter" in the form and validate it. Then a 
 I will continue to add some features from Materialize.
 
 ## How to stop that?
-Simply use the **Red stop** button on the bottom right corner. Each page build with New-PWFPage contain this button.
+Simply use the **Red stop** button on the bottom right corner. Each page built with New-PWFPage contains this button.
 You also can stop it by using this kind of Url, with your custom port: http://localhost:8000/theend
