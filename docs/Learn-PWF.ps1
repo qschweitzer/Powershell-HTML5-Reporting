@@ -3,6 +3,80 @@ Import-Module $PWFPath
 Start-Process "http://localhost:8000"
 New-PWFAppBuild -ListeningPort 8000 -PageBlocks{
     switch($Pages){
+        "/Sample2" {
+            New-PWFPage -Title "Exemple 2" -Container -Content{
+                New-PWFRow -Content {
+                    New-PWFHeader -HeaderText "Exemple 2: Formulaire de cr&eacute;ation de compte AD pour un nouvel employ&eacute;" -Size 1
+                    New-PWFColumn -Size 6 -Content {
+@'
+<pre style=white-space:pre-wrap;background-color:#4dd0e1;>
+New-PWFColumn -Size 6 -Content {
+    New-PWFRow -Content {
+        New-PWFHeader -HeaderText "Visualisation Formulaire:" -Size 2
+        New-PWFColumn -Size 12 -Content {
+            New-PWFHeader -HeaderText "Nouvel employ&eacute;" -Size 4
+            New-PWFForm -Size 12 -ActionPage "Sample2" -Content {
+                New-PWFFormInput -Text -Label "Nom" -IDName "EmployeeName" -Size 6 -Required -IconPrefix "person"
+                New-PWFFormInput -Text -Label "Pr&eacute;nom" -IDName "EmployeeFirstName" -Size 6 -Required
+                New-PWFFormInput -Password -Label "Mot de passe" -IDName "EmployeePassword" -Size 12 -Required -IconPrefix "security"
+                New-PWFFormInput -Email -Label "Adresse Mail" -IDName "EmployeeMail" -Size 12 -IconPrefix "contact_mail"
+                New-PWFFormInput -Text -Label "T&eacute;l&eacute;phone" -IDName "EmployeePhone" -Size 6 -IconPrefix "phone"
+                New-PWFFormInput -Text -Label "Site" -IDName "EmployeeSite" -Size 6 -IconPrefix "person_pin_circle"
+                New-PWFFormInput -Text -Label "Fonction" -IDName "EmployeeFunction" -Size 12
+                New-PWFFormSubmitButton -Label "Cr&eacute;er le compte" -Size Large
+            }
+        }
+    }
+    if($EmployeeName){
+        New-PWFRow -Content {
+            New-PWFHeader -HeaderText "Visualisation R&eacute;sultat:" -Size 2
+            New-PWFPage -Title "Utilisateur cr&eacute;&eacute;" -Container -Content {
+                New-PWFRow -Content {
+                    New-PWFCard -CardType Image -CardTitle ($EmployeeName + " " + $EmployeeFirstName) -CardImgLink "https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?resize=256%2C256&quality=100&ssl=1" -CardContent "Nouvel(le) employ&eacute;(e)."
+                }
+            }
+        }
+    }
+}
+</pre>
+'@
+                    }
+                    New-PWFColumn -Size 6 -Content {
+                        New-PWFRow -Content {
+                            New-PWFHeader -HeaderText "Visualisation Formulaire:" -Size 2
+                            New-PWFColumn -Size 12 -Content {
+                                New-PWFHeader -HeaderText "Nouvel employ&eacute;" -Size 4
+                                New-PWFForm -Size 12 -ActionPage "Sample2" -Content {
+                                    New-PWFFormInput -Text -Label "Nom" -IDName "EmployeeName" -Size 6 -Required -IconPrefix "person"
+                                    New-PWFFormInput -Text -Label "Pr&eacute;nom" -IDName "EmployeeFirstName" -Size 6 -Required
+                                    New-PWFFormInput -Password -Label "Mot de passe" -IDName "EmployeePassword" -Size 12 -Required -IconPrefix "security"
+                                    New-PWFFormInput -Email -Label "Adresse Mail" -IDName "EmployeeMail" -Size 12 -IconPrefix "contact_mail"
+                                    New-PWFFormInput -Text -Label "T&eacute;l&eacute;phone" -IDName "EmployeePhone" -Size 6 -IconPrefix "phone"
+                                    New-PWFFormInput -Text -Label "Site" -IDName "EmployeeSite" -Size 6 -IconPrefix "person_pin_circle"
+                                    New-PWFFormInput -Text -Label "Fonction" -IDName "EmployeeFunction" -Size 12
+                                    New-PWFFormSubmitButton -Label "Cr&eacute;er le compte" -Size Large
+                                }
+                            }
+                        }
+                        if($EmployeeName){
+                            New-PWFRow -Content {
+                                New-PWFHeader -HeaderText "Visualisation R&eacute;sultat:" -Size 2
+                                New-PWFPage -Title "Utilisateur cr&eacute;&eacute;" -Container -Content {
+                                    New-PWFRow -Content {
+                                        New-PWFCard -CardType Image -CardTitle ($EmployeeName + " " + $EmployeeFirstName) -CardImgLink "https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?resize=256%2C256&quality=100&ssl=1" -CardContent "Nouvel(le) employ&eacute;(e)."
+                                    }
+                                }
+                            }
+                        }
+                        New-PWFRow -Content {
+                            New-PWFForm -ActionPage "Sample2" -Size 6 -Content {
+                                New-PWFFormSubmitButton -Label "Exemple suivant" -Size large -Flat -IconName "play_circle_outline"
+                            }
+                        }
+                    }
+                }
+            }
+        }
         "/Sample1" {
             New-PWFPage -Title "Exemple 1" -Container -Content{
                 New-PWFRow -Content {
@@ -47,7 +121,7 @@ New-PWFAppBuild -ListeningPort 8000 -PageBlocks{
                             New-PWFHeader -HeaderText "Visualisation Formulaire:" -Size 2
                             New-PWFColumn -Size 6 -Content {
                                 New-PWFHeader -HeaderText "Process" -Size 4
-                                New-PWFForm -Size 12 -ActionPage "StepFour" -Content {
+                                New-PWFForm -Size 12 -ActionPage "Sample1" -Content {
                                     New-PWFFormInput -Text -Label "Process Name" -IDName "ProcessName" -Size 6 -Required
                                     New-PWFFormSubmitButton -Label "Search Process" -Size Large -IconName "search"
                                 }
@@ -65,6 +139,11 @@ New-PWFAppBuild -ListeningPort 8000 -PageBlocks{
                                         }
                                     }
                                 }
+                            }
+                        }
+                        New-PWFRow -Content {
+                            New-PWFForm -ActionPage "Sample2" -Size 6 -Content {
+                                New-PWFFormSubmitButton -Label "Exemple suivant" -Size large -Flat -IconName "play_circle_outline"
                             }
                         }
                     }
@@ -146,9 +225,7 @@ New-PWFAppBuild -ListeningPort 8000 -PageBlocks{
                         " -BackgroundColor "green"
                     }
                     New-PWFRow -Content {
-                        New-PWFCard -CardType basic -CardTitle "Et des exemples ??" -CardContent {
-                            "Pas de panique, des exemples arrivent."
-                        } -BackgroundColor "red darken-4"
+                        New-PWFCard -CardType basic -CardTitle "Et des exemples ??" -CardContent "Pas de panique, des exemples arrivent." -BackgroundColor "red darken-4"
                     }
                     New-PWFForm -ActionPage "Sample1" -Size 6 -Content {
                         New-PWFFormSubmitButton -Label "La suite" -Size large -Flat -IconName "play_circle_outline"
