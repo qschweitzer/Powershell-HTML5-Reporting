@@ -2,7 +2,7 @@
 .SYNOPSIS
 These functions lets you create an HTML5  web page with dynamic table and charts, easily.
 .DESCRIPTION
-Create a new HTML5 page with dynamic tables and charts, easily. Som example at the end in the EXAMPLES section.
+Create a new HTML5 page with dynamic tables and charts, easily. Some example at the end in the EXAMPLES section.
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
