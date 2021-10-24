@@ -1,4 +1,4 @@
-![My image](https://github.com/qschweitzer/Powershell-HTML5-Reporting/blob/v2/docs/2021-10-24%2023_40_09-Clipboard.jpg)
+![My image](https://github.com/qschweitzer/Powershell-HTML5-Reporting/blob/master/docs/2021-10-24%2023_40_09-Clipboard.jpg)
 # Powershell Web Framework 2.0
 The new version have a new CSS framework: PicoCSS. Why ? Lightweight !
 And much more important, this new version include....charts ! Based on Charts.JS.
@@ -34,4 +34,4 @@ Cards can now contains what you want. No limit. A table ? A chart ? No prob.
 # EXAMPLE AT THE END OF FILE !
 You have the screenshoted example at the end of the script. This will let you starting use and create your own.
 
-![My image](https://github.com/qschweitzer/Powershell-HTML5-Reporting/blob/v2/docs/2021-10-25%2000_13_33-Clipboard.jpg)
+![My image](https://github.com/qschweitzer/Powershell-HTML5-Reporting/blob/master/docs/2021-10-25%2000_13_33-Clipboard.jpg)
