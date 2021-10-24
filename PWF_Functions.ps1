@@ -763,6 +763,7 @@ return $output
 #####  EXAMPLES  #####
 ######################
 
+<#
 $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
     New-PWFHeader -BackgroundColor "#fff" -Centered -Content {
         New-PWFTitles -TitleText "Hi, I'm generated on a Windows PC with a Powershell script." -Size 1
@@ -860,3 +861,4 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
 }
 $TestPage | out-file -Encoding UTF8 -FilePath "C:\Windows\Temp\TestFramework.html"
 Start-Process "C:\Windows\Temp\TestFramework.html"
+#>
