@@ -547,7 +547,7 @@ Function New-PWFTable{
         $RandomIDTable = ("a$(Get-Random)")
         $RandomIDFunction = ("a$(Get-Random)")
         $output = @"
-        <input type="text" id="$($RandomIDInput)" placeholder="Rechercher..">
+        <input type="text" id="$($RandomIDInput)" placeholder="Search..">
 "@
     }
 
