@@ -2,7 +2,7 @@
 .SYNOPSIS
 These functions lets you create an HTML5  web page with dynamic table and charts, easily.
 .DESCRIPTION
-Create a new HTML5 page with dynamic tables and charts, easily. Some example at the end in the EXAMPLES section.
+Create a new HTML5 page with dynamic tables and charts, easily. Som example at the end in the EXAMPLES section.
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
@@ -481,6 +481,33 @@ Function New-PWFImage{
 "@
     return $output
 }
+Function New-PWFProgressBar{
+    <#
+    .SYNOPSIS
+    Insert a progress bar.
+    .DESCRIPTION
+    Insert a progress bar.
+    .PARAMETER CurrentValue
+    The value of the progress.
+    .PARAMETER MaxValue
+    The maximum value. Max value is 100% of the progress.
+    .EXAMPLE
+    New-PWFProgressBar -CurrentValue 25 -MaxValue 200
+    .LINK
+    https://github.com/qschweitzer/Powershell-HTML5-Reporting
+    #>
+    param(
+        [Parameter(Mandatory=$true,Position=0)]
+        [int]$CurrentValue,
+        [Parameter(Mandatory=$true,Position=1)]
+        [int]$MaxValue
+    )
+
+    $output = @"
+    <progress value="$($CurrentValue)" max="$($MaxValue)"></progress>
+"@
+    return $output
+}
 Function New-PWFTable{
     <#
     .SYNOPSIS
@@ -763,7 +790,6 @@ return $output
 #####  EXAMPLES  #####
 ######################
 
-<#
 $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
     New-PWFHeader -BackgroundColor "#fff" -Centered -Content {
         New-PWFTitles -TitleText "Hi, I'm generated on a Windows PC with a Powershell script." -Size 1
@@ -861,4 +887,3 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
 }
 $TestPage | out-file -Encoding UTF8 -FilePath "C:\Windows\Temp\TestFramework.html"
 Start-Process "C:\Windows\Temp\TestFramework.html"
-#>
