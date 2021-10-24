@@ -31,3 +31,4 @@ New-PWFRow {
 # Card system
 Cards can now contains what you want. No limit. A table ? A chart ? No prob.
 
+![My image](https://github.com/qschweitzer/Powershell-HTML5-Reporting/blob/v2/docs/AllFunctions.jpg)
