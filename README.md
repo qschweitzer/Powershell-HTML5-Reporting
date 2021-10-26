@@ -2,7 +2,7 @@
 # Powershell Web Framework 2.0
 The new version have a new CSS framework: PicoCSS. Why ? Lightweight !
 And much more important, this new version include....charts ! Based on Charts.JS.
-The local web server option have been deprecated. I concentrate the effort on reporting features on static page (.html). These new functions are always compatible with a web server like the old version.
+The local web server option have been deprecated. Efforts have been concentrated on reporting features on static page (.html). These new functions are always compatible with a web server like the old version.
 
 ##  Like My Work? Buy Me a Coffee!
 
