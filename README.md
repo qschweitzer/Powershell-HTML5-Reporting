@@ -14,6 +14,18 @@ All arguments for each of them are explained.
 The most interesting is that (almost) all functions are concatainable.
 All functions were having a Content argument can contain some other functions and code.
 
+# Create a new HTML Page
+```
+New-PWFPage -Title "MY FIRST TEST" -Content {
+...some code...
+}
+```
+# Add a Header
+```
+New-PWFHeader -BackgroundColor "#fff" -Centered -Content {
+    New-PWFTitles -TitleText "Hi, I'm generated on a Windows PC with a Powershell script." -Size 1
+}
+```
 # Grid system
 Like a web page, grid system is used.
 With the New-PWFRow you create a new row of a grid.
