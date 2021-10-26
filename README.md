@@ -14,7 +14,7 @@ All arguments for each of them are explained.
 The most interesting is that (almost) all functions are concatainable.
 All functions were having a Content argument can contain some other functions and code.
 ```
-New-PWFPage -Title "MY FIRST TEST" -Charset UTF8 -Container -DarkTheme -Content {
+$MyReport = New-PWFPage -Title "MY FIRST TEST" -Charset UTF8 -Container -DarkTheme -Content {
     New-PWFHeader -BackgroundColor "#fff" -Centered -Content {
         New-PWFTitles -TitleText "Hi, I'm generated on a Windows PC with a Powershell script." -Size 1
     }
@@ -32,6 +32,11 @@ New-PWFPage -Title "MY FIRST TEST" -Charset UTF8 -Container -DarkTheme -Content 
         }
     }
 }
+```
+
+Save your New-PWFPage in a variable, next you just have to export it in an HTML file to save your most beautiful report.
+```
+$MyReport | Out-File -Encoding UTF8 -FilePath "C:\Windows\Temp\Test.html"
 ```
 
 # Create a new HTML Page
