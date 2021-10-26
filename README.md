@@ -127,3 +127,7 @@ New-PWFProgressBar -CurrentValue ((((get-volume -DriveLetter C).Size)/1GB)-((get
 You have the screenshoted example at the end of the script. This will let you starting use and create your own.
 
 ![My image](https://github.com/qschweitzer/Powershell-HTML5-Reporting/blob/master/docs/2021-10-26%2018_03_10-Clipboard.jpg)
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1024px-Bitcoin.svg.png" width="30"> 3DNRNqQk7VS7nFjVxJpXEriZPS8ZeCTEje
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/1200px-Ethereum_logo_2014.svg.png" width="30"> 0x9e79b5D816d8F0C52FFa1bBD657AdaB86f6F77dd
