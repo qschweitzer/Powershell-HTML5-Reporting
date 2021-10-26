@@ -13,13 +13,38 @@ All the functions are commented.
 All arguments for each of them are explained.
 The most interesting is that (almost) all functions are concatainable.
 All functions were having a Content argument can contain some other functions and code.
+```
+New-PWFPage -Title "MY FIRST TEST" -Charset UTF8 -Container -DarkTheme -Content {
+    New-PWFHeader -BackgroundColor "#fff" -Centered -Content {
+        New-PWFTitles -TitleText "Hi, I'm generated on a Windows PC with a Powershell script." -Size 1
+    }
+    New-PWFRow -Content {
+        New-PWFColumn -Content {
+            New-PWFCard -Content {
+                New-PWFTitles -Size 2 -TitleText "This HTML skin is based on $(New-PWFTextFormat -Bold "PicoCSS framework") and $(New-PWFTextFormat -Bold "Charts.JS") for the $(New-PWFTextFormat -ColorHexa "#BF0413" -Highlight "charts")."
+            }
+        }
+        New-PWFColumn -Content {
+            New-PWFCard -Content {
+                New-PWFTitles -Size 2 -TitleText "Progress bar"
+                New-PWFProgressBar -CurrentValue ((((get-volume -DriveLetter C).Size)/1GB)-((get-volume -DriveLetter C).SizeRemaining)/1GB) -MaxValue (((get-volume -DriveLetter C).Size)/1GB)
+            }
+        }
+    }
+}
+```
 
 # Create a new HTML Page
+That's the base:
 ```
 New-PWFPage -Title "MY FIRST TEST" -Content {
 ...some code...
 }
 ```
+A __dark__ theme switch can be used.
+A __container__  switch can be used to center the content and limit the width size.
+A __charset__ option can be used to specify your charset. Default: __UTF8__
+
 # Add a Header
 ```
 New-PWFHeader -BackgroundColor "#fff" -Centered -Content {
