@@ -54,7 +54,14 @@ Function New-PWFPage{
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            
+            <script lang="javascript" src="https://unpkg.com/xlsx/xlsx.mini.js"></script>
+            <style>
+                input[type="submit"].exportbutton{
+                    background-color: #1095c1;
+                    max-width: 10em;
+                    padding: 0px 0px 0px 0px !important;
+                }
+            </style>
             <title>$($title)</title>
         </head>
     <body>
@@ -520,6 +527,8 @@ Function New-PWFTable{
     Array entry. Select certain properties to not use the totality of the object's properties.
     .PARAMETER EnableFilter
     Enable a search bar that helps you to find any word on the table.
+    .PARAMETER Exportbuttons
+    Add a XLSX button to export table to XLSX file.
     .EXAMPLE
     New-PWFTable -ToTable (Get-PhysicalDisk | Select-Object FriendlyName,Size -SelectProperties @("FriendlyName","Size") -EnableFilter
     .LINK
@@ -531,10 +540,13 @@ Function New-PWFTable{
 
         [Parameter(Mandatory=$false,Position=1)]
         $SelectProperties,
-        [switch]$EnableFilter
+        [switch]$EnableFilter,
+        [switch]$Exportbuttons
 
         # Classes: class="striped highlight centered responsive-table"
     )
+    $RandomIDTable = ("table$(Get-Random)")
+
     if($SelectProperties){
         $AllColumnsHeader = ( $ToTable | Select-Object $SelectProperties | Sort-Object $SelectProperties | Get-Member | Where-Object { $_.MemberType -match "Noteproperty"}).Name
     }
@@ -544,10 +556,20 @@ Function New-PWFTable{
 
     if($EnableFilter){
         $RandomIDInput = ("a$(Get-Random)")
-        $RandomIDTable = ("a$(Get-Random)")
         $RandomIDFunction = ("a$(Get-Random)")
         $output = @"
         <input type="text" id="$($RandomIDInput)" placeholder="Search..">
+"@
+    }
+    if($Exportbuttons){
+        $RandomIDpExportXLSX = ("p$(Get-Random)")
+        $RandomIDpbuttonExportXLSX = ("p$(Get-Random)")
+        # Export XLSX
+        $output += @"
+        <p id="$($RandomIDpExportXLSX)" class="xport">
+            <input type="submit" value="XLSX" class="exportbutton" onclick="doit('xlsx');">
+        </p>
+        <p id="$($RandomIDpbuttonExportXLSX)" class="btn"></p>
 "@
     }
 
@@ -596,6 +618,37 @@ Function New-PWFTable{
             }
         }
         document.querySelector('#$($RandomIDInput)').addEventListener('keyup', SearchFunction$($RandomIDFunction), false);
+    </script>
+"@
+    }
+    if($Exportbuttons){
+        $output += @"
+        <script>
+        function doit(type, fn, dl) {
+            var elt = document.getElementById('$($RandomIDTable)');
+            var wb = XLSX.utils.table_to_book(elt, {sheet:"Sheet JS"});
+            return dl ?
+                XLSX.write(wb, {bookType:type, bookSST:true, type: 'base64'}) :
+                XLSX.writeFile(wb, fn || ('YourExportedTable.' + (type || 'xlsx')));
+        }
+
+        function tableau(pid, iid, fmt, ofile) {
+            if(typeof Downloadify !== 'undefined') Downloadify.create(pid,{
+                    swf: 'downloadify.swf',
+                    downloadImage: 'download.png',
+                    width: 100,
+                    height: 30,
+                    filename: ofile, data: function() { return doit(fmt, ofile, true); },
+                    transparent: false,
+                    append: false,
+                    dataType: 'base64',
+                    onComplete: function(){ alert('Your File Has Been Saved!'); },
+                    onCancel: function(){ alert('You have cancelled the saving of this file.'); },
+                    onError: function(){ alert('You must put something in the File Contents or there will be nothing to save!'); }
+            }); else document.getElementById(pid).innerHTML = "";
+        }
+        tableau('$($RandomIDpbuttonExportXLSX)',  '$($RandomIDpExportXLSX)',  'xlsx',  'YourExportedTable.xlsx');
+        
     </script>
 "@
     }
@@ -789,7 +842,7 @@ return $output
 ######################
 #####  EXAMPLES  #####
 ######################
-<#
+
 $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
     New-PWFHeader -BackgroundColor "#fff" -Centered -Content {
         New-PWFTitles -TitleText "Hi, I'm generated on a Windows PC with a Powershell script." -Size 1
@@ -862,7 +915,7 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
         New-PWFColumn -Content {
             New-PWFCard -BackgroundColor "#011526" -Content {
                 New-PWFTitles -Size 3 -TitleText "Search in a table" -LightMode
-                New-PWFTable -ToTable (Get-Process | Select-Object Name, Handle -First 10) -SelectProperties @("Name","Handle") -EnableFilter
+                New-PWFTable -ToTable (Get-Process | Select-Object Name, Handle -First 10) -SelectProperties @("Name","Handle") -EnableFilter -Exportbuttons
             }
         }
     }
@@ -887,4 +940,3 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
 }
 $TestPage | out-file -Encoding UTF8 -FilePath "C:\Windows\Temp\TestFramework.html"
 Start-Process "C:\Windows\Temp\TestFramework.html"
-#>
