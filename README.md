@@ -111,6 +111,8 @@ New-PWFImage -ImageURL "https://cdn.britannica.com/71/103171-050-BD1B685A/Bill-G
 New-PWFTable -ToTable (Get-Process | Select-Object Name, Handle -First 10) -SelectProperties @("Name","Handle")
 New-PWFTable -ToTable (Get-Process | Select-Object Name, Handle -First 10) -SelectProperties @("Name","Handle") -EnableFilter
 ```
+Use -EnableFilter to add a search input bar.
+Use -ExportButtons to add XLSX export button. This will convert your HTML table to XLSX file and download it.
 
 # Create a custom chart !
 Create a chart automaticaly, function will count each same value of the PropertyFilter property and create a chart with count values.
