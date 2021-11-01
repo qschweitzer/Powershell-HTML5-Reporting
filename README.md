@@ -5,7 +5,6 @@ And much more important, this new version include....charts ! Based on Charts.JS
 The local web server option have been deprecated. Efforts have been concentrated on reporting features on static page (.html). These new functions are always compatible with a web server like the old version.
 
 **No CSS, JS source files required. Functions use CDN files link.**
-**
 
 ### Compatibility
 
