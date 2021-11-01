@@ -1,24 +1,24 @@
 ![My image](https://github.com/qschweitzer/Powershell-HTML5-Reporting/blob/master/docs/2021-10-26%2017_59_23-Clipboard.jpg)
-# Powershell Web Framework 2.0
+# :fire: Powershell Web Framework 2.0
 The new version have a new CSS framework: PicoCSS. Why ? Lightweight !
 And much more important, this new version include....charts ! Based on Charts.JS.
 The local web server option have been deprecated. Efforts have been concentrated on reporting features on static page (.html). These new functions are always compatible with a web server like the old version.
 
 **No CSS, JS source files required. Functions use CDN files link.**
 
-### Compatibility
+### :exclamation: Compatibility
 
 <img src="https://github.com/alrra/browser-logos/blob/main/src/chrome/chrome_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/firefox/firefox_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/edge/edge_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/safari/safari_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/opera/opera_24x24.png">
 
-###  Like My Work? Buy Me a Coffee!
+### Like My Work? Buy Me a Coffee!
 
 * <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1024px-Bitcoin.svg.png" width="30"> 3DNRNqQk7VS7nFjVxJpXEriZPS8ZeCTEje
 * <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/1200px-Ethereum_logo_2014.svg.png" width="30"> 0x9e79b5D816d8F0C52FFa1bBD657AdaB86f6F77dd
 
-# How to use
+# :grey_question: How to use
 1. Import the .ps1 file of the Master branch like a module (think to delete example part before so), or simply edit the script and build your own report !
 
-# What to know ?
+# :rocket: What to know ?
 The framework has been optimized to be easily used.
 All the functions are commented.
 All arguments for each of them are explained.
@@ -50,7 +50,7 @@ Save your New-PWFPage in a variable, next you just have to export it in an HTML 
 $MyReport | Out-File -Encoding UTF8 -FilePath "C:\Windows\Temp\Test.html"
 ```
 
-# Create a new HTML Page
+# :page_with_curl: Create a new HTML Page
 That's the base:
 ```
 New-PWFPage -Title "MY FIRST TEST" -Content {
@@ -61,13 +61,13 @@ A __dark__ theme switch can be used.
 A __container__  switch can be used to center the content and limit the width size.
 A __charset__ option can be used to specify your charset. Default: __UTF8__
 
-# Add a Header
+# :pushpin: Add a Header
 ```
 New-PWFHeader -BackgroundColor "#fff" -Centered -Content {
     ...some code...
 }
 ```
-# Grid system
+# :hash: Grid system
 Like a web page, grid system is used.
 With the New-PWFRow you create a new row of a grid.
 With the New-PWFColumn you create a new object, autosized, on the row. More column you have, less larger they are. If you have two, they will do 50/50 of the total width.
@@ -82,37 +82,37 @@ New-PWFRow {
   }
 }
 ```
-# Card system
+# :gem: Card system
 Cards can now contains what you want. No limit. A table ? A chart ? No prob.
 ```
 New-PWFCard -Content {
     ...some code...
 }
 ```
-# Title !
+# :gem: Title !
 To create a title:
 ```
 New-PWFTitles -TitleText "Hi, I'm generated on a Windows PC with a Powershell script." -Size 1
 ```
 
-# Simple text
+# :abcd: Simple text
 ```
 New-PWFText -YourText "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 ```
 
-# Colored and/or specificaly formated text
+# :abcd: :star: Colored and/or specificaly formated text
 ```
 $(New-PWFTextFormat -ColorHexa "#BF0413" -Highlight "WITH A COLOR")
 $(New-PWFTextFormat -Highlight -YourText "You could highlight a text")
 $(New-PWFTextFormat -ColorHexa "#BF0413" -Highlight -Bold -YourText "Multiple options")
 ```
 
-# Add an Image and (optional) define a size
+# :camera: Add an Image and (optional) define a size
 ```
 New-PWFImage -ImageURL "https://cdn.britannica.com/71/103171-050-BD1B685A/Bill-Gates-Microsoft-Corporation-operating-system-press-2001.jpg" -WidthInPercent 30
 ```
 
-# Create a table and (optional) add a search bar to find specific text
+# :gem: Create a table and (optional) add a search bar to find specific text
 ```
 New-PWFTable -ToTable (Get-Process | Select-Object Name, Handle -First 10) -SelectProperties @("Name","Handle")
 New-PWFTable -ToTable (Get-Process | Select-Object Name, Handle -First 10) -SelectProperties @("Name","Handle") -EnableFilter
@@ -120,7 +120,7 @@ New-PWFTable -ToTable (Get-Process | Select-Object Name, Handle -First 10) -Sele
 Use -EnableFilter to add a search input bar.
 Use -ExportButtons to add XLSX export button. This will convert your HTML table to XLSX file and download it.
 
-# Create a custom chart !
+# :chart: Create a custom chart !
 Create a chart automaticaly, function will count each same value of the PropertyFilter property and create a chart with count values.
 ```
 New-PWFChart -AutomaticObject (Get-Process | Select-Object -first 15) -PropertyFilter Name -ChartType doughnut
