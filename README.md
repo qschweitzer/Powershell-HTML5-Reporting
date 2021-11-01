@@ -4,6 +4,13 @@ The new version have a new CSS framework: PicoCSS. Why ? Lightweight !
 And much more important, this new version include....charts ! Based on Charts.JS.
 The local web server option have been deprecated. Efforts have been concentrated on reporting features on static page (.html). These new functions are always compatible with a web server like the old version.
 
+**No CSS, JS source files required. Functions use CDN files link.**
+**
+
+### Compatibility
+
+<img src="https://github.com/alrra/browser-logos/blob/main/src/chrome/chrome_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/firefox/firefox_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/edge/edge_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/safari/safari_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/opera/opera_24x24.png">
+
 ##  Like My Work? Buy Me a Coffee!
 
 * <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1024px-Bitcoin.svg.png" width="30"> 3DNRNqQk7VS7nFjVxJpXEriZPS8ZeCTEje
