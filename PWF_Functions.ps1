@@ -208,7 +208,7 @@ Function New-PWFTitles{
     )
 
     $output = @"
-        <H style='$($Size)$(if($LightMode){"color:#fff;"}elseif($Center){"text-align:center;"})'>$TitleText</H$($Size)>
+        <H$($Size) style='$(if($LightMode){"color:#fff;"}if($Center){"text-align:center;"})'>$TitleText</H$($Size)>
 "@
     return $output
 }
