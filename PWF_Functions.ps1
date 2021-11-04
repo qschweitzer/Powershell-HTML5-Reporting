@@ -3,6 +3,11 @@
 These functions lets you create an HTML5  web page with dynamic table and charts, easily.
 .DESCRIPTION
 Create a new HTML5 page with dynamic tables and charts, easily. Som example at the end in the EXAMPLES section.
+.NOTES
+  Version:        2.1.1
+  Author:         Quentin Schweitzer
+  Creation Date:  04.11.2021
+  Purpose/Change: Add -Scrollbar option to Table function. Add -Center option to all text functions. Add colorize param to colorize background of Table function.
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
@@ -68,7 +73,7 @@ Function New-PWFPage{
     $(if($Container){'<main class="container">'}else{'<main class="container-fluid">'})
 "@
         try {$output += .$Content} catch {$_.Exception.Message}
-    
+
     $output += @"
         <footer>
         </footer>
@@ -157,42 +162,101 @@ Function New-PWFHorizontalScroller{
     #>
     param(
         [Parameter(Mandatory=$true,Position=0)]
-        $Content
+        $Content,
+        [switch]$Scrollbar
     )
 
-        $output = @"
-        <figure>
+        $outputa = @"
+        <figure$(if($Scrollbar){write-output " style=height:25em;"})>
 "@
-        $(try {$output += .$Content} catch {$_.Exception.Message})
+        $(try {$outputa += .$Content} catch {$_.Exception.Message})
 
-    $output += @"
+    $outputa += @"
         </figure>
 "@
 
-return $output
+return $outputa
 
 }
 Function New-PWFTitles{
+    <#
+    .SYNOPSIS
+    Create a new HTML Title with custom size.
+    .DESCRIPTION
+    Create a new HTML Title with custom size
+    .PARAMETER TitleText
+    The TitleText is your string text.
+    .PARAMETER Size
+    The Size of the title. From 1 to 5. 1 is the biggest.
+    .PARAMETER Center
+    Use Center to center your text in the parent division.
+    .PARAMETER LightMode
+    The Lightmode will color your text in white.
+    .EXAMPLE
+    New-PWFTitles -TitleText "MyTitle" -Size 1 -Center -Lightmode
+    .LINK
+    https://github.com/qschweitzer/Powershell-HTML5-Reporting
+    #>
     param(
         [Parameter(Mandatory=$true,Position=0)]
         [string]$TitleText,
         [int]$Size,
 
         [Parameter(Mandatory=$false,Position=1)]
+        [switch]$Center,
         [switch]$LightMode
     )
 
     $output = @"
-        <H$($Size) $(if($LightMode){"style='color:#fff'"})>$TitleText</H$($Size)>
+        <H style='$($Size)$(if($LightMode){"color:#fff;"}elseif($Center){"text-align:center;"})'>$TitleText</H$($Size)>
 "@
     return $output
 }
 Function New-PWFTextFormat{
+    <#
+    .SYNOPSIS
+    Create a new HTML text with customized format.
+    .DESCRIPTION
+    Create a new HTML Title with customized format. You can use multiple format options at the same time.
+    .PARAMETER YourText
+    Your string text.
+    .PARAMETER Center
+    Center your text.
+    .PARAMETER ColorHexa
+    Color your text with custom hexadecimal color.
+    .PARAMETER Abbreviation
+    Add Abreviation mode to your text. Look sample at https://picocss.com/docs/#typography
+    .PARAMETER Highlight
+    Add Highlight mode to your text. Look sample at https://picocss.com/docs/#typography
+    .PARAMETER Bold
+    Add Bold mode to your text. Look sample at https://picocss.com/docs/#typography
+    .PARAMETER Strikethrough
+    Add Strikethrough mode to your text. Look sample at https://picocss.com/docs/#typography
+    .PARAMETER Italic
+    Add Italic mode to your text. Look sample at https://picocss.com/docs/#typography
+    .PARAMETER Deleted
+    Add Deleted mode to your text. Look sample at https://picocss.com/docs/#typography
+    .PARAMETER SubText
+    Add SubText mode to your text. Look sample at https://picocss.com/docs/#typography
+    .PARAMETER SupText
+    Add SupText mode to your text. Look sample at https://picocss.com/docs/#typography
+    .PARAMETER Inserted
+    Add Inserted mode to your text. Look sample at https://picocss.com/docs/#typography
+    .PARAMETER Keyboard
+    Add Keyboard mode to your text. Look sample at https://picocss.com/docs/#typography
+    .PARAMETER Underline
+    Add Underline mode to your text. Look sample at https://picocss.com/docs/#typography
+    .EXAMPLE
+    New-PWFTextFormat -YourText "My Text is Awesome" -ColorHexa "#D94020" -Bold -Underline
+    .LINK
+    https://github.com/qschweitzer/Powershell-HTML5-Reporting
+    #>
     param(
         [Parameter(Mandatory=$true,Position=0)]
         [string]$YourText,
 
         [Parameter(Mandatory=$false,Position=1)]
+        [switch]$Center,
         [string]$ColorHexa,
         [switch]$Abbreviation,
         [switch]$Highlight,
@@ -211,65 +275,78 @@ Function New-PWFTextFormat{
 
     if($Abbreviation){
         $output = @"
-        <abbr $(if($ColorHexa){"style=color:$($ColorHexa);"})>$output</abbr>
+        <abbr style='$(if($ColorHexa){"color:$($ColorHexa);"}if($Center){"text-align:center;"})'>$output</abbr>
 "@
     }
     if($Highlight){
         $output = @"
-        <mark $(if($ColorHexa){"style=color:$($ColorHexa);"})>$output</mark>
+        <mark style='$(if($ColorHexa){"color:$($ColorHexa);"}if($Center){"text-align:center;"})'>$output</mark>
 "@
     }
     if($Bold){
         $output = @"
-        <strong $(if($ColorHexa){"style=color:$($ColorHexa);"})>$output</strong>
+        <strong style='$(if($ColorHexa){"color:$($ColorHexa);"}if($Center){"text-align:center;"})'>$output</strong>
 "@
     }
     if($Strikethrough){
         $output = @"
-        <s $(if($ColorHexa){"style=color:$($ColorHexa);"})>$output</s>
+        <s style='$(if($ColorHexa){"color:$($ColorHexa);"}if($Center){"text-align:center;"})'>$output</s>
 "@
     }
     if($Italic){
         $output = @"
-        <em $(if($ColorHexa){"style=color:$($ColorHexa);"})>$output</em>
+        <em style='$(if($ColorHexa){"color:$($ColorHexa);"}if($Center){"text-align:center;"})'>$output</em>
 "@
     }
     if($Deleted){
         $output = @"
-        <del $(if($ColorHexa){"style=color:$($ColorHexa);"})>$output</del>
+        <del style='$(if($ColorHexa){"color:$($ColorHexa);"}if($Center){"text-align:center;"})'>$output</del>
 "@
     }
     if($SubText){
         $output = @"
-        <sub $(if($ColorHexa){"style=color:$($ColorHexa);"})>$output</sub>
+        <sub style='$(if($ColorHexa){"color:$($ColorHexa);"}if($Center){"text-align:center;"})'>$output</sub>
 "@
     }
     if($SupText){
         $output = @"
-        <sup $(if($ColorHexa){"style=color:$($ColorHexa);"})>$output</sup>
+        <sup style='$(if($ColorHexa){"color:$($ColorHexa);"}if($Center){"text-align:center;"})'>$output</sup>
 "@
     }
     if($Inserted){
         $output = @"
-        <ins $(if($ColorHexa){"style=color:$($ColorHexa);"})>$output</ins>
+        <ins style='$(if($ColorHexa){"color:$($ColorHexa);"}if($Center){"text-align:center;"})'>$output</ins>
 "@
     }
     if($Keyboard){
         $output = @"
-        <kbd $(if($ColorHexa){"style=color:$($ColorHexa);"})>$output</kbd>
+        <kbd style='$(if($ColorHexa){"color:$($ColorHexa);"}if($Center){"text-align:center;"})'>$output</kbd>
 "@
     }
     if($Underline){
         $output = @"
-        <u $(if($ColorHexa){"style=color:$($ColorHexa);"})>$output</u>
+        <u style='$(if($ColorHexa){"color:$($ColorHexa);"}if($Center){"text-align:center;"})'>$output</u>
 "@
     }
     
-
     return $output
 
 }
 Function New-PWFList{
+    <#
+    .SYNOPSIS
+    Create a new HTML list.
+    .DESCRIPTION
+    Create a new HTML list.
+    .PARAMETER List
+    Your array.
+    .PARAMETER Numbered
+    Create a numbered list.
+    .EXAMPLE
+    New-PWFList -List $myarray
+    .LINK
+    https://github.com/qschweitzer/Powershell-HTML5-Reporting
+    #>
     param(
         [Parameter(Mandatory=$true,Position=0)]
         $List,
@@ -283,7 +360,7 @@ Function New-PWFList{
         $($List | ForEach-Object{ "<li>$($_)</li>"})
     </$(if($Numbered){"o"}else{"u"})l>
 "@
-    
+
     return $output
 }
 Function New-PWFHeader{
@@ -305,10 +382,10 @@ Function New-PWFHeader{
 
         [Parameter(Mandatory=$false)]
         [string]$BackgroundColor,
-        [switch]$Centered
+        [switch]$Center
     )
     $output = @"
-        <header style="$(if($BackgroundColor){"background-color:$($BackgroundColor);"})$(if($Centered){"text-align:center"})">
+        <header style="$(if($BackgroundColor){"background-color:$($BackgroundColor);"})$(if($Center){"text-align:center"})">
 "@
         $(try {$output += .$Content} catch {$_.Exception.Message})
 
@@ -413,10 +490,10 @@ Function New-PWFText{
     Create a simple text.
     .PARAMETER YourText
     Type the text you want to display in your report.
-    .PARAMETER Centered
+    .PARAMETER Center
     Move your text to the center of the web page. It's a switch option.
     .EXAMPLE
-    New-PWFText -YourText "My text" -Centered
+    New-PWFText -YourText "My text" -Center
     .LINK
     https://github.com/qschweitzer/Powershell-HTML5-Reporting
     #>
@@ -424,11 +501,11 @@ Function New-PWFText{
         [Parameter(Mandatory=$true,Position=0)]
         [string]$YourText,
         [Parameter(Mandatory=$false,Position=1)]
-        [switch]$Centered
+        [switch]$Center
     )
 
     $output = @"
-        <p $(if($Centered){"'style=text-align:center;'"})>
+        <p $(if($Center){"'style=text-align:center;'"})>
             $YourText
         </p>
 "@
@@ -529,6 +606,14 @@ Function New-PWFTable{
     Enable a search bar that helps you to find any word on the table.
     .PARAMETER Exportbuttons
     Add a XLSX button to export table to XLSX file.
+    .PARAMETER Scrollbars
+    Limit the size of your table and add vertical and horizontal scrollers
+    .PARAMETER ColorForHeader
+    Color the table's header
+    .PARAMETER ColorForRows
+    Color the table's rows
+    .PARAMETER ColorForEverySecondRow
+    Color the table's rows each second line with another color (better visibility)
     .EXAMPLE
     New-PWFTable -ToTable (Get-PhysicalDisk | Select-Object FriendlyName,Size -SelectProperties @("FriendlyName","Size") -EnableFilter
     .LINK
@@ -541,7 +626,11 @@ Function New-PWFTable{
         [Parameter(Mandatory=$false,Position=1)]
         $SelectProperties,
         [switch]$EnableFilter,
-        [switch]$Exportbuttons
+        [switch]$Exportbuttons,
+        [switch]$Scrollbars,
+        [string]$ColorForHeader,
+        [string]$ColorForRows,
+        [string]$ColorForEverySecondRow
 
         # Classes: class="striped highlight centered responsive-table"
     )
@@ -574,20 +663,29 @@ Function New-PWFTable{
     }
 
     $output += @"
-        <table $(if($EnableFilter){"id='$($RandomIDTable)'"})>
+        <table $(if($EnableFilter -or $Exportbuttons){"id='$($RandomIDTable)'"})>
         <thead>
         <tr>
-            $($AllColumnsHeader | ForEach-Object { Write-Output '<th>' $_ '</th>' })
+            $($AllColumnsHeader | ForEach-Object { Write-Output "<th$(if($ColorForHeader){write-output " style=background-color:$($ColorForHeader);"})>" $_ "</th>" })
         </tr>
         </thead>
 
         <tbody>
-        $($ToTable | ForEach-Object {$Row = $_;`
-        Write-Output "<tr>"
-        $AllColumnsHeader | ForEach-Object {
-            Write-Output '<td>' ($Row.$_) '</td>'
-        }
-        Write-Output "</tr>"})
+            $(for ($i = 0; $i -lt $ToTable.Count; $i++) {
+                if($ColorForEverySecondRow){
+                    if($i % 2 -eq 0 ){
+                        $RowColor = $ColorForEverySecondRow
+                    }
+                    else{
+                        $RowColor = $ColorForRows
+                    }
+                }
+                $Row = $ToTable[$i]
+                Write-Output "<tr$(if($ColorForRows){write-output " style=background-color:$($RowColor)"})>"
+                $AllColumnsHeader | ForEach-Object {
+                    Write-Output '<td>' ($Row.$_) '</td>'
+                }
+            Write-Output "</tr>"})
         </tbody>
     </table>
 "@
@@ -647,12 +745,16 @@ Function New-PWFTable{
                     onError: function(){ alert('You must put something in the File Contents or there will be nothing to save!'); }
             }); else document.getElementById(pid).innerHTML = "";
         }
-        tableau('$($RandomIDpbuttonExportXLSX)',  '$($RandomIDpExportXLSX)',  'xlsx',  'YourExportedTable.xlsx');
+        tableau('$($RandomIDpbuttonExportXLSX)', '$($RandomIDpExportXLSX)', 'xlsx', 'YourExportedTable.xlsx');
         
     </script>
 "@
     }
-    return $output
+    if($Scrollbars){
+        return (New-PWFHorizontalScroller -Content { $output} -Scrollbar)
+    }else{
+        return $output
+    }
 }
 Function New-PWFChart{
     <#
