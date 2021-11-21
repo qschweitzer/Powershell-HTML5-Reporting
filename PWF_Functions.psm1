@@ -7,7 +7,7 @@ Create a new HTML5 page with dynamic tables and charts, easily. Som example at t
   Version:        2.2.0
   Author:         Quentin Schweitzer
   Creation Date:  22.11.2021
-  Purpose/Change: Change PWFText to support array or string in $Yourtext. This help to use an output of another function/command.
+  Purpose/Change: Adding some new functions like stacked charts, dynamic tables...
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
