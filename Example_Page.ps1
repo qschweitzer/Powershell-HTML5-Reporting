@@ -75,7 +75,7 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
         New-PWFColumn -Content {
           New-PWFCard -BackgroundColor "#eaac8b" -Content {
             New-PWFTitles -Size 3 -TitleText "Table with conditionnal format" -Center -LightMode
-            New-PWFTable -ToTable (Get-Process | Group-Object -Property Name | Sort-Object Count -Descending | select -First 10 Name, Count) -SelectProperties "Count,Name" -SortByColumn -ConditionProperties "Count,Name" -EnableConditionnalFormat -ConditionOperators "-gt,-match" -ConditionValues "10,conhost" -ConditionBackgroundColors "#e63946,#94d2bd"
+            New-PWFTable -ToTable (Get-Process | Group-Object -Property Name | Sort-Object Count -Descending | select -First 10 Name, Count) -SelectProperties "Name,Count" -SortByColumn -ConditionProperties "Count,Name" -EnableConditionnalFormat -ConditionOperators "-gt,-match" -ConditionValues "10,conhost" -ConditionBackgroundColors "#e63946,#94d2bd"
           }
         }
       }

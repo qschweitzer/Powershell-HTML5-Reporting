@@ -936,7 +936,20 @@ Function New-PWFTable{
           Write-Output "</tr>"})
       </tbody>
   </table>
+  <script>
+  var `$table$($RandomIDTable) = `$('#$($RandomIDTable)')
 
+  `$(function() {
+    `$table$($RandomIDTable).bootstrapTable({
+      columns: [$(for($m=0; $m -lt $SelectProperties.count; $m++){
+        "{
+          title: '$($SelectProperties[$m])',
+          field: '$($SelectProperties[$m])'
+        }$(if($m -ne $SelectProperties.count){","})"
+      })]
+    })
+  })
+  </script>
   $(if($DetailsOnClick){
     "<script>
       function $($RandomIDFuncDetailFormatter)(index, row) {
@@ -949,17 +962,20 @@ Function New-PWFTable{
     </script>"
   })
   $(if($SortByColumn){
+    $RandomIDvarOrder = "order$(Get-random)"
+    $RandomIDvaraa = "aa$(Get-random)"
+    $RandomIDvarbb = "bb$(Get-random)"
     "<script>
     function $($RandomIDFuncCustomSort)(sortName, sortOrder, data) {
-      var order = sortOrder === 'desc' ? -1 : 1
+      var $($RandomIDvarOrder) = sortOrder === 'desc' ? -1 : 1
       data.sort(function (a, b) {
-        var aa = +((a[sortName] + '').replace(/[^\d]/g, ''))
-        var bb = +((b[sortName] + '').replace(/[^\d]/g, ''))
-        if (aa < bb) {
-          return order * -1
+        var $($RandomIDvaraa) = +((a[sortName] + '').replace(/[^\d]/g, ''))
+        var $($RandomIDvarbb) = +((b[sortName] + '').replace(/[^\d]/g, ''))
+        if ($($RandomIDvaraa) < $($RandomIDvarbb)) {
+          return $($RandomIDvarOrder) * -1
         }
-        if (aa > bb) {
-          return order
+        if ($($RandomIDvaraa) > $($RandomIDvarbb)) {
+          return $($RandomIDvarOrder)
         }
         return 0
       })
@@ -969,9 +985,9 @@ Function New-PWFTable{
   $(if($Exportbuttons){
     "
     <script>
-    var `$table = `$('#$($RandomIDTable)')
+    var `$table$($RandomIDTable) = `$('#$($RandomIDTable)')
     `$(function() {
-      `$table.bootstrapTable('destroy').bootstrapTable({
+      `$table$($RandomIDTable).bootstrapTable('destroy').bootstrapTable({
         exportTypes: ['json', 'xml', 'png', 'csv', 'txt', 'excel', 'pdf'],
         columns: [
           $(for ($p=0; $p -lt ($AllColumnsHeader | Measure-Object).count; $p++){
@@ -1090,6 +1106,10 @@ param(
   if(!$Stacked){
     $ChartCount = ($ChartValues | Measure-Object).count
     $ChartDatasets = $ChartLabels
+  }else{
+    if($Legends.gettype().Name -eq "String"){
+      $Legends = $Legends.split(",")
+    }
   }
 
   if($null -eq $ChartColors){
@@ -1114,7 +1134,6 @@ param(
     $Script:StackedChartName = @()
     $StackedContent = .$StackedContent
     $output += @"
-          const DATA_COUNT = $($ChartCount);
           const $($labels) = ['$($Legends -join "','")'];
           const $($data) = {
             labels: $($labels),
