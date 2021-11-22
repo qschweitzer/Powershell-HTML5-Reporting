@@ -16,7 +16,12 @@ The local web server option have been deprecated. Efforts have been concentrated
 * <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/1200px-Ethereum_logo_2014.svg.png" width="30"> 0x9e79b5D816d8F0C52FFa1bBD657AdaB86f6F77dd
 
 # :grey_question: How to use
-1. Import the .ps1 file of the Master branch like a module (think to delete example part before so), or simply edit the script and build your own report !
+1. Install module with commands below. Module isn't published on NuGet, for the moment, so that's why the install is "manual"
+```
+New-Item -Path "C:\Program Files\WindowsPowerShell\Modules\POSHTML5" -ItemType Directory
+Invoke-WebRequest -Uri "https://cdn.jsdelivr.net/gh/qschweitzer/Powershell-HTML5-Reporting@master/Modules/POSHTML5.psm1" -OutFile "C:\Program Files\WindowsPowerShell\Modules\POSHTML5\POSHTML5.psm1"
+```
+2. Import the .psm1 file of the Master branch like (think to delete example part before so), or simply edit the script and build your own report !
 
 # :rocket: What to know ?
 The framework has been optimized to be easily used.
