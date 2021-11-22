@@ -93,11 +93,19 @@
     article {
         --block-spacing-horizontal: calc(var(--spacing) * 1.25);
     }
+    article,
+    .bootstrap-table {
+        --block-spacing-horizontal: 0;
+    }
 }
 
 @media (min-width: 768px) {
     article {
         --block-spacing-horizontal: calc(var(--spacing) * 1.5);
+    }
+    article,
+    .bootstrap-table {
+        --block-spacing-horizontal: 0;
     }
 }
 
@@ -105,11 +113,19 @@
     article {
         --block-spacing-horizontal: calc(var(--spacing) * 1.75);
     }
+    article,
+    .bootstrap-table {
+        --block-spacing-horizontal: 0;
+    }
 }
 
 @media (min-width: 1200px) {
     article {
         --block-spacing-horizontal: calc(var(--spacing) * 2);
+    }
+    article,
+    .bootstrap-table {
+        --block-spacing-horizontal: 0;
     }
 }
 
@@ -2572,9 +2588,4 @@ textarea,
         transition-delay: 0s !important;
         transition-duration: 0s !important;
     }
-}
-
-article,
-.bootstrap-table.bootstrap5 {
-    --block-spacing-horizontal: 0;
 }
