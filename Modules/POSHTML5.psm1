@@ -78,6 +78,10 @@ Function New-PWFPage{
           .bootstrap-table .fixed-table-container .table {
               background-color: white;
           }
+          article,
+          .bootstrap-table {
+            --block-spacing-horizontal: 0;
+          }
           </style>
           <!-- Compiled and minified JavaScript -->
           <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
