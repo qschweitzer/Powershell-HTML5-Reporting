@@ -1,7 +1,6 @@
 ######################
 #####  EXAMPLES  #####
 ######################
-Import-Module .\pwf_functions.psm1
 $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
   New-PWFTabContainer -Tabs {
     New-PWFTab -Name "First Tab" -Content {
