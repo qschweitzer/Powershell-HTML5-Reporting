@@ -823,7 +823,7 @@ Function New-PWFTable{
   if($ConditionValues -match ","){$ConditionValues = $ConditionValues.split(",")}else{$ConditionValues= [array]$ConditionValues}
   if($ConditionBackgroundColors -match ","){$ConditionBackgroundColors = $ConditionBackgroundColors.split(",")}else{$ConditionBackgroundColors= [array]$ConditionBackgroundColors}
   if($EnableConditionnalFormat){
-    For($e =0; $e -lt $ConditionProperties.count; $e++) {
+    For($e =0; $e -lt ($ConditionProperties | Measure-Object).count; $e++) {
       $ConditionnalObject = New-Object psobject
       $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "PropertyName" -Value $ConditionProperties[$e]
       $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "Operator" -Value $ConditionOperators[$e]
@@ -882,7 +882,7 @@ Function New-PWFTable{
       </thead>
 
       <tbody>
-          $(for ($i = 0; $i -lt $ToTable.Count; $i++) {
+          $(for ($i = 0; $i -lt ($ToTable | Measure-Object).count; $i++) {
               if($ColorForEverySecondRow){
                   if($i % 2 -eq 0 ){
                       $RowColor = $ColorForEverySecondRow
@@ -974,8 +974,8 @@ Function New-PWFTable{
       `$table.bootstrapTable('destroy').bootstrapTable({
         exportTypes: ['json', 'xml', 'png', 'csv', 'txt', 'excel', 'pdf'],
         columns: [
-          $(for ($p=0; $p -lt $AllColumnsHeader.count; $p++){
-            if($p -eq $AllColumnsHeader.count){
+          $(for ($p=0; $p -lt ($AllColumnsHeader | Measure-Object).count; $p++){
+            if($p -eq ($AllColumnsHeader | Measure-Object).count){
               Write-Output "
               {
                 field: '$($AllColumnsHeader[$p])'
@@ -1087,15 +1087,8 @@ param(
     }
   }
 
-  if($Stacked){
-    $ChartCount = $StackHashTable.values.values.value.count
-    [array]$ChartDatasets = $StackHashTable.keys
-    if($Legends.gettype().name -eq "String"){
-      $Legends = $Legends.split(",")
-    }
-  }
-  else{
-    $ChartCount = $ChartValues.count
+  if(!$Stacked){
+    $ChartCount = ($ChartValues | Measure-Object).count
     $ChartDatasets = $ChartLabels
   }
 
@@ -1137,21 +1130,21 @@ param(
           const $($data) = {
             labels: [
             $(
-                For ($i = 0; $i -lt $ChartLabels.count; $i++) {
-                  Write-Output "'$($ChartLabels[$i])'$(if($i -ne ($ChartLabels.count)-1){","})"
+                For ($i = 0; $i -lt ($ChartLabels | Measure-Object).count; $i++) {
+                  Write-Output "'$($ChartLabels[$i])'$(if($i -ne (($ChartLabels | Measure-Object).count)-1){","})"
                 }
             )
             ],
           datasets: [{
             label: '$($ChartTitle)',
             data: [$(
-                For ($j = 0; $j -lt $ChartValues.count; $j++) {
-                  Write-Output "'$($ChartValues[$j])'$(if($j -ne ($ChartValues.count)-1){","})"
+                For ($j = 0; $j -lt ($ChartValues | Measure-Object).count; $j++) {
+                  Write-Output "'$($ChartValues[$j])'$(if($j -ne (($ChartValues | Measure-Object).count)-1){","})"
                 })
             ],
             backgroundColor: [
-                $(For ($k = 0; $k -lt $ChartColors.count; $k++) {
-                  Write-Output "'$($ChartColors[$k])'$(if($k -lt ($ChartColors.count)){","})"
+                $(For ($k = 0; $k -lt ($ChartColors | Measure-Object).count; $k++) {
+                  Write-Output "'$($ChartColors[$k])'$(if($k -lt (($ChartColors | Measure-Object).count)){","})"
                 })
             ],
             hoverOffset: 5,
