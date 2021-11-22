@@ -2573,3 +2573,8 @@ textarea,
         transition-duration: 0s !important;
     }
 }
+
+article,
+.bootstrap-table.bootstrap5 {
+    --block-spacing-horizontal: 0;
+}
