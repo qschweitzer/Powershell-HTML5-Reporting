@@ -815,6 +815,7 @@ Function New-PWFTable{
 
       # Classes: class="striped highlight centered responsive-table"
   )
+
   $RandomIDTable = ("table$(Get-Random)")
   $RandomIDFuncDetailFormatter = "detailFormatter$(Get-Random)"
   $RandomIDFuncCustomSort = "customSort$(Get-Random)"
@@ -837,7 +838,7 @@ Function New-PWFTable{
     }
   }
   if($SelectProperties){
-      $AllColumnsHeader = ( $ToTable | Select-Object $SelectProperties | Sort-Object $SelectProperties | Get-Member | Where-Object { $_.MemberType -match "Noteproperty"}).Name
+      $AllColumnsHeader = $SelectProperties
   }
   else{
       $AllColumnsHeader = ($ToTable | Get-Member).Name
@@ -941,10 +942,10 @@ Function New-PWFTable{
       </tbody>
   </table>
   <script>
-  var `$table$($RandomIDTable) = `$('#$($RandomIDTable)')
+  var `$table1$($RandomIDTable) = `$('#$($RandomIDTable)')
 
   `$(function() {
-    `$table$($RandomIDTable).bootstrapTable({
+    `$table1$($RandomIDTable).bootstrapTable({
       columns: [$(for($m=0; $m -lt $SelectProperties.count; $m++){
         "{
           title: '$($SelectProperties[$m])',
