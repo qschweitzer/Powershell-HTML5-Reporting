@@ -4,10 +4,10 @@ These functions lets you create an HTML5  web page with dynamic table and charts
 .DESCRIPTION
 Create a new HTML5 page with dynamic tables and charts, easily. Som example at the end in the EXAMPLES section.
 .NOTES
-  Version:        2.2.0
+  Version:        2.2.1
   Author:         Quentin Schweitzer
-  Creation Date:  22.11.2021
-  Purpose/Change: Adding some new functions like stacked charts, dynamic tables...
+  Creation Date:  28.11.2021
+  Purpose/Change: Adding Alert function, fixing a bug with Firefox displaying (text in dark mode event if no theme selected), fixing some bugs.
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
@@ -44,7 +44,7 @@ Function New-PWFPage{
 
   $output = @"
   <!DOCTYPE html>
-  $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html lang="en">'})
+  $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="light" lang="en">'})
       
       <head>
           <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -544,6 +544,38 @@ Function New-PWFList{
 
   return $output
 }
+Function New-PWFAlert{
+  <#
+  .SYNOPSIS
+  Create a new HTML alert.
+  .DESCRIPTION
+  Create a new HTML alert.
+  .PARAMETER YourText
+  Your text in alert.
+  .PARAMETER ContextualColor
+  A color from the validate set.
+  .EXAMPLE
+  New-PWFAlert -YourText "Your computer isn't up to date" -ContextualColor warning
+  .LINK
+  https://github.com/qschweitzer/Powershell-HTML5-Reporting
+  #>
+  param(
+      [Parameter(Mandatory=$true,Position=0)]
+      $YourText,
+
+      [Parameter(Mandatory=$false,Position=1)]
+      [ValidateSet("default", "primary", "secondary", "success", "danger", "warning","info","light","dark", IgnoreCase = $false)]
+      [string]$ContextualColor="default"
+  )
+
+  $output = @"
+  <div class="alert $(if($ContextualColor){"alert-$($ContextualColor)"})" role="alert">
+    $($YourText)
+  </div>
+"@
+
+  return $output
+}
 
 Function New-PWFCard{
   <#
@@ -809,9 +841,11 @@ Function New-PWFTable{
       [switch]$ShowTooltip,
       [switch]$DetailsOnClick,
       [switch]$SortByColumn,
-      [string]$ColorForHeader,
-      [string]$ColorForRows,
-      [string]$ColorForEverySecondRow
+      [switch]$Striped,
+      [switch]$Dark,
+      [switch]$Small,
+      [ValidateSet("default", "primary", "secondary", "success", "danger", "warning","info","light","dark", IgnoreCase = $false)]
+      [string]$ContextualColor
 
       # Classes: class="striped highlight centered responsive-table"
   )
@@ -841,11 +875,11 @@ Function New-PWFTable{
       $AllColumnsHeader = $SelectProperties
   }
   else{
-      $AllColumnsHeader = ($ToTable | Get-Member).Name
+      $AllColumnsHeader = ($ToTable | Get-Member -MemberType Properties).Name
   }
 
   $output += @"
-      <table id='$($RandomIDTable)' data-toggle='table' $(if($EnableSearch){
+      <table class='$(if($Striped){" table-striped"}if($Dark){" table-dark"}if($Small){" table-sm"}if($ContextualColor){" table-$($ContextualColor)"})' id='$($RandomIDTable)' data-toggle='table' $(if($EnableSearch){
         '
         data-search="true"
         '
@@ -1032,15 +1066,15 @@ Your chart title.
 .PARAMETER ChartType
 "bar", "doughnut", "pie", "line", "radar", "polar"
 .PARAMETER ChartLabels,
-Your labels, from an object/array or in a string format separate by comma: "Label1,Label2,LabelRouge"
+Your labels, from an object/array or in a string format separate by semi-colon: "Label1;Label2;LabelRouge"
 .PARAMETER ChartValues
-Your data [int], from an object/array or in a string format separate by comma: "1,2,3"
+Your data [int], from an object/array or in a string format separate by semi-colon: "1;2;3"
 .PARAMETER Stacked
 Enable the stacked chart format.
 .PARAMETER StackedContent
 Use when Stacked selected. Scriptblock that contains the New-PWFChartStackedDataset functions
 .PARAMETER Legends
-Use when Stacked selected. Your legends, from an object/array or in a string format separate by comma: "Label1,Label2,LabelRouge"
+Use when Stacked selected. Your legends, from an object/array or in a string format separate by semi-colon: "Label1;Label2;LabelRouge"
 .PARAMETER Horizontal
 The color to color y
 .PARAMETER ChartColors
@@ -1051,9 +1085,9 @@ In lightmode all the chart text's color is white.
 Hide the chart's title.
 .EXAMPLE
 New-PWFChart -ChartTitle "Line Chart 1" -ChartType "line" -ChartLabels $ChartDataset.Name -ChartValues ($ChartDataset | select -ExpandProperty count)
-New-PWFChart -Stacked -ChartTitle "Stacked Bars" -ChartType "bar" -Legends "Janvier,Fevrier,Mars,Avril" -StackedContent {
-  New-PWFChartStackedDataset -Name "Dataset1" -Values "1,2,3,4"
-  New-PWFChartStackedDataset -Name "Dataset2" -Values "4,3,2,1"
+New-PWFChart -Stacked -ChartTitle "Stacked Bars" -ChartType "bar" -Legends "Janvier;Fevrier;Mars;Avril" -StackedContent {
+  New-PWFChartStackedDataset -Name "Dataset1" -Values "1;2;3;4"
+  New-PWFChartStackedDataset -Name "Dataset2" -Values "4;3;2;1"
 }
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
@@ -1062,7 +1096,7 @@ param(
   [Parameter(Mandatory = $true,ParameterSetName='Stacked',Position = 0)]
   [Parameter(Mandatory = $true,ParameterSetName='NotStacked',Position = 0)]
   $ChartTitle,
-  [ValidateSet("bar", "doughnut", "pie", "line", "radar", "polar")]
+  [ValidateSet("bar", "doughnut", "pie", "line", "radar", "polar", IgnoreCase = $false)]
   $ChartType,
 
   [Parameter(
@@ -1096,15 +1130,15 @@ param(
   if(!$Stacked){
     #Switch ChartLabels from string to array, splitted by comma
     if($ChartLabels.gettype().Name -eq "String"){
-      $ChartLabels = $ChartLabels.split(",")
+      $ChartLabels = $ChartLabels.split(";")
     }
     #Switch ChartValues from string to array, splitted by comma
     if($ChartValues.gettype().Name -eq "String"){
-      $ChartValues = $ChartValues.split(",")
+      $ChartValues = $ChartValues.split(";")
     }
     #Switch ChartColors from string to array, splitted by comma
     if($ChartColors -and ($ChartColors.gettype().Name -eq "String")){
-      $ChartColors = $ChartColors.split(",")
+      $ChartColors = $ChartColors.split(";")
     }
   }
 
@@ -1113,7 +1147,7 @@ param(
     $ChartDatasets = $ChartLabels
   }else{
     if($Legends.gettype().Name -eq "String"){
-      $Legends = $Legends.split(",")
+      $Legends = $Legends.split(";s")
     }
   }
 
@@ -1235,7 +1269,7 @@ Create a new HTML <article>.
 .PARAMETER Name
 The name of your data set.
 .PARAMETER Values
-The [int] values of your dataset. You could use an object/array or type values as a string, separated by comma like "1,9,3"
+The [int] values of your dataset. You could use an object/array or type values as a string, separated by semi-colon like "1;9;3"
 .PARAMETER Color
 The color to color your data set in the chart. Default is colors generated automatically from thecolorapi.com.
 .EXAMPLE
@@ -1251,7 +1285,7 @@ param(
   $Color
 )
 if($Values.gettype().name -eq "String"){
-  $Values = $Values.split(",")
+  $Values = $Values.split(";")
 }
 if(!$Color){
   $ColorGenerated = $script:ChartColorsPalette
@@ -1268,23 +1302,4 @@ Write-Output @"
 $Script:StackedColorsCount++
 }
 
-Export-ModuleMember -Function New-PWFPage
-Export-ModuleMember -Function New-PWFTabContainer
-Export-ModuleMember -Function New-PWFTab
-Export-ModuleMember -Function New-PWFBlockQuote
-Export-ModuleMember -Function New-PWFCard
-Export-ModuleMember -Function New-PWFCardFooter
-Export-ModuleMember -Function New-PWFCardHeader
-Export-ModuleMember -Function New-PWFChart
-Export-ModuleMember -Function New-PWFChartStackedDataset
-Export-ModuleMember -Function New-PWFColumn
-Export-ModuleMember -Function New-PWFText
-Export-ModuleMember -Function New-PWFTextFormat
-Export-ModuleMember -Function New-PWFTitles
-Export-ModuleMember -Function New-PWFTable
-Export-ModuleMember -Function New-PWFImage
-Export-ModuleMember -Function New-PWFHorizontalScroller
-Export-ModuleMember -Function New-PWFList
-Export-ModuleMember -Function New-PWFIcon
-Export-ModuleMember -Function New-PWFRow
-Export-ModuleMember -Function New-PWFProgressBar
+Export-ModuleMember -Function *
