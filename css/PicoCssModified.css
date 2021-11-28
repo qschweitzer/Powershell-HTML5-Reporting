@@ -667,7 +667,7 @@ pre,
 ul {
     margin-top: 0;
     margin-bottom: var(--typography-spacing-vertical);
-    color: var(--color);
+    color: var(--color,#000);
     font-size: var(--font-size);
     font-weight: var(--font-weight);
     font-style: normal;
