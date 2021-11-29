@@ -576,7 +576,6 @@ Function New-PWFAlert{
 
   return $output
 }
-
 Function New-PWFCard{
   <#
   .SYNOPSIS
@@ -1128,15 +1127,15 @@ param(
   $StackedContent
   )
   if(!$Stacked){
-    #Switch ChartLabels from string to array, splitted by comma
+    #Switch ChartLabels from string to array, splitted by semi-colon
     if($ChartLabels.gettype().Name -eq "String"){
       $ChartLabels = $ChartLabels.split(";")
     }
-    #Switch ChartValues from string to array, splitted by comma
+    #Switch ChartValues from string to array, splitted by semi-colon
     if($ChartValues.gettype().Name -eq "String"){
       $ChartValues = $ChartValues.split(";")
     }
-    #Switch ChartColors from string to array, splitted by comma
+    #Switch ChartColors from string to array, splitted by semi-colon
     if($ChartColors -and ($ChartColors.gettype().Name -eq "String")){
       $ChartColors = $ChartColors.split(";")
     }
