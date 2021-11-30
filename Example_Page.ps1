@@ -1,4 +1,4 @@
-######################
+﻿######################
 #####  EXAMPLES  #####
 ######################
 #Import-Module ".\powershell-html5-reporting\Modules\POSHTML5.psm1" -Force
