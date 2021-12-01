@@ -1076,6 +1076,8 @@ Use when Stacked selected. Scriptblock that contains the New-PWFChartStackedData
 Use when Stacked selected. Your legends, from an object/array or in a string format separate by semi-colon: "Label1;Label2;LabelRouge"
 .PARAMETER HideLegend
 Hide the legend.
+.PARAMETER LegendPosition
+Select position of legend: top,bottom,left,right
 .PARAMETER Horizontal
 The color to color y
 .PARAMETER ChartColors
@@ -1121,6 +1123,8 @@ param(
   [Parameter(Mandatory = $false,ParameterSetName='Stacked',Position = 3)]
   [Parameter(Mandatory = $false,ParameterSetName='NotStacked',Position = 4)]
   [switch]$HideLegend,
+  [ValidateSet("top", "right", "bottom", "left", IgnoreCase = $false)]
+  [string]$LegendPosition="top",
   [switch]$Horizontal,
   $ChartColors,
   [switch]$LightMode,
@@ -1225,6 +1229,7 @@ param(
           plugins: {
             legend: {
               display: $(if($HideLegend){"false"}else{"true"}),
+              $(if($LegendPosition){"legend: '$($LegendPosition),"})
               labels: {
                 $(if($LightMode){"color: '#fff'"})
               }
@@ -1257,6 +1262,7 @@ param(
           document.getElementById('$($ID)'),
           $($config)
       );
+      $($ID).canvas.parentNode.style.height = '50vh';
   </script>
 "@
   
