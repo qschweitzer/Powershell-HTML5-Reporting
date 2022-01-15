@@ -1076,6 +1076,10 @@ Enable the stacked chart format.
 Use when Stacked selected. Scriptblock that contains the New-PWFChartStackedDataset functions
 .PARAMETER Legends
 Use when Stacked selected. Your legends, from an object/array or in a string format separate by semi-colon: "Label1;Label2;LabelRouge"
+.PARAMETER HideLegend
+Hide the legend.
+.PARAMETER LegendPosition
+Select position of legend: top,bottom,left,right
 .PARAMETER Horizontal
 The color to color y
 .PARAMETER ChartColors
@@ -1120,6 +1124,9 @@ param(
 
   [Parameter(Mandatory = $false,ParameterSetName='Stacked',Position = 3)]
   [Parameter(Mandatory = $false,ParameterSetName='NotStacked',Position = 4)]
+  [switch]$HideLegend,
+  [ValidateSet("top", "right", "bottom", "left", IgnoreCase = $false)]
+  [string]$LegendPosition="top",
   [switch]$Horizontal,
   $ChartColors,
   [switch]$LightMode,
@@ -1129,15 +1136,15 @@ param(
   $StackedContent
   )
   if(!$Stacked){
-    #Switch ChartLabels from string to array, splitted by comma
+    #Switch ChartLabels from string to array, splitted by semi-colon
     if($ChartLabels.gettype().Name -eq "String"){
       $ChartLabels = $ChartLabels.split(";")
     }
-    #Switch ChartValues from string to array, splitted by comma
+    #Switch ChartValues from string to array, splitted by semi-colon
     if($ChartValues.gettype().Name -eq "String"){
       $ChartValues = $ChartValues.split(";")
     }
-    #Switch ChartColors from string to array, splitted by comma
+    #Switch ChartColors from string to array, splitted by semi-colon
     if($ChartColors -and ($ChartColors.gettype().Name -eq "String")){
       $ChartColors = $ChartColors.split(";")
     }
@@ -1223,7 +1230,8 @@ param(
           })
           plugins: {
             legend: {
-              display: true,
+              display: $(if($HideLegend){"false"}else{"true"}),
+              $(if($LegendPosition){"legend: '$($LegendPosition),"})
               labels: {
                 $(if($LightMode){"color: '#fff'"})
               }
@@ -1256,6 +1264,7 @@ param(
           document.getElementById('$($ID)'),
           $($config)
       );
+      $($ID).canvas.parentNode.style.height = '50vh';
   </script>
 "@
   
