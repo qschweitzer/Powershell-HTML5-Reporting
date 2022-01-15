@@ -1,0 +1,41 @@
+site_name: POSHTML5 Documentation
+theme:
+  name: material
+  logo: medias/icon.png
+  favicon: medias/icon.png
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+  font:
+    text: Fira Sans
+    code: Fira Code
+  palette:
+    - scheme: default
+      primary: teal
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Light Mode
+    - scheme: slate
+      primary: teal
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Dark Mode
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+repo_name: Powershell-HTML5-Reporting
+repo_url: https://github.com/qschweitzer/Powershell-HTML5-Reporting
+
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/qschweitzer
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/mrtr3z

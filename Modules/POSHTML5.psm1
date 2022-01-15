@@ -27,7 +27,7 @@ Function New-PWFPage{
   .PARAMETER Container
   If added, this parameter will configure the page to have a Container div. Refer to Materialize to understand all the concept of container. https://materializecss.com/getting-started.html
   .EXAMPLE
-  New-PWFPage { New-PWFRow -Content {}}
+  New-PWFPage -Title "TEST" -Chartset UTF8 -Content { New-PWFRow -Content {}}
   .LINK
   https://github.com/qschweitzer/Powershell-HTML5-Reporting
   #>
@@ -155,7 +155,7 @@ Create a new Tab navigation bar with tabs.
 .PARAMETER Tabs
 Create a new tab with New-PWFTabs
 .EXAMPLE
-New-PWFTabContainer { New-PWFTabs -Name "Tab1" -Content {}}
+New-PWFTabContainer -Tabs { New-PWFTabs -Name "Tab1" -Content {}}
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
@@ -392,7 +392,7 @@ Function New-PWFTextFormat{
   #>
   param(
       [Parameter(Mandatory=$true,Position=0)]
-      $YourText,
+      [string]$YourText,
 
       [Parameter(Mandatory=$false,Position=1)]
       [string]$ColorHexa,
@@ -576,7 +576,6 @@ Function New-PWFAlert{
 
   return $output
 }
-
 Function New-PWFCard{
   <#
   .SYNOPSIS
@@ -585,8 +584,10 @@ Function New-PWFCard{
   Create a new HTML <article>.
   .PARAMETER Content
   The Content is a scriptblock that will contain next blocks parts.
+  .PARAMETER BackgroundColor
+  The Content background. 
   .EXAMPLE
-  New-PWFCard -Content { ... }
+  New-PWFCard -Content { ... } -BackgroundColor "#f9fafb"
   .LINK
   https://github.com/qschweitzer/Powershell-HTML5-Reporting
   #>
@@ -1263,9 +1264,9 @@ return $output
 Function New-PWFChartStackedDataset{
 <#
 .SYNOPSIS
-Create a new HTML <article>.
+Create a new chart Dataset for stacked chart only.
 .DESCRIPTION
-Create a new HTML <article>.
+Create a new chart Dataset for stacked chart only.
 .PARAMETER Name
 The name of your data set.
 .PARAMETER Values
