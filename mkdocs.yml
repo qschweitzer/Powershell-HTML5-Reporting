@@ -11,14 +11,14 @@ theme:
     code: Fira Code
   palette:
     - scheme: default
-      primary: teal
+      primary: deep purple
       accent: deep orange
       toggle:
         icon: material/weather-sunny
         name: Light Mode
     - scheme: slate
-      primary: teal
-      accent: deep orange
+      primary: deep purple
+      accent: yellow
       toggle:
         icon: material/weather-night
         name: Dark Mode

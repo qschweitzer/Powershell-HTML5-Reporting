@@ -15,7 +15,9 @@ All arguments for each of them are explained.
 The most interesting is that (almost) all functions are concatainable.
 All functions were having a Content argument can contain some other functions and code.
 
-### Like My Work? Buy Me a Coffee!
+**This doc will be auto-updated when a new function will be available**
+
+## Like My Work? Buy Me a Coffee!
 
 * <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1024px-Bitcoin.svg.png" width="30"> 3DNRNqQk7VS7nFjVxJpXEriZPS8ZeCTEje
 * <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/1200px-Ethereum_logo_2014.svg.png" width="30"> 0x9e79b5D816d8F0C52FFa1bBD657AdaB86f6F77dd
