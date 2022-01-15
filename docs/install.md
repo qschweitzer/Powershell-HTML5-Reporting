@@ -13,3 +13,9 @@ $MyReport = New-PWFPage -Title "MY FIRST TEST" -Charset UTF8 -Container -DarkThe
     }
 }
 ```
+
+## To build the content of your report, refer to the Functions tab of the doc.
+1. Structure your page
+2. Format your Data
+3. Tables and Charts
+4. Others functions to add details, formated text, icons, images...
