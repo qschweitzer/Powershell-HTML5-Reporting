@@ -1,9 +1,8 @@
+![Logo](medias/logo2.png)
 # Welcome
-
 Hi and welcome to my project. POSHTML5 was created in his first version a few years ago has "Powershell Web Framework". That's why all functions of POSHTML5 starts with "PWF".
 *The goal* of this project is to create a simple and fast tool to create awesome reporting, with last HTML5 technologies.
 I try to regulary update and fix issues.
-
 **No CSS, JS source files required. Functions use CDN files link.**
 
 *Compatible with all web browsers*
