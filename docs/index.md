@@ -16,7 +16,13 @@ All functions were having a Content argument can contain some other functions an
 
 **This doc will be auto-updated when a new function will be available**
 
-## :coin: Like My Work? Buy Me a Coffee!
+## Like My Work? Buy Me a Coffee!
 
-* :fontawesome-brands-bitcoin:  3DNRNqQk7VS7nFjVxJpXEriZPS8ZeCTEje
-* :fontawesome-brands-ethereum: 0x9e79b5D816d8F0C52FFa1bBD657AdaB86f6F77dd
+# :fontawesome-brands-bitcoin:
+```
+3DNRNqQk7VS7nFjVxJpXEriZPS8ZeCTEje
+```
+# :fontawesome-brands-ethereum:
+```
+0x9e79b5D816d8F0C52FFa1bBD657AdaB86f6F77dd
+```
