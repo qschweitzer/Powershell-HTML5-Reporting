@@ -1,4 +1,4 @@
-## Install quickly (actually not available from Powershell Gallery, I'm working on it)
+## :material-download: Install quickly (actually not available from Powershell Gallery, I'm working on it)
 1. Install module with commands below. Module isn't published on NuGet, for the moment, so that's why the install is "manual"
 ```
 New-Item -Path "C:\Program Files\WindowsPowerShell\Modules\POSHTML5" -ItemType Directory
@@ -14,8 +14,8 @@ $MyReport = New-PWFPage -Title "MY FIRST TEST" -Charset UTF8 -Container -DarkThe
 }
 ```
 
-## To build the content of your report, refer to the Functions tab of the doc.
-1. Structure your page
-2. Format your Data
-3. Tables and Charts
-4. Others functions to add details, formated text, icons, images...
+## :fire: To build the content of your report, refer to the Functions tab of the doc.
+1. :construction_site: [Structure](/Functions/Structure/New-PWFPage/) your page
+2. :material-palette: [Format](/Functions/Format%20Data/New-PWFCard/) your data
+3. :bar_chart: [Tables and Charts](Functions/Tables%20and%20Charts/New-PWFTable/)
+4. :octicons-alert-16: Others functions to add [titles](Functions/Typography/New-PWFTitles/), [formated text](Functions/Typography/New-PWFTextFormat/), [icons](Functions/Typography/New-PWFIcon/), [alerts and badges](Functions/Badges%20and%20alerts/New-PWFAlert/)...

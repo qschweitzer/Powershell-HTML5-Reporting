@@ -7,7 +7,7 @@ I try to regulary update and fix issues.
 
 *Compatible with all web browsers*
 
-# What to know ?
+# :rocket: What to know ?
 The framework has been optimized to be easily used.
 All the functions are commented.
 All arguments for each of them are explained.
@@ -16,7 +16,7 @@ All functions were having a Content argument can contain some other functions an
 
 **This doc will be auto-updated when a new function will be available**
 
-## Like My Work? Buy Me a Coffee!
+## :coin: Like My Work? Buy Me a Coffee!
 
-* <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1024px-Bitcoin.svg.png" width="30"> 3DNRNqQk7VS7nFjVxJpXEriZPS8ZeCTEje
-* <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/1200px-Ethereum_logo_2014.svg.png" width="30"> 0x9e79b5D816d8F0C52FFa1bBD657AdaB86f6F77dd
+* :fontawesome-brands-bitcoin:  3DNRNqQk7VS7nFjVxJpXEriZPS8ZeCTEje
+* :fontawesome-brands-ethereum: 0x9e79b5D816d8F0C52FFa1bBD657AdaB86f6F77dd

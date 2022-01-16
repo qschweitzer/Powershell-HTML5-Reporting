@@ -1,4 +1,6 @@
-# Sample in Github Repository
+# Example Page
+Available in github repository or on this page.
+## Screenshot of the resulted HTML page
 ![Screenshot Sample](medias/Capture.png)
 ## Source code
 ``` powershell

@@ -29,6 +29,9 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
 
 repo_name: Powershell-HTML5-Reporting
 repo_url: https://github.com/qschweitzer/Powershell-HTML5-Reporting
