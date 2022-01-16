@@ -15,7 +15,7 @@ $MyReport = New-PWFPage -Title "MY FIRST TEST" -Charset UTF8 -Container -DarkThe
 ```
 
 ## :fire: To build the content of your report, refer to the Functions tab of the doc.
-1. :construction_site: [Structure](/Functions/Structure/New-PWFPage/) your page
-2. :material-palette: [Format](/Functions/Format%20Data/New-PWFCard/) your data
-3. :bar_chart: [Tables and Charts](Functions/Tables%20and%20Charts/New-PWFTable/)
-4. :octicons-alert-16: Others functions to add [titles](Functions/Typography/New-PWFTitles/), [formated text](Functions/Typography/New-PWFTextFormat/), [icons](Functions/Typography/New-PWFIcon/), [alerts and badges](Functions/Badges%20and%20alerts/New-PWFAlert/)...
+1. :construction_site: [Structure](/Functions/1-%20Structure/New-PWFPage/) your page
+2. :material-palette: [Format](/Functions/2-%20Format%20Data/New-PWFCard/) your data
+3. :bar_chart: [Tables and Charts](Functions/3-%20Tables%20and%20Charts/New-PWFTable/)
+4. :octicons-alert-16: Others functions to add [titles](Functions/4-%20Typography/New-PWFTitles/), [formated text](Functions/4-%20Typography/New-PWFTextFormat/), [icons](Functions/4-%20Typography/New-PWFIcon/), [alerts and badges](Functions/5%20-Badges%20and%20alerts/New-PWFAlert/)...
