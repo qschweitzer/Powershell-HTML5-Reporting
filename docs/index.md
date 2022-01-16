@@ -16,6 +16,12 @@ All functions were having a Content argument can contain some other functions an
 
 **This doc will be auto-updated when a new function will be available**
 
+## Tools used in POSHTML5
+* :material-language-css3: [PicoCSS](https://picocss.com/) for the major HTML5 and CSS structure
+* :fontawesome-brands-bootstrap: [BOOSTRAP 5](https://getbootstrap.com/) for Tables and other small features like alerts and badges
+* :material-chart-arc: [ChartJS](https://www.chartjs.org/) for....the charts !
+* [tableExport.jquery.plugin](https://github.com/hhurz/tableExport.jquery.plugin) for table export options
+
 ## Like My Work? Buy Me a Coffee!
 
 # :fontawesome-brands-bitcoin:
