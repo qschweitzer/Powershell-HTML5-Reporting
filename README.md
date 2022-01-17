@@ -6,6 +6,8 @@ The local web server option have been deprecated. Efforts have been concentrated
 
 **No CSS, JS source files required. Functions use CDN files link.**
 
+# Full doc at [Online POSHTML Doc](https://qschweitzer.github.io/Powershell-HTML5-Reporting)
+
 ### :exclamation: Compatibility
 
 <img src="https://github.com/alrra/browser-logos/blob/main/src/chrome/chrome_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/firefox/firefox_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/edge/edge_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/safari/safari_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/opera/opera_24x24.png">
