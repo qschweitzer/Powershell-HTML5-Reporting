@@ -1,7 +1,7 @@
 ﻿######################
 #####  EXAMPLES  #####
 ######################
-#Import-Module ".\powershell-html5-reporting\Modules\POSHTML5.psm1" -Force
+Import-Module .\powershell-html5-reporting\Modules\POSHTML5.psm1 -Force
 $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
   New-PWFTabContainer -Tabs {
     New-PWFTab -Name "First Tab" -Content {

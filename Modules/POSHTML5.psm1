@@ -1261,7 +1261,7 @@ param(
           plugins: {
             legend: {
               display: $(if($HideLegend){"false"}else{"true"}),
-              $(if($LegendPosition){"legend: '$($LegendPosition),"})
+              $(if($LegendPosition){"legend: '$($LegendPosition)',"})
               labels: {
                 $(if($LightMode){"color: '#fff'"})
               }
