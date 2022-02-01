@@ -1273,6 +1273,7 @@ param(
             }
           },
           responsive: true,
+          maintainAspectRatio: false,
           scales: {
             x: {
               $(if($Stacked){"stacked: true,"})
