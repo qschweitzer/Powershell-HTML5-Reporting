@@ -15,12 +15,12 @@
     --line-height: 1.5;
     --font-weight: 400;
     --font-size: 16px;
-    --border-radius: 0.25rem;
+    --border-radius: 1.32rem;
     --border-width: 1px;
     --outline-width: 3px;
     --spacing: 1rem;
     --typography-spacing-vertical: 1.5rem;
-    --block-spacing-vertical: calc(var(--spacing) * 2);
+    --block-spacing-vertical: calc(var(--spacing) * 0.8);
     --block-spacing-horizontal: var(--spacing);
     --grid-spacing-vertical: 0;
     --grid-spacing-horizontal: var(--spacing);
@@ -153,27 +153,27 @@ h6 {
 
 h1 {
     --font-size: 2rem;
-    --typography-spacing-vertical: 3rem;
+    --typography-spacing-vertical: 1rem;
 }
 
 h2 {
     --font-size: 1.75rem;
-    --typography-spacing-vertical: 2.625rem;
+    --typography-spacing-vertical: 1.625rem;
 }
 
 h3 {
     --font-size: 1.5rem;
-    --typography-spacing-vertical: 2.25rem;
+    --typography-spacing-vertical: 1.25rem;
 }
 
 h4 {
     --font-size: 1.25rem;
-    --typography-spacing-vertical: 1.874rem;
+    --typography-spacing-vertical: 0.874rem;
 }
 
 h5 {
     --font-size: 1.125rem;
-    --typography-spacing-vertical: 1.6875rem;
+    --typography-spacing-vertical: 0.6875rem;
 }
 
 [type=checkbox],
@@ -582,7 +582,7 @@ section {
 
 .grid {
     grid-column-gap: var(--grid-spacing-horizontal);
-    grid-row-gap: var(--grid-spacing-vertical);
+    grid-row-gap: 0em;
     display: grid;
     grid-template-columns: 1fr;
     margin: 0;
@@ -667,7 +667,7 @@ pre,
 ul {
     margin-top: 0;
     margin-bottom: var(--typography-spacing-vertical);
-    color: var(--color,#000);
+    color: var(--color, #000);
     font-size: var(--font-size);
     font-weight: var(--font-weight);
     font-style: normal;
@@ -2150,17 +2150,17 @@ details[open]>summary::after {
 
 div,
 article {
-    margin-bottom: 1em;
+    margin-bottom: 0rem;
 }
 
 article {
-    margin: 1em 0;
-    padding: var(--block-spacing-vertical) var(--block-spacing-horizontal);
+    margin-bottom: 1em;
+    padding: var(--block-spacing-vertical) 1rem var(--block-spacing-horizontal) 1rem;
     overflow: hidden;
     border-radius: var(--border-radius);
     background: var(--card-background-color);
     box-shadow: var(--card-box-shadow);
-    height: 100%;
+    /*height: 100%; */
 }
 
 article>header,
@@ -2200,6 +2200,20 @@ nav,
     width: inherit;
 }
 
+.nav-tabs .nav-link.active {
+    color: #ffffff;
+    background-color: #355070;
+    border-color: #dee2e6 #dee2e6 #fff;
+    border-color: none;
+}
+
+.nav-tabs .nav-link {
+    color: #000;
+    border: 3.6px solid #355070;
+    border-radius: 1.2rem;
+    margin-bottom: 1rem;
+}
+
 .nav-link {
     color: #415462;
 }
@@ -2222,7 +2236,7 @@ nav {
 button,
 .nav-tabs,
 .nav-link {
-    background-color: #d3d3d3;
+    background-color: #ffffff;
 }
 
 nav ol,
@@ -2588,4 +2602,39 @@ textarea,
         transition-delay: 0s !important;
         transition-duration: 0s !important;
     }
+}
+
+
+/**
+* CUSTOM Quentin Schweitzer
+**/
+
+.btn-group {
+    margin-bottom: 0;
+}
+
+.page-item .page-link {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.page-item.active .page-link {
+    color: #fff;
+    background-color: #5c636a;
+    border-color: #5c636b;
+}
+
+.bootstrap-table .fixed-table-container .table {
+    background-color: white;
+}
+
+article,
+.bootstrap-table {
+    --block-spacing-horizontal: 0;
+    padding-bottom: 0.5rem;
+}
+
+.alert-info {
+    width: fit-content;
 }
