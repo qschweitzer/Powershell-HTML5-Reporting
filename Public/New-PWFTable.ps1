@@ -1,0 +1,279 @@
+﻿Function New-PWFTable{
+<#
+.SYNOPSIS
+Create a table from object.
+.DESCRIPTION
+Create a table from a powershell object.
+.PARAMETER ToTable
+The object you want to conver to an HTML table
+.PARAMETER SelectProperties
+Array or string (separate by comma) entries. Select certain properties to not use the totality of the object's properties.
+.PARAMETER EnableSearch
+Enable a search bar that helps you to find any word on the table.
+.PARAMETER Exportbuttons
+Add a XLSX button to export table to XLSX file.
+.PARAMETER Pagination
+Limit the size of your table and add pagination system.
+.PARAMETER ShowTooltip
+Add a toolbar with some options like fullscreen your tab, enable/disable pagination...
+.PARAMETER DetailsOnClick
+Use it to large objects, it will limit the width size of your table and add all other properties in a details pane. Just click on the row to display details.
+.PARAMETER EnableConditionnalFormat
+Enable addition of condition with next parameters ConditionProperties,COnditionOperators,ConditionValues,ConditionBackgroundColors. Each of them nedd to have same number of properties,operators,values.
+.PARAMETER ConditionProperties
+Add the different properties where you want to add a condition, in a string format and joined by comma: "Property1,Property2"
+.PARAMETER ConditionOperators
+Add the different operators of the conditions, in powershell format: "-lt,-gt"
+.PARAMETER ConditionValues
+Add the different values to control condition: "1,8"
+.PARAMETER ConditionBackgroundColors
+Add a background color if the condition match
+.PARAMETER ColorForHeader
+Color the table's header
+.PARAMETER ColorForRows
+Color the table's rows
+.PARAMETER ColorForEverySecondRow
+Color the table's rows each second line with another color (better visibility)
+.EXAMPLE
+New-PWFTable -ToTable (Get-Process | Group-Object -Property Name -NoElement | Sort-Object Count -Descending | select Name, Count) -SelectProperties "Name,Count" -EnableConditionnalFormat -ConditionProperties "Count,Name" -ConditionOperators "-gt,-match" -ConditionValues "2,svchost" -ConditionBackgroundColors "#ff0000,#FFFF00"
+.LINK
+https://github.com/qschweitzer/Powershell-HTML5-Reporting
+#>
+param(
+    [Parameter(Mandatory=$true,Position=0)]
+    $ToTable,
+
+    [Parameter(Mandatory=$false,Position=1)]
+    $SelectProperties,
+    [switch]$EnableSearch,
+    [switch]$Exportbuttons,
+
+    [Parameter(Mandatory = $false,
+    ParameterSetName='Conditionnal',
+    HelpMessage = "Enable conditionnal format on certain values.",
+    Position = 2)]
+    [switch]$EnableConditionnalFormat,
+    [Parameter(ParameterSetName='Conditionnal', Position = 3)]
+    $ConditionProperties,
+    $ConditionOperators,
+    $ConditionValues,
+    $ConditionBackgroundColors,
+
+    [Parameter(Mandatory=$false,Position=4)]
+    [switch]$Pagination,
+    [switch]$ShowTooltip,
+    [switch]$DetailsOnClick,
+    [switch]$SortByColumn,
+    [switch]$Striped,
+    [switch]$Dark,
+    [switch]$Small,
+    [ValidateSet("default", "primary", "secondary", "success", "danger", "warning","info","light","dark", IgnoreCase = $false)]
+    [string]$ContextualColor
+
+    # Classes: class="striped highlight centered responsive-table"
+)
+
+$RandomIDTable = ("table$(Get-Random)")
+$RandomIDFuncDetailFormatter = "detailFormatter$(Get-Random)"
+$RandomIDFuncCustomSort = "customSort$(Get-Random)"
+$ConditionnalObjects = @()
+if($SelectProperties -and $SelectProperties.gettype().Name -eq "String"){
+    $SelectProperties = $SelectProperties.split(',')
+}
+if($ConditionProperties -match ","){$ConditionProperties = $ConditionProperties.split(",")}else{$ConditionProperties= [array]$ConditionProperties}
+if($ConditionOperators -match ","){$ConditionOperators = $ConditionOperators.split(",")}else{$ConditionOperators= [array]$ConditionOperators}
+if($ConditionValues -match ","){$ConditionValues = $ConditionValues.split(",")}else{$ConditionValues= [array]$ConditionValues}
+if($ConditionBackgroundColors -match ","){$ConditionBackgroundColors = $ConditionBackgroundColors.split(",")}else{$ConditionBackgroundColors= [array]$ConditionBackgroundColors}
+if($EnableConditionnalFormat){
+    For($e =0; $e -lt ($ConditionProperties | Measure-Object).count; $e++) {
+    $ConditionnalObject = New-Object psobject
+    $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "PropertyName" -Value $ConditionProperties[$e]
+    $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "Operator" -Value $ConditionOperators[$e]
+    $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "Value" -Value $ConditionValues[$e]
+    $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "ColorHexa" -Value $ConditionBackgroundColors[$e]
+    $ConditionnalObjects += $ConditionnalObject
+    }
+}
+if($SelectProperties){
+    $AllColumnsHeader = $SelectProperties
+}
+else{
+    $AllColumnsHeader = ($ToTable | Get-Member -MemberType Properties).Name
+}
+
+$output += @"
+    <table class='$(if($Striped){" table-striped"}if($Dark){" table-dark"}if($Small){" table-sm"}if($ContextualColor){" table-$($ContextualColor)"})' id='$($RandomIDTable)' data-toggle='table' $(if($EnableSearch){
+        '
+        data-search="true"
+        '
+    })
+        $(if($Pagination){'data-pagination="true"'})
+        $(if($Exportbuttons){
+        '
+        data-show-export="true"
+        '
+        })
+        $(if($ShowTooltip){
+        '
+        data-show-columns="true"
+        data-show-columns-toggle-all="true"
+        data-show-pagination-switch="true"
+        data-show-toggle="true"
+        data-show-fullscreen="true"
+        data-buttons="buttons"
+        '
+        })
+        $(if($DetailsOnClick){
+        "
+        data-detail-view='true'
+        data-detail-formatter='$($RandomIDFuncDetailFormatter)'
+        data-detail-view-icon='false'
+        data-detail-view-by-click='true'
+        "
+        })
+        $(if($SortByColumn){
+        "
+        data-custom-sort='$($RandomIDFuncCustomSort)'
+        "
+        })
+    >
+    <thead>
+    <tr>
+        $($AllColumnsHeader | ForEach-Object { Write-Output "<th$(if($ColorForHeader){write-output " style=background-color:'$($ColorForHeader);'"}) data-field="$($_)"$(if($SortByColumn){" data-sortable='true'"})>" $_ "</th>" })
+    </tr>
+    </thead>
+
+    <tbody>
+        $(for ($i = 0; $i -lt ($ToTable | Measure-Object).count; $i++) {
+            if($ColorForEverySecondRow){
+                if($i % 2 -eq 0 ){
+                    $RowColor = $ColorForEverySecondRow
+                }
+                else{
+                    $RowColor = $ColorForRows
+                }
+            }
+            else{
+                $RowColor = $ColorForRows
+            }
+            $Row = $ToTable[$i]
+            $RandomIDBodyTR = ("tr-id-$(Get-Random)")
+            Write-Output "<tr id='$($RandomIDBodyTR)' $(if($ColorForRows){write-output " style=background-color:$($RowColor)"})>"
+
+            $AllColumnsHeader | ForEach-Object {
+                $RandomIDBodyTD = ("tr-id-$(Get-Random)")
+                $ActualProperty = $_
+                if(($ActualProperty -in $ConditionnalObjects.PropertyName)){
+                    $ConditionnalObjects | ForEach-Object {
+                    if($_.PropertyName -eq $ActualProperty){
+                    $ActualCondition = $_
+                    try{
+                        $ActualValue = [int]$Row.$ActualProperty
+                    }catch{
+                        $ActualValue = $Row.$ActualProperty
+                    }
+                    try{
+                        $ConditionCmd = ('[int]$ActualValue' + " " + $ActualCondition.Operator + " " + '[int]$ActualCondition.Value')
+                        $ConditionResult = (Invoke-Expression $ConditionCmd)
+                    }catch{
+                        $ConditionCmd = ('$ActualValue' + " " + $ActualCondition.Operator + " " + '$ActualCondition.Value') 
+                        $ConditionResult = (Invoke-Expression $ConditionCmd)
+                    }
+                    if($ConditionResult -eq "True"){
+                        $ConditionnalValidated = Write-Output "<td id='$($RandomIDBodyTD)' style='background-color: $($ActualCondition.ColorHexa)'> $($ActualValue) </td>"
+                    }
+                    }
+                }
+                if($ConditionnalValidated){
+                    Write-Output $ConditionnalValidated
+                }else{
+                    Write-Output "<td id='$($RandomIDBodyTD)'> $($Row.$ActualProperty) </td>"
+                }
+                $ConditionnalValidated = $null
+                }
+                else{
+                Write-Output "<td id='$($RandomIDBodyTD)'> $($Row.$ActualProperty) </td>"
+                }
+            }
+        Write-Output "</tr>"})
+    </tbody>
+</table>
+<script>
+var `$table1$($RandomIDTable) = `$('#$($RandomIDTable)')
+
+`$(function() {
+    `$table1$($RandomIDTable).bootstrapTable({
+    columns: [$(for($m=0; $m -lt $SelectProperties.count; $m++){
+        "{
+        title: '$($SelectProperties[$m])',
+        field: '$($SelectProperties[$m])'
+        }$(if($m -ne $SelectProperties.count){","})"
+    })]
+    })
+})
+</script>
+$(if($DetailsOnClick){
+    "<script>
+    function $($RandomIDFuncDetailFormatter)(index, row) {
+        var html = []
+        $.each(row, function (key, value) {
+        html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+        })
+        return html.join('')
+    }
+    </script>"
+})
+$(if($SortByColumn){
+    $RandomIDvarOrder = "order$(Get-random)"
+    $RandomIDvaraa = "aa$(Get-random)"
+    $RandomIDvarbb = "bb$(Get-random)"
+    "<script>
+    function $($RandomIDFuncCustomSort)(sortName, sortOrder, data) {
+    var $($RandomIDvarOrder) = sortOrder === 'desc' ? -1 : 1
+    data.sort(function (a, b) {
+        var $($RandomIDvaraa) = +((a[sortName] + '').replace(/[^\d]/g, ''))
+        var $($RandomIDvarbb) = +((b[sortName] + '').replace(/[^\d]/g, ''))
+        if ($($RandomIDvaraa) < $($RandomIDvarbb)) {
+        return $($RandomIDvarOrder) * -1
+        }
+        if ($($RandomIDvaraa) > $($RandomIDvarbb)) {
+        return $($RandomIDvarOrder)
+        }
+        return 0
+    })
+    }
+    </script>"
+})
+$(if($Exportbuttons){
+    "
+    <script>
+    var `$table$($RandomIDTable) = `$('#$($RandomIDTable)')
+    `$(function() {
+    `$table$($RandomIDTable).bootstrapTable('destroy').bootstrapTable({
+        exportTypes: ['json', 'xml', 'png', 'csv', 'txt', 'excel', 'pdf'],
+        columns: [
+        $(for ($p=0; $p -lt ($AllColumnsHeader | Measure-Object).count; $p++){
+            if($p -eq ($AllColumnsHeader | Measure-Object).count){
+            Write-Output "
+            {
+                field: '$($AllColumnsHeader[$p])'
+            }
+            "
+            }else{
+            Write-Output "
+            {
+                field: '$($AllColumnsHeader[$p])'
+            },
+            "
+            }
+        })
+        ]
+    })
+    })
+    </script>
+    "
+})
+"@
+
+return $output
+}
