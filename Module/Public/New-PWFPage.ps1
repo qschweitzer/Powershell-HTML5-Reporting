@@ -46,7 +46,7 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
         <!--Import Google Icon Font-->
         <!--<link href="assets/css/icon.css" rel="stylesheet">-->
         <style>
-        $($AllCSS = Get-ChildItem "$((Get-Module POSHTML5).ModuleBase)\..\assets\css" -Filter *.css)
+        $($AllCSS = Get-ChildItem "$((Get-Module POSHTML5).ModuleBase)\assets\css" -Filter *.css)
         $($AllCSS | ForEach-Object {"$(Get-Content $_.fullname) $(write-output `r`n)"})
         </style>
     
@@ -68,7 +68,7 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
         <!--<script src="assets/js/bootstrap-table.min.js"></script>-->
         <!--<script src="assets/js/bootstrap-table-export.min.js"></script>-->
         <script>
-        $($AllJS = Get-ChildItem "$((Get-Module POSHTML5).ModuleBase)\..\assets\js" -Filter *.min.* | Sort-Object Name)
+        $($AllJS = Get-ChildItem "$((Get-Module POSHTML5).ModuleBase)\assets\js" -Filter *.min.* | Sort-Object Name)
         $($AllJS | ForEach-Object {"$(Get-Content $_.fullname) $(write-output `r`n)"})
         </script>
         <title>$($title)</title>

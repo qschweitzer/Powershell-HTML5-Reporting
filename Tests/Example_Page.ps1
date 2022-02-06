@@ -1,7 +1,6 @@
 ﻿######################
 #####  EXAMPLES  #####
 ######################
-Import-Module "$($PSScriptRoot)\Modules\POSHTML5.psm1" -Force
 $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
   New-PWFTabContainer -Tabs {
     New-PWFTab -Name "First Tab" -Content {
