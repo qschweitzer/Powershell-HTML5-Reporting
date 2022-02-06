@@ -141,3 +141,9 @@ New-PWFProgressBar -CurrentValue ((((get-volume -DriveLetter C).Size)/1GB)-((get
 You have the screenshoted example at the end of the script. This will let you starting use and create your own.
 
 ![My image](https://github.com/qschweitzer/Powershell-HTML5-Reporting/blob/master/docs/2021-10-26%2018_03_10-Clipboard.jpg)
+
+
+# LATEST UPDATES
+
+* **New-PWFTitles deprecated**, replaced by New-PWFTitle as recommanded by Invoke-ScriptAnalyzer.
+* Project now available on PowershellGallery
