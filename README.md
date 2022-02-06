@@ -1,29 +1,23 @@
 ![My image](https://github.com/qschweitzer/Powershell-HTML5-Reporting/blob/master/docs/2021-10-26%2017_59_23-Clipboard.jpg)
-# :fire: Powershell Web Framework 2.0
-The new version have a new CSS framework: PicoCSS. Why ? Lightweight !
-And much more important, this new version include....charts ! Based on Charts.JS.
-The local web server option have been deprecated. Efforts have been concentrated on reporting features on static page (.html). These new functions are always compatible with a web server like the old version.
+# :fire: Powershell Web Framework
 
-**No CSS, JS source files required. Functions use CDN files link.**
-
-# Full doc at [Online POSHTML Doc](https://qschweitzer.github.io/Powershell-HTML5-Reporting)
+# Full documentation online
+[Online POSHTML Doc](https://qschweitzer.github.io/Powershell-HTML5-Reporting)
 
 ### :exclamation: Compatibility
 
-<img src="https://github.com/alrra/browser-logos/blob/main/src/chrome/chrome_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/firefox/firefox_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/edge/edge_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/safari/safari_24x24.png"> <img src="https://github.com/alrra/browser-logos/blob/main/src/opera/opera_24x24.png">
+All web browsers are compatible with POSHTML5.
 
 ### Like My Work? Buy Me a Coffee!
 
 * <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1024px-Bitcoin.svg.png" width="30"> 3DNRNqQk7VS7nFjVxJpXEriZPS8ZeCTEje
 * <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/1200px-Ethereum_logo_2014.svg.png" width="30"> 0x9e79b5D816d8F0C52FFa1bBD657AdaB86f6F77dd
 
-# :grey_question: How to use
-1. Install module with commands below. Module isn't published on NuGet, for the moment, so that's why the install is "manual"
+# :grey_question: Install
+1. Install module with commands below.
 ```
-New-Item -Path "C:\Program Files\WindowsPowerShell\Modules\POSHTML5" -ItemType Directory
-Invoke-WebRequest -Uri "https://cdn.jsdelivr.net/gh/qschweitzer/Powershell-HTML5-Reporting@master/Modules/POSHTML5.psm1" -OutFile "C:\Program Files\WindowsPowerShell\Modules\POSHTML5\POSHTML5.psm1"
+Install-Module -Name POSHTML5
 ```
-2. Import the .psm1 file of the Master branch like (think to delete example part before so), or simply edit the script and build your own report !
 
 # :rocket: What to know ?
 The framework has been optimized to be easily used.
