@@ -1,4 +1,4 @@
-![My image](https://github.com/qschweitzer/Powershell-HTML5-Reporting/blob/master/docs/2021-10-26%2017_59_23-Clipboard.jpg)
+![My image](https://github.com/qschweitzer/Powershell-HTML5-Reporting/blob/gh-pages/medias/logo.png)
 # :fire: Powershell Web Framework
 
 # Full documentation online
