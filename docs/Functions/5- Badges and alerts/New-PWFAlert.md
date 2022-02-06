@@ -38,7 +38,7 @@ Accept wildcard characters: False
 A color from the defined dataset.
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Primary, Secondary, Success, Danger, Warning, Info, Light, Dark. Default is Primary.
 Aliases:
 
 Required: False

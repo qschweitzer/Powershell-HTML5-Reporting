@@ -32,3 +32,7 @@ All functions were having a Content argument can contain some other functions an
 ```
 0x9e79b5D816d8F0C52FFa1bBD657AdaB86f6F77dd
 ```
+
+## NEWS
+
+* POSHTML5 is now published on PowershellGallery. Look at Install page to know how to install it quickly.

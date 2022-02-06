@@ -1,26 +1,26 @@
-# New-PWFTitles
+# New-PWFTitle
 
 ## Description
 New row wich contains what you want.
 
 ## SYNTAX
 ``` powershell
-New-PWFTitles -TitleText <string> -Size <string> [-Center] [-Lightmode]
+New-PWFTitle -TitleText <string> -Size <string> [-Center] [-Lightmode]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFTitles -TitleText "MyTitle" -Size 1 -Center -Lightmode
+New-PWFTitle -TitleText "MyTitle" -Size 1 -Center -Lightmode
 ```
 ### EXAMPLE 2
 ```powershell
-New-PWFTitles -TitleText "MyTitle" -Size 1 -Center
+New-PWFTitle -TitleText "MyTitle" -Size 1 -Center
 ```
 ### EXAMPLE 3
 ```powershell
-New-PWFTitles -TitleText "MyTitle" -Size 1
+New-PWFTitle -TitleText "MyTitle" -Size 1
 ```
 
 ## PARAMETERS
