@@ -2,7 +2,7 @@
 # :fire: Powershell Web Framework
 
 # Full documentation online
-[Online POSHTML Doc](https://qschweitzer.github.io/Powershell-HTML5-Reporting)
+### [Online POSHTML Doc](https://qschweitzer.github.io/Powershell-HTML5-Reporting)
 
 ### :exclamation: Compatibility
 
