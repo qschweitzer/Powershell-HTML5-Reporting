@@ -1,5 +1,5 @@
-﻿Function New-PWFTab{
-<#
+﻿Function New-PWFTab {
+    <#
 .SYNOPSIS
 Create a new Tab.
 .DESCRIPTION
@@ -13,22 +13,22 @@ New-PWFTabs -Name "Tab1" -Content {...}
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory=$true,Position=0)]
-    $Name,
-    $Content,
-    [Parameter(Mandatory=$false,Position=1)]
-    [switch]$Container
-)
-$Script:TabsNames += $Name
-$idName = "tab$(Get-Random)"
-$Script:TabsID+=$idName
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        $Name,
+        $Content,
+        [Parameter(Mandatory = $false, Position = 1)]
+        [switch]$Container
+    )
+    $Script:TabsNames += $Name
+    $idName = "tab$(Get-Random)"
+    $Script:TabsID += $idName
 
-$output = @"
+    $output = @"
     <div class="tab-pane fade show$(if($TabsCount -eq 1){" active"})$(if($Container){" container"}else{" container-fluid"})" id="nav-$($idName)" role="tabpanel" aria-labelledby="nav-$($idName)-tab">
     $(try {.$Content} catch {$_.Exception.Message})
     </div>
 "@
-$Script:TabsCount++
-return $output
+    $Script:TabsCount++
+    return $output
 }

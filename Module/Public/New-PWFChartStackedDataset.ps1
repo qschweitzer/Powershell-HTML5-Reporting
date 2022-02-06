@@ -1,5 +1,5 @@
-﻿Function New-PWFChartStackedDataset{
-<#
+﻿Function New-PWFChartStackedDataset {
+    <#
 .SYNOPSIS
 Create a new chart Dataset for stacked chart only.
 .DESCRIPTION
@@ -15,27 +15,27 @@ New-PWFChartStackedDataset -Name "January" -Values 1..31
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory = $true,Position = 0)]
-    $Name,
-    $Values,
-    [Parameter(Mandatory = $false,Position = 1)]
-    $Color
-)
-if($Values.gettype().name -eq "String"){
-    $Values = $Values.split(";")
-}
-if(!$Color){
-    $ColorGenerated = $script:ChartColorsPalette
-}
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        $Name,
+        $Values,
+        [Parameter(Mandatory = $false, Position = 1)]
+        $Color
+    )
+    if ($Values.gettype().name -eq "String") {
+        $Values = $Values.split(";")
+    }
+    if (!$Color) {
+        $ColorGenerated = $script:ChartColorsPalette
+    }
 
-$Script:StackedChartName += $Name
-Write-Output @"
+    $Script:StackedChartName += $Name
+    Write-Output @"
     {
         label: '$($Name)',
         data: ['$($Values -join "','")'],
         backgroundColor: '$(if($ColorGenerated){$ColorGenerated[($Script:StackedColorsCount)]}else{$Color})',
     },
 "@
-$Script:StackedColorsCount++
+    $Script:StackedColorsCount++
 }

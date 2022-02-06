@@ -1,5 +1,5 @@
-﻿Function New-PWFRow{
-<#
+﻿Function New-PWFRow {
+    <#
 .SYNOPSIS
 Create a new HTML div with Row class.
 .DESCRIPTION
@@ -11,20 +11,20 @@ New-PWFRow -Content { ... }
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory=$true,Position=0)]
-    $Content
-)
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        $Content
+    )
 
-$output = @"
+    $output = @"
     <div class="grid">
 "@
-    $(try {$output += .$Content} catch {$_.Exception.Message})
+    $(try { $output += .$Content } catch { $_.Exception.Message })
 
-$output += @"
+    $output += @"
     </div>
 "@
 
-return $output
+    return $output
 
 }

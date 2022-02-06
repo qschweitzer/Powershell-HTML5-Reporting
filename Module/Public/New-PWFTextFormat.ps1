@@ -1,5 +1,5 @@
-﻿Function New-PWFTextFormat{
-<#
+﻿Function New-PWFTextFormat {
+    <#
 .SYNOPSIS
 Create a new HTML text with customized format.
 .DESCRIPTION
@@ -37,83 +37,83 @@ New-PWFTextFormat -YourText "My Text is Awesome" -ColorHexa "#D94020" -Bold -Und
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory=$true,Position=0)]
-    [string]$YourText,
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        [string]$YourText,
 
-    [Parameter(Mandatory=$false,Position=1)]
-    [string]$ColorHexa,
-    [switch]$Abbreviation,
-    [switch]$Highlight,
-    [switch]$Bold,
-    [switch]$Strikethrough,
-    [switch]$Italic,
-    [switch]$Deleted,
-    [switch]$SubText,
-    [switch]$SupText,
-    [switch]$Inserted,
-    [switch]$Keyboard,
-    [switch]$Underline
-)
-function LoopFormat {
-    param (
-        $Text,
-        $Type,
-        $ColorHexa
+        [Parameter(Mandatory = $false, Position = 1)]
+        [string]$ColorHexa,
+        [switch]$Abbreviation,
+        [switch]$Highlight,
+        [switch]$Bold,
+        [switch]$Strikethrough,
+        [switch]$Italic,
+        [switch]$Deleted,
+        [switch]$SubText,
+        [switch]$SupText,
+        [switch]$Inserted,
+        [switch]$Keyboard,
+        [switch]$Underline
     )
-    $Result = @"
+    function LoopFormat {
+        param (
+            $Text,
+            $Type,
+            $ColorHexa
+        )
+        $Result = @"
         <$($Type) style='$(if($ColorHexa){"color:$($ColorHexa);"})'>$($Text -split '\n' | ForEach-Object {"$_"})</$($Type)>
 "@
 
-    return $Result
-}
+        return $Result
+    }
 
-$output = $YourText
-$type = ""
+    $output = $YourText
+    $type = ""
 
-if($Abbreviation){
-    $type += "abbr;"
-}
-if($Highlight){
-    $type += "mark;"
-}
-if($Bold){
-    $type += "strong;"
-}
-if($Strikethrough){
-    $type += "s;"
-}
-if($Italic){
-    $type += "em;"
-}
-if($Deleted){
-    $type += "del;"
-}
-if($SubText){
-    $type += "sub;"
-}
-if($SupText){
-    $type += "sup;"
-}
-if($Inserted){
-    $type += "ins;"
-}
-if($Keyboard){
-    $type += "kbd;"
-}
-if($Underline){
-    $type += "u;"
-}
-if($type -eq ""){
-    $type += "span;"
-}
+    if ($Abbreviation) {
+        $type += "abbr;"
+    }
+    if ($Highlight) {
+        $type += "mark;"
+    }
+    if ($Bold) {
+        $type += "strong;"
+    }
+    if ($Strikethrough) {
+        $type += "s;"
+    }
+    if ($Italic) {
+        $type += "em;"
+    }
+    if ($Deleted) {
+        $type += "del;"
+    }
+    if ($SubText) {
+        $type += "sub;"
+    }
+    if ($SupText) {
+        $type += "sup;"
+    }
+    if ($Inserted) {
+        $type += "ins;"
+    }
+    if ($Keyboard) {
+        $type += "kbd;"
+    }
+    if ($Underline) {
+        $type += "u;"
+    }
+    if ($type -eq "") {
+        $type += "span;"
+    }
 
-$type = $type -split ";"
+    $type = $type -split ";"
 
 
-$type | Where-Object { $_ -ne ""} | ForEach-Object {
-    $output = LoopFormat -Text $output -Type $_ -ColorHexa $ColorHexa
-}
+    $type | Where-Object { $_ -ne "" } | ForEach-Object {
+        $output = LoopFormat -Text $output -Type $_ -ColorHexa $ColorHexa
+    }
 
-return $output
+    return $output
 }

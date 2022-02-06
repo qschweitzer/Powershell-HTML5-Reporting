@@ -1,5 +1,5 @@
-﻿Function New-PWFTabContainer{
-<#
+﻿Function New-PWFTabContainer {
+    <#
 .SYNOPSIS
 Create a new Tab navigation bar with tabs.
 .DESCRIPTION
@@ -11,17 +11,17 @@ New-PWFTabContainer -Tabs { New-PWFTabs -Name "Tab1" -Content {}}
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory=$true,Position=0)]
-    $Tabs
-)
-$Script:TabsNames = @()
-$Script:TabsCount = 1
-$Script:TabsID = @()
-$RandomIDNavTab = "NavTab$(Get-Random)"
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        $Tabs
+    )
+    $Script:TabsNames = @()
+    $Script:TabsCount = 1
+    $Script:TabsID = @()
+    $RandomIDNavTab = "NavTab$(Get-Random)"
 
-$TabsOutput = .$Tabs
-$output = @"
+    $TabsOutput = .$Tabs
+    $output = @"
 <nav>
     <div class="nav nav-tabs" id="$($RandomIDNavTab)" role="tablist">
     $(try {
@@ -40,5 +40,5 @@ $output = @"
 </div>
 "@
 
-return $output
+    return $output
 }

@@ -1,5 +1,5 @@
-﻿Function New-PWFTitles{
-<#
+﻿Function New-PWFTitle {
+    <#
 .SYNOPSIS
 Create a new HTML Title with custom size.
 .DESCRIPTION
@@ -17,18 +17,18 @@ New-PWFTitles -TitleText "MyTitle" -Size 1 -Center -Lightmode
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory=$true,Position=0)]
-    [string]$TitleText,
-    [int]$Size,
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        [string]$TitleText,
+        [int]$Size,
 
-    [Parameter(Mandatory=$false,Position=1)]
-    [switch]$Center,
-    [switch]$LightMode
-)
+        [Parameter(Mandatory = $false, Position = 1)]
+        [switch]$Center,
+        [switch]$LightMode
+    )
 
-$output = @"
+    $output = @"
     <H$($Size) style='$(if($LightMode){"color:#fff;"}if($Center){"text-align:center;"})'>$TitleText</H$($Size)>
 "@
-return $output
+    return $output
 }

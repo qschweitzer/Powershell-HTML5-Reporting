@@ -1,5 +1,5 @@
-﻿Function New-PWFHorizontalScroller{
-<#
+﻿Function New-PWFHorizontalScroller {
+    <#
 .SYNOPSIS
 Create a new HTML figure without class.
 .DESCRIPTION
@@ -12,21 +12,21 @@ New-PWFHorizontalScroller -Content { ... }
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory=$true,Position=0)]
-    $Content,
-    [switch]$Scrollbar
-)
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        $Content,
+        [switch]$Scrollbar
+    )
 
     $outputa = @"
     <figure$(if($Scrollbar){write-output " style=height:25em;"})>
 "@
-    $(try {$outputa += .$Content} catch {$_.Exception.Message})
+    $(try { $outputa += .$Content } catch { $_.Exception.Message })
 
-$outputa += @"
+    $outputa += @"
     </figure>
 "@
 
-return $outputa
+    return $outputa
 
 }

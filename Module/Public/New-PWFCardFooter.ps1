@@ -1,5 +1,5 @@
-﻿Function New-PWFCardFooter{
-<#
+﻿Function New-PWFCardFooter {
+    <#
 .SYNOPSIS
 Create a new HTML <footer>.
 .DESCRIPTION
@@ -11,17 +11,16 @@ New-PWFCardFooter -Content { ... }
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory=$true,Position=0)]
-    $Content
-)
-$output = @"
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        $Content
+    )
+    $output = @"
     <footer>
 "@
-    $(try {$output += .$Content} catch {$_.Exception.Message})
-    
+    $(try { $output += .$Content } catch { $_.Exception.Message })
     $output += @"
     </footer>
 "@
-return $output
+    return $output
 }

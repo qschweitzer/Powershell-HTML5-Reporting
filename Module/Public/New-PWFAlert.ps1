@@ -1,5 +1,5 @@
-﻿Function New-PWFAlert{
-<#
+﻿Function New-PWFAlert {
+    <#
 .SYNOPSIS
 Create a new HTML alert.
 .DESCRIPTION
@@ -13,20 +13,20 @@ New-PWFAlert -YourText "Your computer isn't up to date" -ContextualColor warning
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory=$true,Position=0)]
-    $YourText,
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        $YourText,
 
-    [Parameter(Mandatory=$false,Position=1)]
-    [ValidateSet("default", "primary", "secondary", "success", "danger", "warning","info","light","dark", IgnoreCase = $false)]
-    [string]$ContextualColor="default"
-)
+        [Parameter(Mandatory = $false, Position = 1)]
+        [ValidateSet("default", "primary", "secondary", "success", "danger", "warning", "info", "light", "dark", IgnoreCase = $false)]
+        [string]$ContextualColor = "default"
+    )
 
-$output = @"
+    $output = @"
 <div class="alert $(if($ContextualColor){"alert-$($ContextualColor)"})" role="alert">
     $($YourText)
 </div>
 "@
 
-return $output
+    return $output
 }

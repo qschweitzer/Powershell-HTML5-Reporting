@@ -6,7 +6,8 @@ $FoundErrors = @(
     Foreach ($Import in @($Private + $Public)) {
         Try {
             . $Import.Fullname
-        } Catch {
+        }
+        Catch {
             Write-Error -Message "Failed to import functions from $($import.Fullname): $_"
             $true
         }

@@ -1,5 +1,5 @@
-﻿Function New-PWFChart{
-<#
+﻿Function New-PWFChart {
+    <#
 .SYNOPSIS
 Create a new ChartJS chart.
 .DESCRIPTION
@@ -39,70 +39,71 @@ New-PWFChart -Stacked -ChartTitle "Stacked Bars" -ChartType "bar" -Legends "Janv
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory = $true,ParameterSetName='Stacked',Position = 0)]
-    [Parameter(Mandatory = $true,ParameterSetName='NotStacked',Position = 0)]
-    $ChartTitle,
-    [ValidateSet("bar", "doughnut", "pie", "line", "radar", "polar", IgnoreCase = $false)]
-    $ChartType,
+    param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'Stacked', Position = 0)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'NotStacked', Position = 0)]
+        $ChartTitle,
+        [ValidateSet("bar", "doughnut", "pie", "line", "radar", "polar", IgnoreCase = $false)]
+        $ChartType,
 
-    [Parameter(
-    ParameterSetName='Stacked',
-    HelpMessage = 'If Stacked selected, you have to create a hashtable with datasets.',
-    Position = 1)]
-    [switch]$Stacked,
+        [Parameter(
+            ParameterSetName = 'Stacked',
+            HelpMessage = 'If Stacked selected, you have to create a hashtable with datasets.',
+            Position = 1)]
+        [switch]$Stacked,
 
-    [Parameter(
-    ParameterSetName='NotStacked',
-    HelpMessage = 'Classic chart.',
-    Position = 2)]
-    $ChartLabels,
+        [Parameter(
+            ParameterSetName = 'NotStacked',
+            HelpMessage = 'Classic chart.',
+            Position = 2)]
+        $ChartLabels,
 
-    [Parameter(Mandatory = $true,ParameterSetName='NotStacked',Position = 3)]
-    $ChartValues,
+        [Parameter(Mandatory = $true, ParameterSetName = 'NotStacked', Position = 3)]
+        $ChartValues,
 
-    [Parameter(Mandatory = $true,ParameterSetName='Stacked',Position = 2)]
-    $Legends,
+        [Parameter(Mandatory = $true, ParameterSetName = 'Stacked', Position = 2)]
+        $Legends,
 
-    [Parameter(Mandatory = $false,ParameterSetName='Stacked',Position = 3)]
-    [Parameter(Mandatory = $false,ParameterSetName='NotStacked',Position = 4)]
-    [switch]$HideLegend,
-    [ValidateSet("top", "right", "bottom", "left", IgnoreCase = $false)]
-    [string]$LegendPosition="top",
-    [switch]$Horizontal,
-    $ChartColors,
-    [switch]$LightMode,
-    [switch]$DontShowTitle,
+        [Parameter(Mandatory = $false, ParameterSetName = 'Stacked', Position = 3)]
+        [Parameter(Mandatory = $false, ParameterSetName = 'NotStacked', Position = 4)]
+        [switch]$HideLegend,
+        [ValidateSet("top", "right", "bottom", "left", IgnoreCase = $false)]
+        [string]$LegendPosition = "top",
+        [switch]$Horizontal,
+        $ChartColors,
+        [switch]$LightMode,
+        [switch]$DontShowTitle,
 
-    [Parameter(Mandatory = $true,ParameterSetName='Stacked',Position = 2)]
-    $StackedContent
+        [Parameter(Mandatory = $true, ParameterSetName = 'Stacked', Position = 2)]
+        $StackedContent
     )
-    if(!$Stacked){
-    #Switch ChartLabels from string to array, splitted by semi-colon
-    if($ChartLabels.gettype().Name -eq "String"){
-        $ChartLabels = $ChartLabels.split(";")
-    }
-    #Switch ChartValues from string to array, splitted by semi-colon
-    if($ChartValues.gettype().Name -eq "String"){
-        $ChartValues = $ChartValues.split(";")
-    }
-    #Switch ChartColors from string to array, splitted by semi-colon
-    if($ChartColors -and ($ChartColors.gettype().Name -eq "String")){
-        $ChartColors = $ChartColors.split(";")
-    }
-    }
-
-    if(!$Stacked){
-    $ChartCount = ($ChartValues | Measure-Object).count
-    $ChartDatasets = $ChartLabels
-    }else{
-    if($Legends.gettype().Name -eq "String"){
-        $Legends = $Legends.split(";s")
-    }
+    if (!$Stacked) {
+        #Switch ChartLabels from string to array, splitted by semi-colon
+        if ($ChartLabels.gettype().Name -eq "String") {
+            $ChartLabels = $ChartLabels.split(";")
+        }
+        #Switch ChartValues from string to array, splitted by semi-colon
+        if ($ChartValues.gettype().Name -eq "String") {
+            $ChartValues = $ChartValues.split(";")
+        }
+        #Switch ChartColors from string to array, splitted by semi-colon
+        if ($ChartColors -and ($ChartColors.gettype().Name -eq "String")) {
+            $ChartColors = $ChartColors.split(";")
+        }
     }
 
-    if($null -eq $ChartColors){
-    $ChartColors = $script:ChartColorsPalette
+    if (!$Stacked) {
+        $ChartCount = ($ChartValues | Measure-Object).count
+        $ChartDatasets = $ChartLabels
+    }
+    else {
+        if ($Legends.gettype().Name -eq "String") {
+            $Legends = $Legends.split(";s")
+        }
+    }
+
+    if ($null -eq $ChartColors) {
+        $ChartColors = $script:ChartColorsPalette
     }
 
     $ID = "ID$(Get-Random -Maximum 9999)"
@@ -110,8 +111,6 @@ param(
     $config = "config$(Get-Random -Maximum 9999)"
     $labels = "labels$(Get-Random -Maximum 9999)"
     $Script:StackedColorsCount = 0
-    
-
     $output = @"
     <div>
         <canvas id="$($ID)"></canvas>
@@ -119,10 +118,10 @@ param(
 
     <script>
 "@
-    if($Stacked){
-    $Script:StackedChartName = @()
-    $StackedContent = .$StackedContent
-    $output += @"
+    if ($Stacked) {
+        $Script:StackedChartName = @()
+        $StackedContent = .$StackedContent
+        $output += @"
             const $($labels) = ['$($Legends -join "','")'];
             const $($data) = {
             labels: $($labels),
@@ -131,10 +130,10 @@ param(
             ]
             };
 "@
-    $Script:StackedChartName = @()
-    }else
-    {
-    $output += @"
+        $Script:StackedChartName = @()
+    }
+    else {
+        $output += @"
             const $($data) = {
             labels: [
             $(
@@ -162,7 +161,6 @@ param(
 "@
     }
     $output += @"
-    
         const $($config) = {
         type: '$(if("" -ne $ChartType){write-output $ChartType}else{write-output "doughnut"})',
         data: $($data),
@@ -210,6 +208,5 @@ param(
         $($ID).canvas.parentNode.style.height = '50vh';
     </script>
 "@
-    
-return $output
+    return $output
 }

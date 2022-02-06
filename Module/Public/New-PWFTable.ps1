@@ -1,5 +1,5 @@
-﻿Function New-PWFTable{
-<#
+﻿Function New-PWFTable {
+    <#
 .SYNOPSIS
 Create a table from object.
 .DESCRIPTION
@@ -39,69 +39,69 @@ New-PWFTable -ToTable (Get-Process | Group-Object -Property Name -NoElement | So
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory=$true,Position=0)]
-    $ToTable,
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        $ToTable,
 
-    [Parameter(Mandatory=$false,Position=1)]
-    $SelectProperties,
-    [switch]$EnableSearch,
-    [switch]$Exportbuttons,
+        [Parameter(Mandatory = $false, Position = 1)]
+        $SelectProperties,
+        [switch]$EnableSearch,
+        [switch]$Exportbuttons,
 
-    [Parameter(Mandatory = $false,
-    ParameterSetName='Conditionnal',
-    HelpMessage = "Enable conditionnal format on certain values.",
-    Position = 2)]
-    [switch]$EnableConditionnalFormat,
-    [Parameter(ParameterSetName='Conditionnal', Position = 3)]
-    $ConditionProperties,
-    $ConditionOperators,
-    $ConditionValues,
-    $ConditionBackgroundColors,
+        [Parameter(Mandatory = $false,
+            ParameterSetName = 'Conditionnal',
+            HelpMessage = "Enable conditionnal format on certain values.",
+            Position = 2)]
+        [switch]$EnableConditionnalFormat,
+        [Parameter(ParameterSetName = 'Conditionnal', Position = 3)]
+        $ConditionProperties,
+        $ConditionOperators,
+        $ConditionValues,
+        $ConditionBackgroundColors,
 
-    [Parameter(Mandatory=$false,Position=4)]
-    [switch]$Pagination,
-    [switch]$ShowTooltip,
-    [switch]$DetailsOnClick,
-    [switch]$SortByColumn,
-    [switch]$Striped,
-    [switch]$Dark,
-    [switch]$Small,
-    [ValidateSet("default", "primary", "secondary", "success", "danger", "warning","info","light","dark", IgnoreCase = $false)]
-    [string]$ContextualColor
+        [Parameter(Mandatory = $false, Position = 4)]
+        [switch]$Pagination,
+        [switch]$ShowTooltip,
+        [switch]$DetailsOnClick,
+        [switch]$SortByColumn,
+        [switch]$Striped,
+        [switch]$Dark,
+        [switch]$Small,
+        [ValidateSet("default", "primary", "secondary", "success", "danger", "warning", "info", "light", "dark", IgnoreCase = $false)]
+        [string]$ContextualColor
 
-    # Classes: class="striped highlight centered responsive-table"
-)
+        # Classes: class="striped highlight centered responsive-table"
+    )
 
-$RandomIDTable = ("table$(Get-Random)")
-$RandomIDFuncDetailFormatter = "detailFormatter$(Get-Random)"
-$RandomIDFuncCustomSort = "customSort$(Get-Random)"
-$ConditionnalObjects = @()
-if($SelectProperties -and $SelectProperties.gettype().Name -eq "String"){
-    $SelectProperties = $SelectProperties.split(',')
-}
-if($ConditionProperties -match ","){$ConditionProperties = $ConditionProperties.split(",")}else{$ConditionProperties= [array]$ConditionProperties}
-if($ConditionOperators -match ","){$ConditionOperators = $ConditionOperators.split(",")}else{$ConditionOperators= [array]$ConditionOperators}
-if($ConditionValues -match ","){$ConditionValues = $ConditionValues.split(",")}else{$ConditionValues= [array]$ConditionValues}
-if($ConditionBackgroundColors -match ","){$ConditionBackgroundColors = $ConditionBackgroundColors.split(",")}else{$ConditionBackgroundColors= [array]$ConditionBackgroundColors}
-if($EnableConditionnalFormat){
-    For($e =0; $e -lt ($ConditionProperties | Measure-Object).count; $e++) {
-    $ConditionnalObject = New-Object psobject
-    $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "PropertyName" -Value $ConditionProperties[$e]
-    $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "Operator" -Value $ConditionOperators[$e]
-    $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "Value" -Value $ConditionValues[$e]
-    $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "ColorHexa" -Value $ConditionBackgroundColors[$e]
-    $ConditionnalObjects += $ConditionnalObject
+    $RandomIDTable = ("table$(Get-Random)")
+    $RandomIDFuncDetailFormatter = "detailFormatter$(Get-Random)"
+    $RandomIDFuncCustomSort = "customSort$(Get-Random)"
+    $ConditionnalObjects = @()
+    if ($SelectProperties -and $SelectProperties.gettype().Name -eq "String") {
+        $SelectProperties = $SelectProperties.split(',')
     }
-}
-if($SelectProperties){
-    $AllColumnsHeader = $SelectProperties
-}
-else{
-    $AllColumnsHeader = ($ToTable | Get-Member -MemberType Properties).Name
-}
+    if ($ConditionProperties -match ",") { $ConditionProperties = $ConditionProperties.split(",") }else { $ConditionProperties = [array]$ConditionProperties }
+    if ($ConditionOperators -match ",") { $ConditionOperators = $ConditionOperators.split(",") }else { $ConditionOperators = [array]$ConditionOperators }
+    if ($ConditionValues -match ",") { $ConditionValues = $ConditionValues.split(",") }else { $ConditionValues = [array]$ConditionValues }
+    if ($ConditionBackgroundColors -match ",") { $ConditionBackgroundColors = $ConditionBackgroundColors.split(",") }else { $ConditionBackgroundColors = [array]$ConditionBackgroundColors }
+    if ($EnableConditionnalFormat) {
+        For ($e = 0; $e -lt ($ConditionProperties | Measure-Object).count; $e++) {
+            $ConditionnalObject = New-Object psobject
+            $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "PropertyName" -Value $ConditionProperties[$e]
+            $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "Operator" -Value $ConditionOperators[$e]
+            $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "Value" -Value $ConditionValues[$e]
+            $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "ColorHexa" -Value $ConditionBackgroundColors[$e]
+            $ConditionnalObjects += $ConditionnalObject
+        }
+    }
+    if ($SelectProperties) {
+        $AllColumnsHeader = $SelectProperties
+    }
+    else {
+        $AllColumnsHeader = ($ToTable | Get-Member -MemberType Properties).Name
+    }
 
-$output += @"
+    $output += @"
     <table class='$(if($Striped){" table-striped"}if($Dark){" table-dark"}if($Small){" table-sm"}if($ContextualColor){" table-$($ContextualColor)"})' id='$($RandomIDTable)' data-toggle='table' $(if($EnableSearch){
         '
         data-search="true"
@@ -166,22 +166,22 @@ $output += @"
                 if(($ActualProperty -in $ConditionnalObjects.PropertyName)){
                     $ConditionnalObjects | ForEach-Object {
                     if($_.PropertyName -eq $ActualProperty){
-                    $ActualCondition = $_
-                    try{
-                        $ActualValue = [int]$Row.$ActualProperty
-                    }catch{
-                        $ActualValue = $Row.$ActualProperty
-                    }
-                    try{
-                        $ConditionCmd = ('[int]$ActualValue' + " " + $ActualCondition.Operator + " " + '[int]$ActualCondition.Value')
-                        $ConditionResult = (Invoke-Expression $ConditionCmd)
-                    }catch{
-                        $ConditionCmd = ('$ActualValue' + " " + $ActualCondition.Operator + " " + '$ActualCondition.Value') 
-                        $ConditionResult = (Invoke-Expression $ConditionCmd)
-                    }
-                    if($ConditionResult -eq "True"){
-                        $ConditionnalValidated = Write-Output "<td id='$($RandomIDBodyTD)' style='background-color: $($ActualCondition.ColorHexa)'> $($ActualValue) </td>"
-                    }
+                        $ActualCondition = $_
+                        try{
+                            $ActualValue = [int]$Row.$ActualProperty
+                        }catch{
+                            $ActualValue = $Row.$ActualProperty
+                        }
+                        try{
+                            $ConditionCmd = ('[int]$ActualValue' + " " + $ActualCondition.Operator + " " + '[int]$ActualCondition.Value')
+                            $ConditionResult = (Invoke-Expression $ConditionCmd)
+                        }catch{
+                            $ConditionCmd = ('$ActualValue' + " " + $ActualCondition.Operator + " " + '$ActualCondition.Value')
+                            $ConditionResult = (Invoke-Expression $ConditionCmd)
+                        }
+                        if($ConditionResult -eq "True"){
+                            $ConditionnalValidated = Write-Output "<td id='$($RandomIDBodyTD)' style='background-color: $($ActualCondition.ColorHexa)'> $($ActualValue) </td>"
+                        }
                     }
                 }
                 if($ConditionnalValidated){
@@ -275,5 +275,5 @@ $(if($Exportbuttons){
 })
 "@
 
-return $output
+    return $output
 }

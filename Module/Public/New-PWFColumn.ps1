@@ -1,5 +1,5 @@
-﻿Function New-PWFColumn{
-<#
+﻿Function New-PWFColumn {
+    <#
 .SYNOPSIS
 Create a new HTML div column without class.
 .DESCRIPTION
@@ -11,20 +11,20 @@ New-PWFColumn -Content { ... }
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory=$true,Position=0)]
-    $Content
-)
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        $Content
+    )
 
     $output = @"
     <div>
 "@
-    $(try {$output += .$Content} catch {$_.Exception.Message})
+    $(try { $output += .$Content } catch { $_.Exception.Message })
 
-$output += @"
+    $output += @"
     </div>
 "@
 
-return $output
+    return $output
 
 }

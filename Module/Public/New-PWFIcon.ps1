@@ -1,5 +1,5 @@
-﻿Function New-PWFIcon{
-<#
+﻿Function New-PWFIcon {
+    <#
 .SYNOPSIS
 Create a new icon.
 .DESCRIPTION
@@ -13,18 +13,18 @@ New-PWFIcon -IconName Settings -SizeInPixel 24
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory=$true,Position=0)]
-    [string]$IconName,
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        [string]$IconName,
 
-    [Parameter(Mandatory=$false,Position=1)]
-    [string]$SizeinPixel
-)
+        [Parameter(Mandatory = $false, Position = 1)]
+        [string]$SizeinPixel
+    )
 
-$output = @"
+    $output = @"
     <i class="$(if($SizeinPixel){write-output "style=font-size: $($SizeinPixel)px;"}) material-icons">$IconName</i>
 "@
 
-return $output
+    return $output
 
 }

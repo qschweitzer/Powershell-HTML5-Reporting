@@ -1,5 +1,5 @@
-﻿Function New-PWFImage{
-<#
+﻿Function New-PWFImage {
+    <#
 .SYNOPSIS
 Insert an image.
 .DESCRIPTION
@@ -13,15 +13,15 @@ New-PWFImage -ImageURL "https://myimage.." -WidthInPercent 50
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory=$true,Position=0)]
-    [string]$ImageURL,
-    [Parameter(Mandatory=$false,Position=1)]
-    [int]$WidthInPercent
-)
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        [string]$ImageURL,
+        [Parameter(Mandatory = $false, Position = 1)]
+        [int]$WidthInPercent
+    )
 
-$output = @"
+    $output = @"
 <img src="$($ImageURL)" $(if($WidthInPercent){"width=$($WidthInPercent)%"})>
 "@
-return $output
+    return $output
 }

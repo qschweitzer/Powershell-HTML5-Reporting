@@ -1,5 +1,5 @@
-﻿Function New-PWFList{
-<#
+﻿Function New-PWFList {
+    <#
 .SYNOPSIS
 Create a new HTML list.
 .DESCRIPTION
@@ -13,19 +13,19 @@ New-PWFList -List $myarray
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory=$true,Position=0)]
-    $List,
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        $List,
 
-    [Parameter(Mandatory=$false,Position=1)]
-    [switch]$Numbered
-)
+        [Parameter(Mandatory = $false, Position = 1)]
+        [switch]$Numbered
+    )
 
-$output = @"
+    $output = @"
 <$(if($Numbered){"o"}else{"u"})l>
     $($List | ForEach-Object{ "<li>$($_)</li>"})
 </$(if($Numbered){"o"}else{"u"})l>
 "@
 
-return $output
+    return $output
 }

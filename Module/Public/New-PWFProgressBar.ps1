@@ -1,5 +1,5 @@
-﻿Function New-PWFProgressBar{
-<#
+﻿Function New-PWFProgressBar {
+    <#
 .SYNOPSIS
 Insert a progress bar.
 .DESCRIPTION
@@ -13,15 +13,15 @@ New-PWFProgressBar -CurrentValue 25 -MaxValue 200
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-param(
-    [Parameter(Mandatory=$true,Position=0)]
-    [int]$CurrentValue,
-    [Parameter(Mandatory=$true,Position=1)]
-    [int]$MaxValue
-)
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        [int]$CurrentValue,
+        [Parameter(Mandatory = $true, Position = 1)]
+        [int]$MaxValue
+    )
 
-$output = @"
+    $output = @"
 <progress value="$($CurrentValue)" max="$($MaxValue)"></progress>
 "@
-return $output
+    return $output
 }
