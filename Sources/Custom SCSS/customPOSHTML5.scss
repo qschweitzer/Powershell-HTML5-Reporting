@@ -1,0 +1,28 @@
+// Custom.scss
+// Option B: Include parts of Bootstrap
+//node-sass .\scss\customPOSHTML5.scss .\scss\customPOSHTML5.css
+
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "../sources/bootstrap/functions";
+@import "../sources/bootstrap/variables";
+@import "../sources/bootstrap/mixins";
+
+// 2. Include any default variable overrides here
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import "../sources/bootstrap/alert";
+@import "../sources/bootstrap/badge";
+@import "../sources/bootstrap/pagination";
+@import "../sources/bootstrap/tables";
+@import "../sources/bootstrap/buttons";
+@import "../sources/bootstrap/button-group";
+@import "../sources/bootstrap/dropdown";
+@import "../sources/bootstrap/nav";
+
+// 4. Include any optional Bootstrap CSS as needed
+//@import "../sources/bootstrap/utilities";
+
+// 5. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+//@import "../sources/bootstrap/utilities/api";
+
+// 6. Add additional custom code here
