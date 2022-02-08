@@ -20,12 +20,25 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -OnlineCSS -OnlineJS -Content {
         }
         New-PWFColumn -Content {
           New-PWFCard -Content {
-            New-PWFListGroup -Numbered -GroupItems {
-              New-PWFListGroupItem -ItemContent "Test 1" -SubHeading "SubHeading 1" -BadgeContent "2"
-              New-PWFListGroupItem -ItemContent "Test 2" -SubHeading "SubHeading 2" -BadgeContent "4"
+            New-PWFListGroup -GroupItems {
+              New-PWFListGroupItem -ItemContent "Test 1" -SubHeading "SubHeading 1" -BadgeContent "2" -BadgeColor "danger"
+              New-PWFListGroupItem -ItemContent "Test 2" -SubHeading "SubHeading 2" -BadgeContent "4" -ContextualColor danger
               New-PWFListGroupItem -ItemContent "Test 3" -SubHeading "SubHeading 3" -BadgeContent "156"
             }
           }
+        }
+        New-PWFColumn -Content {
+          New-PWFCard -Content {
+            New-PWFTitle -TitleText "35%" -Size 3 -Center
+            New-PWFText "Test de stats" -Center
+          }
+        }
+        New-PWFColumn -Content {
+            New-PWFAccordion -AccordionItems {
+              New-PWFAccordionItem -ItemTitle "Test 1" -ItemContent "SubHeading 1"
+              New-PWFAccordionItem -ItemTitle "Test 2" -ItemContent "SubHeading 2"
+              New-PWFAccordionItem -ItemTitle "Test 3" -ItemContent "SubHeading 3"
+            }
         }
       }
       New-PWFRow -Content {
