@@ -1,7 +1,8 @@
 ﻿######################
 #####  EXAMPLES  #####
 ######################
-$TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
+Import-Module "$PSScriptRoot\..\poshtml5.psd1" -force
+$TestPage = New-PWFPage -Title "MY FIRST TEST" -OnlineCSS -OnlineJS -Content {
   New-PWFTabContainer -Tabs {
     New-PWFTab -Name "First Tab" -Content {
       New-PWFCardHeader -BackgroundColor "#fff" -Center -Content {
@@ -15,6 +16,15 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
             Integer laoreet rutrum ante eget ultrices. $(New-PWFTextFormat -Bold "Write a bold text") Proin mi quam, pulvinar eget magna eu, tristique euismod orci."
             New-PWFBlockQuote -YourText "You could now use 'tabs' to create multi page content !"
             New-PWFAlert -YourText "Built with less 100 lines of code !" -ContextualColor info
+          }
+        }
+        New-PWFColumn -Content {
+          New-PWFCard -Content {
+            New-PWFListGroup -Numbered -GroupItems {
+              New-PWFListGroupItem -ItemContent "Test 1" -SubHeading "SubHeading 1" -BadgeContent "2"
+              New-PWFListGroupItem -ItemContent "Test 2" -SubHeading "SubHeading 2" -BadgeContent "4"
+              New-PWFListGroupItem -ItemContent "Test 3" -SubHeading "SubHeading 3" -BadgeContent "156"
+            }
           }
         }
       }

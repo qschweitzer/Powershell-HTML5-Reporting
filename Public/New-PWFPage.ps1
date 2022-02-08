@@ -43,7 +43,7 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
             <!--Import Bootstrap minified CSS -->
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
             <!--Import Custom PicoCSS minified CSS -->
-            <link href="https://cdn.jsdelivr.net/gh/qschweitzer/Powershell-HTML5-Reporting/css/PicoCssModified.min.css" rel="stylesheet" crossorigin="anonymous">
+            <link href="https://cdn.jsdelivr.net/gh/qschweitzer/Powershell-HTML5-Reporting/assets/css/113_PicoCssModified.min.css" rel="stylesheet" crossorigin="anonymous">
             <!--Import Table Export minified CSS -->
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.2.0/css/tableexport.min.css" >
             <!--Import Google Icon Font-->
