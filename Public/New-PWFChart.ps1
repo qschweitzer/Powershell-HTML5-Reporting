@@ -171,9 +171,9 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
             plugins: {
             legend: {
                 display: $(if($HideLegend){"false"}else{"true"}),
-                $(if($LegendPosition){"legend: '$($LegendPosition)',"})
+                $(if($LegendPosition){"position: '$($LegendPosition)',"})
                 labels: {
-                $(if($LightMode){"color: '#fff'"})
+                $(if($LightMode){"color: '#fff',"})
                 }
             },
             title: {
@@ -205,7 +205,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
             document.getElementById('$($ID)'),
             $($config)
         );
-        $($ID).canvas.parentNode.style.height = '50vh';
+        $($ID).canvas.parentNode.style.height = '80vh';
     </script>
 "@
     return $output

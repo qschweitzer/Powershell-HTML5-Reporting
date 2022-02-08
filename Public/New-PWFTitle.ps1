@@ -17,6 +17,7 @@ New-PWFTitles -TitleText "MyTitle" -Size 1 -Center -Lightmode
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
+    [Alias("New-PWFTitles")] # Old name
     param(
         [Parameter(Mandatory = $true, Position = 0)]
         [string]$TitleText,

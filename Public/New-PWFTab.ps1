@@ -23,7 +23,6 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     $Script:TabsNames += $Name
     $idName = "tab$(Get-Random)"
     $Script:TabsID += $idName
-
     $output = @"
     <div class="tab-pane fade show$(if($TabsCount -eq 1){" active"})$(if($Container){" container"}else{" container-fluid"})" id="nav-$($idName)" role="tabpanel" aria-labelledby="nav-$($idName)-tab">
     $(try {.$Content} catch {$_.Exception.Message})

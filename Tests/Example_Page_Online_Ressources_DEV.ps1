@@ -1,7 +1,11 @@
 ﻿######################
 #####  EXAMPLES  #####
 ######################
+<<<<<<< Updated upstream:Tests/Example_Page_Online_Ressources_DEV.ps1
 Import-Module "$PSScriptRoot\..\poshtml5.psd1" -force
+=======
+Import-Module $PSScriptRoot\..\poshtml5.psd1 -Force
+>>>>>>> Stashed changes:Tests/Dev_Page_Online_Ressources.ps1
 $TestPage = New-PWFPage -Title "MY FIRST TEST" -OnlineCSS -OnlineJS -Content {
   New-PWFTabContainer -Tabs {
     New-PWFTab -Name "First Tab" -Content {
