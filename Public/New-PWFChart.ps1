@@ -205,7 +205,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
             document.getElementById('$($ID)'),
             $($config)
         );
-        $($ID).canvas.parentNode.style.height = '80vh';
+        $($ID).canvas.parentNode.style.height = '25rem';
     </script>
 "@
     return $output
