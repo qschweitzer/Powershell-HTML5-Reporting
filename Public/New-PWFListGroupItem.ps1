@@ -10,7 +10,7 @@ The primary text in the Item.
 Add a header title on the item.
 .PARAMETER BadgeContent
 Add a badge and set the text on it.
-.PARAMETER BadgeColorHex
+.PARAMETER BadgeColor
 Select the color of the badge.
 .PARAMETER ContextualColor
 Select the color of the Item.
@@ -26,13 +26,13 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
       $SubHeading,
       $BadgeContent,
       [ValidateSet("default", "primary", "secondary", "success", "danger", "warning", "info", "light", "dark", IgnoreCase = $false)]
-      $BadgeColorHex = "primary",
+      $BadgeColor = "primary",
       [ValidateSet("default", "primary", "secondary", "success", "danger", "warning", "info", "light", "dark", IgnoreCase = $false)]
       $ContextualColor = "default"
   )
 
   $output = @"
-  <li class='list-group-item d-flex justify-content-between align-items-start'>
+  <li class='list-group-item d-flex justify-content-between align-items-start $(if($ContextualColor){"list-group-item-$($ContextualColor)"})'>
     <div class='ms-2 me-auto'>
       $(if($SubHeading){
         "<div class='fw-bold'>$SubHeading</div>"
@@ -40,7 +40,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
       $($ItemContent)
     </div>
     $(if($BadgeContent){
-      "<span class='badge bg-$($BadgeColorHex) rounded-pill'>$BadgeContent</span>"
+      "<span class='badge bg-$($BadgeColor) rounded-pill'>$BadgeContent</span>"
     })
   </li>
 "@
