@@ -26,7 +26,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     )
 
     $output = @"
-        <$(if($Numbered){"o"}else{"u"})l class="list-group list-group-numbered">
+        <$(if($Numbered){"o"}else{"u"})l class="list-group$(if($Numbered){" list-group-numbered"})">
             $(try { .$GroupItems } catch { $_.Exception.Message })
         </$(if($Numbered){"o"}else{"u"})l>
 "@
