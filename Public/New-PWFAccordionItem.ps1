@@ -29,7 +29,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
             </button>
         </h2>
         <div id="$($RandomID_Accordioncollapsone)" class="accordion-collapse collapse" aria-labelledby="$($RandomID_AccordionHeader)" $(if(!$Script:CollapseAlwaysOpen -eq $true){"data-bs-parent='#$Script:RandomID_AccordionFlush'"})>
-            <div class="accordion-body">$($ItemContent)</div>
+            <div class="accordion-body">$(try { .$ItemContent } catch { $_.Exception.Message })</div>
         </div>
     </div>
 "@
