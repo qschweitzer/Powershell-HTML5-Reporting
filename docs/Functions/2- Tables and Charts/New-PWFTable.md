@@ -12,12 +12,12 @@ New-PWFTable -ToTable <object> [-SelectProperties <array>] [-EnableSearch <switc
 
 ### EXAMPLE 1
 ```powershell
-New-PWFTable -ToTable (Get-Process | Group-Object -Property Name -NoElement | Sort-Object Count -Descending | select Name, Count) -SelectProperties "Name,Count" -EnableConditionnalFormat -ConditionProperties "Count,Name" -ConditionOperators "-gt,-match" -ConditionValues "2,svchost" -ConditionBackgroundColors "#ff0000,#FFFF00"
+New-PWFTable -ToTable (Get-Process | Group-Object -Property Name -NoElement | Sort-Object Count -Descending) -SelectProperties "Name,Count" -EnableConditionnalFormat -ConditionProperties "Count,Name" -ConditionOperators ">,match" -ConditionValues "2,svchost" -ConditionBackgroundColors "#ff0000,yellow"
 ```
 
 ## PARAMETERS
 ### -ToTable
-The object you want to conver to an HTML table.
+The object you want to convert to an HTML table.
 ```yaml
 Type: Object
 Parameter Sets: (All)
@@ -96,7 +96,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 ### -ConditionOperators
-Add the different operators of the conditions, in powershell format: "-lt,-gt"
+Add the different operators of the conditions, like ">=",">" for numbers compare. To match specific text, use "match".
 ```yaml
 Type: String
 Parameter Sets: (All)

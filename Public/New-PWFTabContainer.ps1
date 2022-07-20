@@ -18,24 +18,21 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     $Script:TabsNames = @()
     $Script:TabsCount = 1
     $Script:TabsID = @()
+    $TabContentID = "Container$(Get-Random)"
     $RandomIDNavTab = "NavTab$(Get-Random)"
 
     $TabsOutput = .$Tabs
     $output = @"
 <nav>
     <div class="nav nav-tabs" id="$($RandomIDNavTab)" role="tablist">
-    $(try {
-        for($i=0; $i -lt $TabsID.count; $i++){
-            "<button class='nav-link$(if($i -eq 0){" active"})' id='nav-$($TabsID[$i])-tab' data-bs-toggle='tab' data-bs-target='#nav-$($TabsID[$i])' type='button' role='tab' aria-controls='nav-$($TabsID[$i])'$(if($i -eq 0){" aria-selected='true'"})>$($TabsNames[$i])</button>`r`n"
+    $(
+        for($i=0; $i -le $Script:TabsID.count; $i++){
+            "<button class='nav-link$(if($i -eq 0){" active"})' id='nav-$($Script:TabsID[$i])-tab' data-bs-toggle='tab' data-bs-target='#nav-$($Script:TabsID[$i])' type='button' role='tab' aria-controls='nav-$($Script:TabsID[$i])'$(if($i -eq 0){" aria-selected='true'"})>$($Script:TabsNames[$i])</button>`r`n"
         }
-    }
-    catch
-    {
-        $_.Exception.Message
-    })
+    )
     </div>
 </nav>
-<div class="tab-content" id="nav-tabContent">
+<div class="tab-content" id="$($TabContentID)">
     $($TabsOutput)
 </div>
 "@

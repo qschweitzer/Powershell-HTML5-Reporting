@@ -1,6 +1,11 @@
 ﻿######################
 #####  EXAMPLES  #####
 ######################
+Import-Module $PSScriptRoot+"\..\public\new-pwftable.ps1" -Force
+Import-Module $PSScriptRoot+"\..\public\new-pwftabcontainer.ps1" -Force
+Import-Module $PSScriptRoot+"\..\public\new-pwftab.ps1" -Force
+Import-Module $PSScriptRoot+"\..\public\new-pwfcarouselcontainer.ps1" -Force
+Import-Module $PSScriptRoot+"\..\public\new-pwfcarouselitem.ps1" -Force
 $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
   New-PWFTabContainer -Tabs {
     New-PWFTab -Name "First Tab" -Content {
@@ -45,21 +50,21 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
         New-PWFColumn -Content {
           New-PWFCard -BackgroundColor "#6d597a" -Content {
             New-PWFTitle -Size 3 -TitleText "Disks capacity" -LightMode -Center
-            $DisksInfos =  (Get-Disk | Select-Object FriendlyName,@{Name='Size in GB'; Expression={[math]::Round(($_.Size/1GB),2)}})
+            $DisksInfos = (Get-Disk | Select-Object FriendlyName, @{Name = 'Size in GB'; Expression = { [math]::Round(($_.Size / 1GB), 2) } })
             New-PWFChart -ChartValues $DisksInfos."Size in GB" -ChartLabels $DisksInfos.FriendlyName -ChartTitle "Disk Space in GB" -ChartType bar -LightMode -DontShowTitle
           }
         }
         New-PWFColumn -Content {
           New-PWFCard -BackgroundColor "#b56576" -Content {
             New-PWFTitle -Size 3 -TitleText "Doughnut Chart" -LightMode -Center
-            $Process = (Get-Process | Select-Object -first 15) | Group-Object Name | select Name,@{Name="counter";expression={$_.count}}
+            $Process = (Get-Process | Select-Object -first 15) | Group-Object Name | select Name, @{Name = "counter"; expression = { $_.count } }
             New-PWFChart -ChartValues $Process.Counter -ChartLabels $Process.Name -ChartTitle "First 15th Process" -ChartType doughnut -LightMode
           }
         }
         New-PWFColumn -Content {
           New-PWFCard -BackgroundColor "#e56b6f" -Content {
             New-PWFTitle -Size 3 -TitleText "Pie Chart" -LightMode -Center
-            $Process = Get-Process | Group-Object Name | select -First 15 Name,@{Name="counter";expression={$_.count}}
+            $Process = Get-Process | Group-Object Name | select -First 15 Name, @{Name = "counter"; expression = { $_.count } }
             New-PWFChart -ChartValues $Process.Counter -ChartLabels $Process.Name -ChartTitle "First 15th Process 2" -ChartType pie -Horizontal -LightMode
           }
         }
@@ -68,14 +73,14 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
         New-PWFColumn -Content {
           New-PWFCard -BackgroundColor "#F2935C" -Content {
             New-PWFTitle -Size 3 -TitleText "Line Chart" -LightMode -Center
-            $Chart2Dataset = Get-Process | Group-Object -NoElement -Property Count,Name | Sort-Object Count -Descending | Select-Object -First 10
+            $Chart2Dataset = Get-Process | Group-Object -NoElement -Property Count, Name | Sort-Object Count -Descending | Select-Object -First 10
             New-PWFChart -ChartTitle "Line Chart 1" -ChartType "line" -ChartLabels $Chart2Dataset.Name -ChartValues ($Chart2Dataset | select -ExpandProperty count) -LightMode
           }
         }
         New-PWFColumn -Content {
           New-PWFCard -BackgroundColor "#eaac8b" -Content {
             New-PWFTitle -Size 3 -TitleText "Table with conditionnal format" -Center -LightMode
-            New-PWFTable -ToTable (Get-Process | Group-Object -Property Name | Sort-Object Count -Descending | Select-Object -First 10 Name, Count) -SelectProperties "Name,Count" -SortByColumn -ConditionProperties "Count,Name" -EnableConditionnalFormat -ConditionOperators "-gt,-match" -ConditionValues "10,conhost" -ConditionBackgroundColors "#e63946,#94d2bd" -Small
+            New-PWFTable -ToTable (Get-Process | Group-Object -Property Name | Sort-Object Count -Descending | Select-Object -First 10 Name, Count) -SelectProperties "Name,Count" -SortByColumn -ConditionProperties "Count,Name" -EnableConditionnalFormat -ConditionOperators ">,match" -ConditionValues "10,conhost" -ConditionBackgroundColors "#e63946,#94d2bd" -Small
           }
         }
       }
@@ -84,7 +89,7 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
           New-PWFCard -BackgroundColor "#fff" -Content {
             New-PWFTitle -Size 3 -TitleText "Search in a table" -Center
             New-PWFText -YourText "Some options now like export table, search, paginate, hide many columns and show details by clicking on the row..."
-            New-PWFTable -ToTable (Get-Process | Group-Object -Property Name | Sort-Object Count -Descending | Select-Object Name, Count) -Pagination -DetailsOnClick -SortByColumn -ShowTooltip -EnableSearch -Exportbuttons -contextualcolor dark -Striped
+            New-PWFTable -ToTable (Get-Process | Select-Object ProcessName, Handles, NPM, PM, WS, PeakWorkingSet64, Description, CPU, ProductVersion, PagedMemorySize64, PagedSystemMemorySize, PeakVirtualMemorySize, Responding) -SelectProperties ProcessName, Handles -DetailsOnClick -EnableConditionnalFormat -ConditionProperties "ProcessName,Handles" -EnableSearch -Exportbuttons -Pagination -ShowTooltip -ConditionOperators "match,>=" -ConditionValues "3CX,100" -ConditionBackgroundColors "#e63946,#94d2bd"
           }
         }
       }
@@ -96,8 +101,21 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
           New-PWFList -List (Get-Process | Select-Object -First 10).Name
         }
       }
+      New-PWFColumn -Content {
+        New-PWFCarouselContainer -content {
+          New-PWFCarouselItem -Content {
+            New-PWFImage -ImageURL "https://cdn.britannica.com/71/103171-050-BD1B685A/Bill-Gates-Microsoft-Corporation-operating-system-press-2001.jpg" -WidthInPercent 30
+          }
+          New-PWFCarouselItem -content {
+            $Process2 = Get-Process | Group-Object Name | Select-Object -First 15 Name, @{Name = "counter"; expression = { $_.count } }
+            New-PWFChart -ChartValues $Process2.Counter -ChartLabels $Process2.Name -ChartTitle "First 15th" -ChartType pie -Horizontal -LightMode
+
+          }
+        }
+      }
     }
   }
 }
-$TestPage | out-file -Encoding UTF8 -FilePath "C:\Windows\Temp\TestFramework.html"
-Start-Process "C:\Windows\Temp\TestFramework.html"
+$ExportFile = $PSScriptRoot + "\TestFramework.html"
+$TestPage | out-file -Encoding UTF8 -FilePath $ExportFile
+Start-Process $ExportFile

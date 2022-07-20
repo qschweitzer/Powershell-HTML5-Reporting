@@ -34,7 +34,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
 $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="light" lang="en">'})
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta charset="$($charset)">
+        <meta charset="$($charset)">F
         $(if($OnlineCSS){
             '
             <!-- Compiled and minified CSS -->
@@ -46,8 +46,6 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
             <link href="https://cdn.jsdelivr.net/gh/qschweitzer/Powershell-HTML5-Reporting/assets/css/113_PicoCssModified.min.css" rel="stylesheet" crossorigin="anonymous">
             <!--Import Table Export minified CSS -->
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.2.0/css/tableexport.min.css" >
-            <!--Import Google Icon Font-->
-            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
             '
         }
         else{
