@@ -84,7 +84,7 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -OnlineCSS -OnlineJS -Content {
           New-PWFCard -BackgroundColor "#fff" -Content {
             New-PWFTitle -Size 3 -TitleText "Search in a table" -Center
             New-PWFText -YourText "Some options now like export table, search, paginate, hide many columns and show details by clicking on the row..."
-            New-PWFTable -ToTable (Get-Process | Group-Object -Property Name | Sort-Object Count -Descending | Select-Object Name, Count) -Pagination -DetailsOnClick -SortByColumn -ShowTooltip -EnableSearch -Exportbuttons -contextualcolor dark -Striped
+            New-PWFTable -ToTable (Get-Process | Select-Object ProcessName, Handles, NPM, PM, WS, PeakWorkingSet64, Description, CPU, ProductVersion, PagedMemorySize64, PagedSystemMemorySize, PeakVirtualMemorySize, Responding) -SelectProperties ProcessName, Handles -DetailsOnClick -EnableConditionnalFormat -ConditionProperties "ProcessName,Handles" -EnableSearch -Exportbuttons -Pagination -ShowTooltip -ConditionOperators "match,>=" -ConditionValues "3CX,100" -ConditionBackgroundColors "#e63946,#94d2bd"
           }
         }
       }

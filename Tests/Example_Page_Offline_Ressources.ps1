@@ -101,18 +101,6 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -Content {
           New-PWFList -List (Get-Process | Select-Object -First 10).Name
         }
       }
-      New-PWFColumn -Content {
-        New-PWFCarouselContainer -content {
-          New-PWFCarouselItem -Content {
-            New-PWFImage -ImageURL "https://cdn.britannica.com/71/103171-050-BD1B685A/Bill-Gates-Microsoft-Corporation-operating-system-press-2001.jpg" -WidthInPercent 30
-          }
-          New-PWFCarouselItem -content {
-            $Process2 = Get-Process | Group-Object Name | Select-Object -First 15 Name, @{Name = "counter"; expression = { $_.count } }
-            New-PWFChart -ChartValues $Process2.Counter -ChartLabels $Process2.Name -ChartTitle "First 15th" -ChartType pie -Horizontal -LightMode
-
-          }
-        }
-      }
     }
   }
 }

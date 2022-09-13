@@ -88,9 +88,9 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
         For ($e = 0; $e -lt ($ConditionProperties | Measure-Object).count; $e++) {
             $ConditionnalObject = New-Object psobject
             $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "PropertyName" -Value $ConditionProperties[$e]
-            $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "Operator" -Value $ConditionOperators[$e]
-            $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "Value" -Value $ConditionValues[$e]
-            $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "ColorHexa" -Value $ConditionBackgroundColors[$e]
+            $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "poshOperator" -Value ([string]$ConditionOperators[$e])
+            $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "poshValue" -Value ([string]$ConditionValues[$e])
+            $ConditionnalObject | Add-Member -MemberType NoteProperty -Name "poshColor" -Value ([string]$ConditionBackgroundColors[$e])
             $ConditionnalObjects += $ConditionnalObject
         }
     }
@@ -100,7 +100,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     else {
         $AllColumnsHeader = ($ToTable | Get-Member -MemberType Properties).Name
     }
-
+    
     $output += @"
     <table class='$(if($Striped){" table-striped"}if($Dark){" table-dark"}if($Small){" table-sm"}if($ContextualColor){" table-$($ContextualColor)"})' id='$($RandomIDTable)' data-toggle='table' $(if($EnableSearch){
         '
@@ -136,68 +136,98 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
         data-custom-sort='$($RandomIDFuncCustomSort)'
         "
         })
+        $(if($ConditionProperties){
+            $cellID = "cellStyle$(Get-random)"
+        })
     >
     <thead>
-    <tr>
-        $($AllColumnsHeader | ForEach-Object { Write-Output "<th$(if($ColorForHeader){write-output " style=background-color:'$($ColorForHeader);'"}) data-field="$($_)"$(if($SortByColumn){" data-sortable='true'"})>" $_ "</th>" })
-    </tr>
+        <tr>
+            $($AllColumnsHeader | ForEach-Object { Write-Output "<th$(if($ColorForHeader){write-output " style='background-color:$($ColorForHeader);'"}) data-field="$($_)"$(if($SortByColumn){" data-sortable='true'"})$(if($ConditionProperties){" data-cell-style='$($cellID)'"})>" $_ "</th>" })
+        </tr>
     </thead>
+</table>
 
-    <tbody>
-        $(for ($i = 0; $i -lt ($ToTable | Measure-Object).count; $i++) {
-            if($ColorForEverySecondRow){
-                if($i % 2 -eq 0 ){
-                    $RowColor = $ColorForEverySecondRow
+$(if($Exportbuttons){
+    "
+    <script>
+    var `$table$($RandomIDTable) = `$('#$($RandomIDTable)')
+    `$(function() {
+        `$table$($RandomIDTable).bootstrapTable('destroy').bootstrapTable({
+            exportTypes: ['json', 'xml', 'png', 'csv', 'txt', 'excel', 'pdf'],
+            columns: [
+            $(for ($p=0; $p -lt ($AllColumnsHeader | Measure-Object).count; $p++){
+                if($p -eq ($AllColumnsHeader | Measure-Object).count){
+                Write-Output "
+                {
+                    field: '$($AllColumnsHeader[$p])'
                 }
-                else{
-                    $RowColor = $ColorForRows
+                "
+                }else{
+                Write-Output "
+                {
+                    field: '$($AllColumnsHeader[$p])'
+                },
+                "
                 }
-            }
-            else{
-                $RowColor = $ColorForRows
-            }
-            $Row = $ToTable[$i]
-            $RandomIDBodyTR = ("tr-id-$(Get-Random)")
-            Write-Output "<tr id='$($RandomIDBodyTR)' $(if($ColorForRows){write-output " style=background-color:$($RowColor)"})>"
+            })
+            ]
+        })
+    })
+    </script>
+    "
+})
+<script>
+var `$table2$($RandomIDTable) = `$('#$($RandomIDTable)')
+`$(function() {
+    var datajson = $($ToTable | ConvertTo-Json)
+    `$table2$($RandomIDTable).bootstrapTable({data: datajson})
+    `$('#$($RandomIDTable)').bootstrapTable('load', datajson);
+})
+</script>
 
-            $AllColumnsHeader | ForEach-Object {
-                $RandomIDBodyTD = ("tr-id-$(Get-Random)")
-                $ActualProperty = $_
-                if(($ActualProperty -in $ConditionnalObjects.PropertyName)){
-                    $ConditionnalObjects | ForEach-Object {
-                    if($_.PropertyName -eq $ActualProperty){
-                        $ActualCondition = $_
-                        try{
-                            $ActualValue = [int]$Row.$ActualProperty
-                        }catch{
-                            $ActualValue = $Row.$ActualProperty
-                        }
-                        try{
-                            $ConditionCmd = ('[int]$ActualValue' + " " + $ActualCondition.Operator + " " + '[int]$ActualCondition.Value')
-                            $ConditionResult = (Invoke-Expression $ConditionCmd)
-                        }catch{
-                            $ConditionCmd = ('$ActualValue' + " " + $ActualCondition.Operator + " " + '$ActualCondition.Value')
-                            $ConditionResult = (Invoke-Expression $ConditionCmd)
-                        }
-                        if($ConditionResult -eq "True"){
-                            $ConditionnalValidated = Write-Output "<td id='$($RandomIDBodyTD)' style='background-color: $($ActualCondition.ColorHexa)'> $($ActualValue) </td>"
+$(if($DetailsOnClick){
+    "<script>
+    function $($RandomIDFuncDetailFormatter)(index, row) {
+        var html = []
+        $.each(row, function (key, value) {
+            html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+        })
+        return html.join('')
+    }
+    </script>"
+})
+
+$(if($ConditionnalObjects){
+    "
+    <script>
+    function $($cellID)(value, row, index) {
+        $($ConditionnalObjects | ForEach-Object {
+            if($_.poshoperator -notmatch "match"){
+                "if (!(isNaN(value)) &&value $($_.poshoperator) '$($_.poshvalue)'){
+                    return {
+                        css:{
+                            'background-color': '$($_.poshcolor)'
                         }
                     }
-                }
-                if($ConditionnalValidated){
-                    Write-Output $ConditionnalValidated
-                }else{
-                    Write-Output "<td id='$($RandomIDBodyTD)'> $($Row.$ActualProperty) </td>"
-                }
-                $ConditionnalValidated = $null
-                }
-                else{
-                Write-Output "<td id='$($RandomIDBodyTD)'> $($Row.$ActualProperty) </td>"
-                }
+                }"
             }
-        Write-Output "</tr>"})
-    </tbody>
-</table>
+            else{
+                "
+                if (isNaN(value) && (value.toLowerCase()).match(/^.*$((($_.poshvalue).toLower())).*$/)){
+                    return {
+                        css:{
+                            'background-color': '$($_.poshcolor)'
+                        }
+                    }
+                }"
+            }
+        })
+        return {
+        }
+      }
+      </script>"
+})
+
 <script>
 var `$table1$($RandomIDTable) = `$('#$($RandomIDTable)')
 
@@ -212,17 +242,7 @@ var `$table1$($RandomIDTable) = `$('#$($RandomIDTable)')
     })
 })
 </script>
-$(if($DetailsOnClick){
-    "<script>
-    function $($RandomIDFuncDetailFormatter)(index, row) {
-        var html = []
-        $.each(row, function (key, value) {
-        html.push('<p><b>' + key + ':</b> ' + value + '</p>')
-        })
-        return html.join('')
-    }
-    </script>"
-})
+
 $(if($SortByColumn){
     $RandomIDvarOrder = "order$(Get-random)"
     $RandomIDvaraa = "aa$(Get-random)"
@@ -244,36 +264,6 @@ $(if($SortByColumn){
     }
     </script>"
 })
-$(if($Exportbuttons){
-    "
-    <script>
-    var `$table$($RandomIDTable) = `$('#$($RandomIDTable)')
-    `$(function() {
-    `$table$($RandomIDTable).bootstrapTable('destroy').bootstrapTable({
-        exportTypes: ['json', 'xml', 'png', 'csv', 'txt', 'excel', 'pdf'],
-        columns: [
-        $(for ($p=0; $p -lt ($AllColumnsHeader | Measure-Object).count; $p++){
-            if($p -eq ($AllColumnsHeader | Measure-Object).count){
-            Write-Output "
-            {
-                field: '$($AllColumnsHeader[$p])'
-            }
-            "
-            }else{
-            Write-Output "
-            {
-                field: '$($AllColumnsHeader[$p])'
-            },
-            "
-            }
-        })
-        ]
-    })
-    })
-    </script>
-    "
-})
 "@
-
     return $output
 }
