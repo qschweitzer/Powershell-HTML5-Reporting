@@ -45,7 +45,7 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -OnlineCSS -OnlineJS -Content {
         New-PWFColumn -Content {
           New-PWFCard -BackgroundColor "#6d597a" -Content {
             New-PWFTitle -Size 3 -TitleText "Disks capacity" -LightMode -Center
-            $DisksInfos =  (Get-Disk | Select-Object FriendlyName,@{Name='Size in GB'; Expression={[math]::Round(($_.Size/1GB),2)}})
+            $DisksInfos = (Get-Disk | Select-Object FriendlyName,@{Name='Size in GB'; Expression={[math]::Round(($_.Size/1GB),2)}})
             New-PWFChart -ChartValues $DisksInfos."Size in GB" -ChartLabels $DisksInfos.FriendlyName -ChartTitle "Disk Space in GB" -ChartType bar -LightMode -DontShowTitle
           }
         }

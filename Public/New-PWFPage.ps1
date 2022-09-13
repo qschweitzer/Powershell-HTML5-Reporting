@@ -46,6 +46,8 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
             <link href="https://cdn.jsdelivr.net/gh/qschweitzer/Powershell-HTML5-Reporting/assets/css/113_PicoCssModified.min.css" rel="stylesheet" crossorigin="anonymous">
             <!--Import Table Export minified CSS -->
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.2.0/css/tableexport.min.css" >
+            <!--Import Google Icon Font-->
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
             '
         }
         else{

@@ -1,6 +1,7 @@
 ﻿######################
 #####  EXAMPLES  #####
 ######################
+Import-Module $PSScriptRoot+"\..\public\new-pwfpage.ps1" -Force
 Import-Module $PSScriptRoot+"\..\public\new-pwftable.ps1" -Force
 Import-Module $PSScriptRoot+"\..\public\new-pwftabcontainer.ps1" -Force
 Import-Module $PSScriptRoot+"\..\public\new-pwftab.ps1" -Force
