@@ -72,7 +72,16 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
 
         # Classes: class="striped highlight centered responsive-table"
     )
+    # Cleaning Properties Name, removing white space
+    $OldTableProperties = $ToTable.psobject.Properties.Name
+    $NewTableProperties = $OldTableProperties -replace " ",""
+    $orderedtable = [ordered] @{}; $i = 0
+    $ToTable.psobject.Properties.ForEach({
+        $orderedtable[$NewTableProperties[$i++]] = $_.Value
+    })
+    $ToTable = $orderedtable
 
+    # Script begin
     $RandomIDTable = ("table$(Get-Random)")
     $RandomIDFuncDetailFormatter = "detailFormatter$(Get-Random)"
     $RandomIDFuncCustomSort = "customSort$(Get-Random)"
@@ -80,6 +89,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     if ($SelectProperties -and $SelectProperties.gettype().Name -eq "String") {
         $SelectProperties = $SelectProperties.split(',')
     }
+    write-host $SelectProperties
     if ($ConditionProperties -match ",") { $ConditionProperties = $ConditionProperties.split(",") }else { $ConditionProperties = [array]$ConditionProperties }
     if ($ConditionOperators -match ",") { $ConditionOperators = $ConditionOperators.split(",") }else { $ConditionOperators = [array]$ConditionOperators }
     if ($ConditionValues -match ",") { $ConditionValues = $ConditionValues.split(",") }else { $ConditionValues = [array]$ConditionValues }
@@ -179,7 +189,8 @@ $(if($Exportbuttons){
 <script>
 var `$table2$($RandomIDTable) = `$('#$($RandomIDTable)')
 `$(function() {
-    var datajson = $($ToTable | ConvertTo-Json)
+    $(if(($ToTable | Measure-Object).count -eq 1 ){ "var datajson = [$($ToTable | ConvertTo-Json)]" }
+    else{"var datajson = $($ToTable | ConvertTo-Json)"})
     `$table2$($RandomIDTable).bootstrapTable({data: datajson})
     `$('#$($RandomIDTable)').bootstrapTable('load', datajson);
 })
@@ -233,11 +244,11 @@ var `$table1$($RandomIDTable) = `$('#$($RandomIDTable)')
 
 `$(function() {
     `$table1$($RandomIDTable).bootstrapTable({
-    columns: [$(for($m=0; $m -lt $SelectProperties.count; $m++){
+    columns: [$(for($m=0; $m -le ($SelectProperties | Measure-Object).count-1; $m++){
         "{
         title: '$($SelectProperties[$m])',
         field: '$($SelectProperties[$m])'
-        }$(if($m -ne $SelectProperties.count){","})"
+        }$(if($m -ne ($SelectProperties | Measure-Object).count-1){","})"
     })]
     })
 })

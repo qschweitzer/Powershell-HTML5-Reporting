@@ -120,11 +120,9 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
     $output += @"
     <footer>
     </footer>
-</div>
 <!--</main>-->
 </body>
 </html>
-
 "@
     return $output
 }
