@@ -72,16 +72,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
 
         # Classes: class="striped highlight centered responsive-table"
     )
-    # Cleaning Properties Name, removing white space
-    $OldTableProperties = $ToTable.psobject.Properties.Name
-    $NewTableProperties = $OldTableProperties -replace " ",""
-    $orderedtable = [ordered] @{}; $i = 0
-    $ToTable.psobject.Properties.ForEach({
-        $orderedtable[$NewTableProperties[$i++]] = $_.Value
-    })
-    $ToTable = $orderedtable
 
-    # Script begin
     $RandomIDTable = ("table$(Get-Random)")
     $RandomIDFuncDetailFormatter = "detailFormatter$(Get-Random)"
     $RandomIDFuncCustomSort = "customSort$(Get-Random)"
