@@ -6,13 +6,7 @@
 
 ### :exclamation: Compatibility
 
-All web browsers are compatible with POSHTML5.
-
-### Like My Work? Buy Me a Coffee!
-
-* <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1024px-Bitcoin.svg.png" width="30"> 3DNRNqQk7VS7nFjVxJpXEriZPS8ZeCTEje
-* <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/1200px-Ethereum_logo_2014.svg.png" width="30"> 0x9e79b5D816d8F0C52FFa1bBD657AdaB86f6F77dd
-
+All web browsers are compatible with 
 # :grey_question: Install
 1. Install module with commands below.
 ```
@@ -147,3 +141,10 @@ You have the screenshoted example at the end of the script. This will let you st
 
 * **New-PWFTitles deprecated**, replaced by New-PWFTitle as recommanded by Invoke-ScriptAnalyzer.
 * Project now available on PowershellGallery
+
+POSHTML5.
+
+### Like My Work? Buy Me a Coffee!
+
+* <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1024px-Bitcoin.svg.png" width="30"> 3DNRNqQk7VS7nFjVxJpXEriZPS8ZeCTEje
+* <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/1200px-Ethereum_logo_2014.svg.png" width="30"> 0x9e79b5D816d8F0C52FFa1bBD657AdaB86f6F77dd
