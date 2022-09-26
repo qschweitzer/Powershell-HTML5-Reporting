@@ -45,21 +45,21 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -OnlineCSS -OnlineJS -Content {
         New-PWFColumn -Content {
           New-PWFCard -BackgroundColor "#6d597a" -Content {
             New-PWFTitle -Size 3 -TitleText "Disks capacity" -LightMode -Center
-            $DisksInfos = (Get-Disk | Select-Object FriendlyName,@{Name='Size in GB'; Expression={[math]::Round(($_.Size/1GB),2)}})
+            $DisksInfos = (Get-Disk | Select-Object FriendlyName, @{Name = 'Size in GB'; Expression = { [math]::Round(($_.Size / 1GB), 2) } })
             New-PWFChart -ChartValues $DisksInfos."Size in GB" -ChartLabels $DisksInfos.FriendlyName -ChartTitle "Disk Space in GB" -ChartType bar -LightMode -DontShowTitle
           }
         }
         New-PWFColumn -Content {
           New-PWFCard -BackgroundColor "#b56576" -Content {
             New-PWFTitle -Size 3 -TitleText "Doughnut Chart" -LightMode -Center
-            $Process = (Get-Process | Select-Object -first 15) | Group-Object Name | select Name,@{Name="counter";expression={$_.count}}
+            $Process = (Get-Process | Select-Object -first 15) | Group-Object Name | select Name, @{Name = "counter"; expression = { $_.count } }
             New-PWFChart -ChartValues $Process.Counter -ChartLabels $Process.Name -ChartTitle "First 15th Process" -ChartType doughnut -LightMode
           }
         }
         New-PWFColumn -Content {
           New-PWFCard -BackgroundColor "#e56b6f" -Content {
             New-PWFTitle -Size 3 -TitleText "Pie Chart" -LightMode -Center
-            $Process = Get-Process | Group-Object Name | select -First 15 Name,@{Name="counter";expression={$_.count}}
+            $Process = Get-Process | Group-Object Name | select -First 15 Name, @{Name = "counter"; expression = { $_.count } }
             New-PWFChart -ChartValues $Process.Counter -ChartLabels $Process.Name -ChartTitle "First 15th Process 2" -ChartType pie -Horizontal -LightMode
           }
         }
@@ -68,14 +68,14 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -OnlineCSS -OnlineJS -Content {
         New-PWFColumn -Content {
           New-PWFCard -BackgroundColor "#F2935C" -Content {
             New-PWFTitle -Size 3 -TitleText "Line Chart" -LightMode -Center
-            $Chart2Dataset = Get-Process | Group-Object -NoElement -Property Count,Name | Sort-Object Count -Descending | Select-Object -First 10
+            $Chart2Dataset = Get-Process | Group-Object -NoElement -Property Count, Name | Sort-Object Count -Descending | Select-Object -First 10
             New-PWFChart -ChartTitle "Line Chart 1" -ChartType "line" -ChartLabels $Chart2Dataset.Name -ChartValues ($Chart2Dataset | select -ExpandProperty count) -LightMode
           }
         }
         New-PWFColumn -Content {
           New-PWFCard -BackgroundColor "#eaac8b" -Content {
             New-PWFTitle -Size 3 -TitleText "Table with conditionnal format" -Center -LightMode
-            New-PWFTable -ToTable (Get-Process | Group-Object -Property Name | Sort-Object Count -Descending | Select-Object -First 10 Name, Count) -SelectProperties "Name,Count" -SortByColumn -ConditionProperties "Count,Name" -EnableConditionnalFormat -ConditionOperators "-gt,-match" -ConditionValues "10,conhost" -ConditionBackgroundColors "#e63946,#94d2bd" -Small
+            New-PWFTable -ToTable (Get-Process | Group-Object -Property Name | Sort-Object Count -Descending | Select-Object -First 10 Name, Count) -SelectProperties "Name,Count" -SortByColumn -EnableConditionnalFormat -ConditionProperties "Count,Name" -ConditionOperators ">,match" -ConditionValues "10,conhost" -ConditionBackgroundColors "#e63946,#94d2bd" -Small
           }
         }
       }
@@ -84,8 +84,20 @@ $TestPage = New-PWFPage -Title "MY FIRST TEST" -OnlineCSS -OnlineJS -Content {
           New-PWFCard -BackgroundColor "#fff" -Content {
             New-PWFTitle -Size 3 -TitleText "Search in a table" -Center
             New-PWFText -YourText "Some options now like export table, search, paginate, hide many columns and show details by clicking on the row..."
-            New-PWFTable -ToTable (Get-Process | Select-Object ProcessName, Handles, NPM, PM, WS, PeakWorkingSet64, Description, CPU, ProductVersion, PagedMemorySize64, PagedSystemMemorySize, PeakVirtualMemorySize, Responding) -SelectProperties ProcessName, Handles -DetailsOnClick -EnableConditionnalFormat -ConditionProperties "ProcessName,Handles" -EnableSearch -Exportbuttons -Pagination -ShowTooltip -ConditionOperators "match,>=" -ConditionValues "3CX,100" -ConditionBackgroundColors "#e63946,#94d2bd"
+            New-PWFTable -ToTable (Get-Process | Select-Object -First 50) -SelectProperties ProcessName, Handles -DetailsOnClick -EnableConditionnalFormat -ConditionProperties "ProcessName,Handles" -EnableSearch -Exportbuttons -Pagination -ShowTooltip -ConditionOperators "match,>=" -ConditionValues "conhost,100" -ConditionBackgroundColors "#e63946,#94d2bd"
           }
+        }
+      }
+      New-PWFRow -Content {
+        New-PWFColumn -Content {
+          New-PWFCard -BackgroundColor "#fff" -Content {
+            New-PWFTitle -Size 3 -TitleText "Collapsed items (New!)" -Center
+            New-PWFAccordion -AccordionItems {
+              Get-Service | Select-Object -First 3 | ForEach-Object {
+                New-PWFAccordionItem -ItemTitle $_.DisplayName -ItemContent { "$([string]$_.DisplayName) is $($_.Status)" }
+              }
+            }
+          } 
         }
       }
     }
