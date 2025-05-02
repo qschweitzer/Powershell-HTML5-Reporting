@@ -7,7 +7,7 @@ Create a new chart Dataset for stacked chart only.
 .PARAMETER Name
 The name of your data set.
 .PARAMETER Values
-The [int] values of your dataset. You could use an object/array or type values as a string, separated by semi-colon like "1;9;3"
+The [int] values of your dataset. You have to use an array.
 .PARAMETER Color
 The color to color your data set in the chart. Default is colors generated automatically from thecolorapi.com.
 .EXAMPLE
@@ -18,13 +18,10 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     param(
         [Parameter(Mandatory = $true, Position = 0)]
         $Name,
-        $Values,
+        [array]$Values,
         [Parameter(Mandatory = $false, Position = 1)]
         $Color
     )
-    if ($Values.gettype().name -eq "String") {
-        $Values = $Values.split(";")
-    }
     if (!$Color) {
         $ColorGenerated = $script:ChartColorsPalette
     }

@@ -23,7 +23,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
 
     $output = @"
 <$(if($Numbered){"o"}else{"u"})l>
-    $($List | ForEach-Object{ "<li>$($_)</li>"})
+    $($List | ForEach-Object{ "<li>$($_ | Convert-MDtoHTML)</li>"})
 </$(if($Numbered){"o"}else{"u"})l>
 "@
 

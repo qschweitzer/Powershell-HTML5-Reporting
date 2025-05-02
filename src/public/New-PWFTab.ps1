@@ -20,14 +20,27 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
         [Parameter(Mandatory = $false, Position = 1)]
         [switch]$Container
     )
-    $Script:TabsNames += $Name
+    if ($Script:Firstab) {
+        $Script:Firstab = $false
+    }
+    else {
+        $Script:Firstab = $true
+    }
+    $Script:TabUsed = $true
+    if (-not $Script:TabsNames) {
+        $Script:TabsNames = @($Name)
+    }
+    else {
+        $Script:TabsNames += $Name
+    }
+
     $idName = "tab$(Get-Random)"
     $Script:TabsID += $idName
     $output = @"
-    <div class="tab-pane fade show$(if($TabsCount -eq 1){" active"})$(if($Container){" container"}else{" container-fluid"})" id="nav-$($idName)" role="tabpanel" aria-labelledby="nav-$($idName)-tab">
+
+    <section id="$($Name.tolower() | Remove-StringSpecialCharactere)">
     $(try {.$Content} catch {$_.Exception.Message})
-    </div>
+    </section>
 "@
-    $Script:TabsCount++
     return $output
 }

@@ -16,11 +16,11 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
         $Content
     )
     $output = @"
-    <footer>
+    <div class="card-footer">
 "@
     $(try { $output += .$Content } catch { $_.Exception.Message })
     $output += @"
-    </footer>
+    </div>
 "@
     return $output
 }

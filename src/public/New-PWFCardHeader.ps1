@@ -20,12 +20,12 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
         [switch]$Center
     )
     $output = @"
-    <header style="$(if($BackgroundColor){"background-color:$($BackgroundColor);"})$(if($Center){"text-align:center"})">
+    <div class="card-header">
 "@
     $(try { $output += .$Content } catch { $_.Exception.Message })
 
     $output += @"
-    </header>
+    </div>
 "@
     return $output
 }

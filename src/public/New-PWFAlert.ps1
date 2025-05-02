@@ -23,9 +23,9 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     )
 
     $output = @"
-<div class="alert $(if($ContextualColor){"alert-$($ContextualColor)"})" role="alert">
+<span class="status $(if($ContextualColor){"status-$($ContextualColor)"})">
     $($YourText)
-</div>
+</span>
 "@
 
     return $output

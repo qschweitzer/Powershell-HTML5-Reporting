@@ -62,7 +62,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
         $ChartValues,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Stacked', Position = 2)]
-        $Legends,
+        [array]$Legends,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Stacked', Position = 3)]
         [Parameter(Mandatory = $false, ParameterSetName = 'NotStacked', Position = 4)]
@@ -96,17 +96,18 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
         $ChartCount = ($ChartValues | Measure-Object).count
         $ChartDatasets = $ChartLabels
     }
-    else {
-        if ($Legends.gettype().Name -eq "String") {
-            $Legends = $Legends.split(";s")
-        }
-    }
 
     if ($null -eq $ChartColors) {
         $ChartColors = $script:ChartColorsPalette
     }
 
     $ID = "ID$(Get-Random -Maximum 9999)"
+    if ($script:AllCharts) {
+        $script:AllCharts += $ID
+    }
+    else {
+        $script:AllCharts = @($ID)
+    }
     $data = "data$(Get-Random -Maximum 9999)"
     $config = "config$(Get-Random -Maximum 9999)"
     $labels = "labels$(Get-Random -Maximum 9999)"
@@ -117,6 +118,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     </div>
 
     <script>
+
 "@
     if ($Stacked) {
         $Script:StackedChartName = @()
@@ -149,11 +151,6 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
                     Write-Output "'$($ChartValues[$j])'$(if($j -ne (($ChartValues | Measure-Object).count)-1){","})"
                 })
             ],
-            backgroundColor: [
-                $(For ($k = 0; $k -lt ($ChartColors | Measure-Object).count; $k++) {
-                    Write-Output "'$($ChartColors[$k])'$(if($k -lt (($ChartColors | Measure-Object).count)){","})"
-                })
-            ],
             hoverOffset: 5,
             tension: 0.5
             }]
@@ -173,12 +170,12 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
                 display: $(if($HideLegend){"false"}else{"true"}),
                 $(if($LegendPosition){"position: '$($LegendPosition)',"})
                 labels: {
-                $(if($LightMode){"color: '#fff',"})
+                $(if($LightMode){"color: 'var(--color-light)',"}else{"color: 'var(--color-dark)',"})
                 }
             },
             title: {
                 display: $(if($DontShowTitle){"false"}else{"true"}),
-                $(if($LightMode){"color: '#fff',"})
+                $(if($LightMode){"color: 'var(--color-light)',"}else{"color: 'var(--color-dark)',"})
                 text: '$($ChartTitle)'
             }
             },
@@ -188,13 +185,13 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
             x: {
                 $(if($Stacked){"stacked: true,"})
                 ticks: {
-                $(if($LightMode){"color: '#fff'"})
+                $(if($LightMode){"color: 'var(--color-light)'"}else{"color: 'var(--color-dark)',"})
                 }
             },
             y: {
                 $(if($Stacked){"stacked: true,"})
                 ticks: {
-                $(if($LightMode){"color: '#fff'"})
+                $(if($LightMode){"color: 'var(--color-light)'"}else{"color: 'var(--color-dark)',"})
                 }
             }
             }

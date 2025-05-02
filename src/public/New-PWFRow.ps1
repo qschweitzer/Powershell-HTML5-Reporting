@@ -13,7 +13,8 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
     param(
         [Parameter(Mandatory = $true, Position = 0)]
-        $Content
+        $Content,
+        [switch]$AutoSize
     )
 
     $output = @"

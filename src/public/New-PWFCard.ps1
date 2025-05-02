@@ -16,17 +16,32 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
         param(
                 [Parameter(Mandatory = $true, Position = 1)]
                 $Content,
-
+                [string]$Header,
                 [Parameter(Mandatory = $false, Position = 0)]
                 [string]$BackgroundColor = "#f9fafb"
         )
-        $output = @"
-        <article $(write-output "style='background-color:$($BackgroundColor)'")>
+        [string]$output = @"
+        <div class="card">
 "@
-        $(try { $output += .$Content } catch { $_.Exception.Message })
+        if ($Header) {
+                $output += @"
+                <div class="card-header">
+                        <h3>$($Header | Convert-MDtoHTML)</h3>
+                </div>
+"@
+        }
+        try {
+                if ($Content -is [string]) {
+                        $output += $Content  | Convert-MDtoHTML
+                }
+                else {
+                        $output += .$Content 
+                }
+        }
+        catch { $_.Exception.Message }
 
         $output += @"
-        </article>
+        </div>
 "@
         return $output
 }

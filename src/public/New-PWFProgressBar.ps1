@@ -21,7 +21,9 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     )
 
     $output = @"
-<progress value="$($CurrentValue)" max="$($MaxValue)"></progress>
+    <div class="progress">
+        <div role="progressbar" aria-valuenow="$($CurrentValue)" aria-valuemax="$($MaxValue)" style="width: $($CurrentValue)%"></div>
+    </div>
 "@
     return $output
 }

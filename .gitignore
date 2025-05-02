@@ -1,2 +1,11 @@
-*vscode
-site
+/sample/out/*
+password.txt
+
+/build
+/test/out/
+/coverage.xml
+/markdown
+/tmp
+/nuget
+/src/Private/baseFiles
+/src/private/baseFiles
