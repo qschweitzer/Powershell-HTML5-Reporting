@@ -57,21 +57,20 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
         $ConditionBackgroundColors
     )
 
-    $RandomIDTable = Get-Random
+    $RandomIDTable = -join ((65..90) + (97..122) | Get-Random -Count 10 | % {[char]$_})
     $AllColumnsHeader = ($ToTable | Get-Member -MemberType Properties).Name
 
-    if (-not [string]$script:allTableData) {
-        [string]$script:allTableData += "window.$($randomIDTable)Data = JSON.parse(``$($ToTable | ConvertTo-Json)``);"
-    }
+    [string]$script:allTableData += "window.$($randomIDTable)Data = JSON.parse(``$($ToTable | ConvertTo-Json)``);"
     
     $output += @"
     <div class="table-container">
         <div class="table-header">
             <h3 class="card-title">🔒 Analyse de sécurité</h3>
             <div class="table-controls">
-                <input type="text" class="search-input" id="security-search" placeholder="Rechercher dans l'inventaire" />
-                <button class="table-control" onclick="exportToCSV('security')">📄 CSV</button>
-                <button class="table-control" onclick="exportToExcel('security')">📊 Excel</button>
+                <input type="text" class="search-input table-control" id="$RandomIDTable-search" placeholder="🔍 Search in table..." oninput="filterTable('$RandomIDTable-table', this.value)"/>
+                <button class="table-control" onclick="exportToCSV('$RandomIDTable')">📄 CSV</button>
+                <button class="table-control" onclick="exportToJSON('$RandomIDTable')">📄 JSON</button>
+                <button class="table-control" onclick="exportToExcel('$RandomIDTable')">📊 Excel</button>
             </div>
         </div>
         <div class="table-wrapper">
@@ -81,9 +80,8 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
                         $($AllColumnsHeader | ForEach-Object { Write-Output "<th class='sortable' data-sort='$(Remove-StringSpecialCharactere $_)'>" $_ "</th>`n" })
                     </tr>
                 </thead>
-                <tbody id="$($RandomIDTable)'-tbody">
+                <tbody id="$($RandomIDTable)-tbody">
                     <tr>
-
                     </tr>
                 </tbody>
             </table>
