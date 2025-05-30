@@ -186,6 +186,7 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
     </footer>
     <script>
     // === DATA ===
+    $($script:allTableData)
 
     // === THEME MANAGEMENT ===
         class ThemeManager {
@@ -231,13 +232,13 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
         class DataTable {
             constructor(tableId, data, columns = null) {
                 if (!Array.isArray(data) || data.length === 0) {
-                    throw new Error(`DataTable: données invalides ou vides pour la table ${tableId}`);
+                    throw new Error(`DataTable: empty or invalid data for table: ${tableId}`);
                 }
 
                 this.tableId = tableId;
                 this.data = [...data];
                 this.originalData = [...data];
-                this.columns = columns || Object.keys(data[0]); // Auto-detection ici
+                this.columns = columns || Object.keys(data[0]); // Auto-detect
                 this.currentPage = 1;
                 this.rowsPerPage = 10;
 
