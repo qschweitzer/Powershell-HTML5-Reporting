@@ -61,7 +61,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     $AllColumnsHeader = ($ToTable | Get-Member -MemberType Properties).Name
 
     if (-not [string]$script:allTableData) {
-        [string]$script:allTableData += "window.$($randomIDTable)Data = $($ToTable | ConvertTo-Json)"
+        [string]$script:allTableData += "window.$($randomIDTable)Data = JSON.parse(``$($ToTable | ConvertTo-Json)``);"
     }
     
     $output += @"
