@@ -54,23 +54,10 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
         $ConditionProperties,
         $ConditionOperators,
         $ConditionValues,
-        $ConditionBackgroundColors,
-
-        [Parameter(Mandatory = $false, Position = 4)]
-        [switch]$Pagination,
-        [switch]$ShowTooltip,
-        [switch]$DetailsOnClick,
-        [switch]$SortByColumn,
-        [switch]$Striped,
-        [switch]$Dark,
-        [switch]$Small,
-        [ValidateSet("default", "primary", "secondary", "success", "danger", "warning", "info", "light", "dark", IgnoreCase = $false)]
-        [string]$ContextualColor
+        $ConditionBackgroundColors
     )
 
     $RandomIDTable = Get-Random
-    $RandomIDFuncDetailFormatter = "detailFormatter$(Get-Random)"
-    $RandomIDFuncCustomSort = "customSort$(Get-Random)"
     $AllColumnsHeader = ($ToTable | Get-Member -MemberType Properties).Name
 
     if (-not [string]$script:allTableData) {
