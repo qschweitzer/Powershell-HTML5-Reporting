@@ -69,7 +69,7 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
         <meta charset="$($charset)">
         <style>
         $($AllCSS = Get-ChildItem "$((Get-Module POSHTML5).ModuleBase)\assets\css" -Filter *.css)
-        $($AllCSS | ForEach-Object {write-host $_.name;"$(Get-Content $_.fullname) $(write-output `r`n)"})
+        $($AllCSS | ForEach-Object {write-host $_.name;"$(Get-Content $_.fullname) $(write-output ``r``n)"})
         </style>
         <script>
             // Tableau pour stocker les instances des graphiques
@@ -117,7 +117,7 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
         else{
             "<script>
             $($AllJS = Get-ChildItem "$((Get-Module POSHTML5).ModuleBase)\assets\js" -Filter *.min.* | Sort-Object Name)
-            $($AllJS | ForEach-Object {write-host $_.name;"$(Get-Content $_.fullname) $(write-output `r`n)"})
+            $($AllJS | ForEach-Object {write-host $_.name;"$(Get-Content $_.fullname) $(write-output ``r``n)"})
             </script>"
         })
         <title>$($title)</title>
@@ -232,7 +232,7 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
         class DataTable {
             constructor(tableId, data, columns = null) {
                 if (!Array.isArray(data) || data.length === 0) {
-                    throw new Error(`DataTable: empty or invalid data for table: ${tableId}`);
+                    throw new Error(``DataTable: empty or invalid data for table: `${tableId}``);
                 }
 
                 this.tableId = tableId;
@@ -251,26 +251,26 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
                 const pageData = this.getCurrentPageData();
 
                 tbody.innerHTML = pageData.map(item => {
-                    return `
+                    return ``
                 <tr>
-                    $${this.columns.map(col => {
+                    `${this.columns.map(col => {
                         const value = item[col] ?? '';
                         const formatted = this.formatCell(col, value);
-                        return `<td>$${formatted}</td>`;
+                        return ``<td>`${formatted}</td>``;
                     }).join('')}
                 </tr>
-            `;
+            ``;
                 }).join('');
             }
 
             formatCell(col, value) {
                 if (col === 'status') {
-                    return `<span class="status-badge status-$${value}">$${value}</span>`;
+                    return ``<span class="status-badge status-`${value}">`${value}</span>``;
                 }
                 if (col === 'severity') {
                     const cls = value === 'Critique' ? 'status-offline' :
                         value === 'Élevée' ? 'status-maintenance' : 'status-online';
-                    return `<span class="status-badge $${cls}">$${value}</span>`;
+                    return ``<span class="status-badge `${cls}">`${value}</span>``;
                 }
                 return value;
             }
@@ -297,6 +297,7 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
         }
 
         // === SEARCH MANAGEMENT ===
+        // Global search
         const searchInput = document.getElementById('global-search');
         searchInput.addEventListener('input', () => {
             const keyword = searchInput.value.toLowerCase();
@@ -311,54 +312,83 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
             });
         });
 
+        // Per table
+        function filterTable(tableId, query) {
+            const table = document.getElementById(tableId);
+            const tbody = table.querySelector("tbody");
+            const rows = tbody.querySelectorAll("tr");
+            const q = query.toLowerCase();
+
+            rows.forEach(row => {
+                const match = Array.from(row.cells).some(cell =>
+                    cell.textContent.toLowerCase().includes(q)
+                );
+                row.style.display = match ? "" : "none";
+            });
+        }
+
         // === EXPORT FUNCTIONS ===
-        function exportToCSV(tableType) {
-            const table = tables[tableType];
-            if (!table) return;
+        /* JSON */
+        function exportToJSON(tableId) {
+            const table = document.getElementById(```${tableId}-table``);
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const headers = Array.from(table.querySelectorAll("thead th")).map(th =>
+                th.getAttribute("data-sort")
+            );
 
-            const data = table.exportData();
-            const headers = Object.keys(data[0]);
+            const data = rows.map(row => {
+                const cells = Array.from(row.cells);
+                const item = {};
+                headers.forEach((key, index) => {
+                    const span = cells[index].querySelector("span");
+                    item[key] = span ? span.textContent.trim() : cells[index].textContent.trim();
+                });
+                return item;
+            });
 
-            let csv = headers.join(',') + '\n';
-            csv += data.map(row =>
-                headers.map(header => `"${row[header]}"`).join(',')
-            ).join('\n');
-
-            downloadFile(csv, `$${tableType}-export.csv`, 'text/csv;charset=utf-8;');
-        }
-
-        function exportToExcel(tableType) {
-            const table = tables[tableType];
-            if (!table) return;
-
-            const data = table.exportData();
-            const headers = Object.keys(data[0]);
-
-            let html = '<table><thead><tr>';
-            html += headers.map(h => `<th>$${h}</th>`).join('');
-            html += '</tr></thead><tbody>';
-            html += data.map(row =>
-                '<tr>' + headers.map(h => `<td>$${row[h]}</td>`).join('') + '</tr>'
-            ).join('');
-            html += '</tbody></table>';
-
-            downloadFile(html, `$${tableType}-export.xls`, 'application/vnd.ms-excel');
-        }
-
-        function downloadFile(content, filename, mimeType) {
-            const blob = new Blob([content], { type: mimeType });
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
             const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
+            downloadFile(url, ```${tableId}.json``);
         }
 
-        function generateReport(type) {
-            alert(`Génération du rapport $${type} en cours...`);
+        /* CSV */
+        function exportToCSV(tableId) {
+            const table = document.getElementById(```${tableId}-table``);
+            const rows = Array.from(table.querySelectorAll("tr"));
+            const csv = rows.map(row =>
+                Array.from(row.cells).map(cell =>
+                    ``"`${cell.innerText.replace(/"/g, '""')}"``
+                ).join(",")
+            ).join("\n");
+
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            downloadFile(url, ```${tableId}.csv``);
+        }
+
+        /* Excel (XLSX) */
+        function exportToExcel(tableId) {
+            const table = document.getElementById(```${tableId}-table``);
+            const rows = Array.from(table.querySelectorAll("tr"));
+            const tsv = rows.map(row =>
+                Array.from(row.cells).map(cell =>
+                    cell.innerText.replace(/\t/g, ' ')
+                ).join("\t")
+            ).join("\n");
+
+            const blob = new Blob([tsv], { type: "application/vnd.ms-excel" });
+            const url = URL.createObjectURL(blob);
+            downloadFile(url, ```${tableId}.xls``);
+        }
+
+        function downloadFile(url, filename) {
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = filename;
+            a.style.display = "none"; // Important si document.body est sensible
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
 
         // === INITIALIZATION ===
@@ -366,21 +396,20 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
 
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('current-date').textContent = new Date().toLocaleDateString('fr-FR');
-            document.getElementById('last-analysis').textContent = new Date().toLocaleString('fr-FR');
-
+            
             themeManager = new ThemeManager();
 
             // Dynamic DataTables init
             document.querySelectorAll('table.data-table').forEach(tableEl => {
                 const tableId = tableEl.id;
                 const key = tableId.replace('-table', '');
-                const dataVarName = `${key}Data`;
+                const dataVarName = ```${key}Data``;
                 const data = window[dataVarName];
 
                 if (data) {
                     tables[key] = new DataTable(tableId, data);
                 } else {
-                    console.warn(`⚠️ Emtpy data : $${dataVarName} isn't defined.`);
+                    console.warn(``⚠️ Emtpy data : `${dataVarName} isn't defined.``);
                 }
             });
         });
