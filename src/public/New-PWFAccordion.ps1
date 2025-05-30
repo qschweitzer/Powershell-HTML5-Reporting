@@ -26,9 +26,8 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     if($Alwaysopen){$script:CollapseAlwaysOpen = $true}
     $Script:RandomID_AccordionFlush = "AF$(Get-Random)" 
     $output = @"
-    <div class="accordion accordion-flush" id="$($RandomID_AccordionFlush)">
         $(try { .$AccordionItems } catch { $_.Exception.Message })
-    </div>
+    <hr />
 "@
     return $output
 }

@@ -22,16 +22,10 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     $RandomID_AccordionHeader = "AH$(Get-Random)"
     $RandomID_Accordioncollapsone = "CO$(Get-Random)"
     $output = @"
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="$($RandomID_AccordionHeader)">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#$($RandomID_Accordioncollapsone)" aria-expanded="false" aria-controls="$($RandomID_Accordioncollapsone)">
-            $($ItemTitle)
-            </button>
-        </h2>
-        <div id="$($RandomID_Accordioncollapsone)" class="accordion-collapse collapse" aria-labelledby="$($RandomID_AccordionHeader)" $(if(!$Script:CollapseAlwaysOpen -eq $true){"data-bs-parent='#$Script:RandomID_AccordionFlush'"})>
-            <div class="accordion-body">$(try { .$ItemContent } catch { $_.Exception.Message })</div>
-        </div>
-    </div>
+    <details name="$($RandomID_AccordionFlush)">
+    <summary>$($ItemTitle)</summary>
+    <p>$(try { .$ItemContent } catch { $_.Exception.Message })</p>
+    </details>
 "@
 
     return $output
