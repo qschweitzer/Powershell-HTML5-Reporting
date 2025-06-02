@@ -20,11 +20,11 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
         [Parameter(Mandatory = $false, Position = 1)]
         [switch]$Container
     )
-    if ($Script:Firstab) {
-        $Script:Firstab = $false
+    if ($script:firstTab) {
+        $script:firstTab = $false
     }
     else {
-        $Script:Firstab = $true
+        $script:firstTab = $true
     }
     $Script:TabUsed = $true
     if (-not $Script:TabsNames) {
@@ -37,10 +37,9 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     $idName = "tab$(Get-Random)"
     $Script:TabsID += $idName
     $output = @"
-
-    <section id="$($Name.tolower() | Remove-StringSpecialCharactere)">
-    $(try {.$Content} catch {$_.Exception.Message})
-    </section>
+    <div class="tab-content $(if($script:firstTab){"active"})" id="$($Name.tolower() | Remove-StringSpecialCharactere)">
+        $(try {.$Content} catch {$_.Exception.Message})
+    </div>
 "@
     return $output
 }

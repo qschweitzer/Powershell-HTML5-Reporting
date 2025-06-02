@@ -18,7 +18,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     )
 
     $output = @"
-    <div class="grid">
+    <div class="cards-grid">
 "@
     $(try { $output += .$Content } catch { $_.Exception.Message })
 

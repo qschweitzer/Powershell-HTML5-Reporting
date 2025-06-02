@@ -13,34 +13,42 @@ New-PWFCard -Content { ... } -BackgroundColor "#f9fafb"
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-        param(
-                [Parameter(Mandatory = $true, Position = 1)]
+
+        param (
+                [Parameter(Mandatory,Position = 0, ValueFromPipeline)]
                 $Content,
-                [string]$Header,
-                [Parameter(Mandatory = $false, Position = 0)]
-                [string]$BackgroundColor = "#f9fafb"
+                [Parameter(Position = 1)]
+                [string]$title
         )
         [string]$output = @"
         <div class="card">
 "@
-        if ($Header) {
+        if ($title) {
                 $output += @"
                 <div class="card-header">
-                        <h3>$($Header | Convert-MDtoHTML)</h3>
+                        <h3 class="card-title">$($title | Convert-MDtoHTML)</h3>
                 </div>
 "@
         }
+        else{
+                $script:noheader = $true
+        }
+
+        $output += @"
+                <div class="card-body $(if($statNumber){"stats-card"})">
+"@
         try {
                 if ($Content -is [string]) {
                         $output += $Content  | Convert-MDtoHTML
                 }
-                else {
+                elseif($Content -is [scriptblock]) {
                         $output += .$Content 
                 }
         }
         catch { $_.Exception.Message }
 
         $output += @"
+                </div>
         </div>
 "@
         return $output
