@@ -1,18 +1,18 @@
-# New-PWFHorizontalScroller
+# New-WEBHorizontalScroller
 
 ## Description
 Add an horizontal scroller of your next div. Use it for very large content.
 
 ## SYNTAX
 ``` powershell
-New-PWFHorizontalScroller -Content <scriptblock>
+New-WEBHorizontalScroller -Content <scriptblock>
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFHorizontalScroller -Content {
+New-WEBHorizontalScroller -Content {
     ...SOMECODE...
 }
 ```

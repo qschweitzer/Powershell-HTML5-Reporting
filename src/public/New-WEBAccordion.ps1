@@ -1,4 +1,4 @@
-Function New-PWFAccordion {
+Function New-WEBAccordion {
     <#
 .SYNOPSIS
 Create a new Accordion element to organize your content.
@@ -9,10 +9,10 @@ ScriptBlock containing PWF-AccordionItems.
 .PARAMETER Alwaysopen
 When you click on first and then second title, the first stay open.
 .EXAMPLE
-New-PWFAccordion -AccordionItems {
-    New-PWFAccordionItem -ItemTitle "Test 1" -ItemContent "SubHeading 1"
-    New-PWFAccordionItem -ItemTitle "Test 2" -ItemContent "SubHeading 2"
-    New-PWFAccordionItem -ItemTitle "Test 3" -ItemContent "SubHeading 3"
+New-WEBAccordion -AccordionItems {
+    New-WEBAccordionItem -ItemTitle "Test 1" -ItemContent "SubHeading 1"
+    New-WEBAccordionItem -ItemTitle "Test 2" -ItemContent "SubHeading 2"
+    New-WEBAccordionItem -ItemTitle "Test 3" -ItemContent "SubHeading 3"
 }
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting

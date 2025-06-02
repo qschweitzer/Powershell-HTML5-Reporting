@@ -1,4 +1,4 @@
-﻿Function New-PWFChart {
+﻿Function New-WEBChart {
     <#
 .SYNOPSIS
 Create a new ChartJS chart.
@@ -15,7 +15,7 @@ Your data [int], from an object/array or in a string format separate by semi-col
 .PARAMETER Stacked
 Enable the stacked chart format.
 .PARAMETER StackedContent
-Use when Stacked selected. Scriptblock that contains the New-PWFChartStackedDataset functions
+Use when Stacked selected. Scriptblock that contains the New-WEBChartStackedDataset functions
 .PARAMETER Legends
 Use when Stacked selected. Your legends, from an object/array or in a string format separate by semi-colon: "Label1;Label2;LabelRouge"
 .PARAMETER HideLegend
@@ -31,10 +31,10 @@ In lightmode all the chart text's color is white.
 .PARAMETER DontShowTitle
 Hide the chart's title.
 .EXAMPLE
-New-PWFChart -ChartTitle "Line Chart 1" -ChartType "line" -ChartLabels $ChartDataset.Name -ChartValues ($ChartDataset | select -ExpandProperty count)
-New-PWFChart -Stacked -ChartTitle "Stacked Bars" -ChartType "bar" -Legends "Janvier;Fevrier;Mars;Avril" -StackedContent {
-    New-PWFChartStackedDataset -Name "Dataset1" -Values "1;2;3;4"
-    New-PWFChartStackedDataset -Name "Dataset2" -Values "4;3;2;1"
+New-WEBChart -ChartTitle "Line Chart 1" -ChartType "line" -ChartLabels $ChartDataset.Name -ChartValues ($ChartDataset | select -ExpandProperty count)
+New-WEBChart -Stacked -ChartTitle "Stacked Bars" -ChartType "bar" -Legends "Janvier;Fevrier;Mars;Avril" -StackedContent {
+    New-WEBChartStackedDataset -Name "Dataset1" -Values "1;2;3;4"
+    New-WEBChartStackedDataset -Name "Dataset2" -Values "4;3;2;1"
 }
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting

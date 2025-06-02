@@ -1,18 +1,18 @@
-# New-PWFRow
+# New-WEBRow
 
 ## Description
 New row wich contains what you want.
 
 ## SYNTAX
 ``` powershell
-New-PWFRow -Content <scriptblock>
+New-WEBRow -Content <scriptblock>
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFRow -Content {
+New-WEBRow -Content {
     ...SOMECODE...
 }
 ```

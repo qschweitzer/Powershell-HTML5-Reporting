@@ -1,13 +1,13 @@
-﻿Function New-PWFCarouselContainer {
+﻿Function New-WEBCarouselContainer {
     <#
 .SYNOPSIS
 Create a new Carousel container.
 .DESCRIPTION
 Create a new Carousel container that will contains what you want.
 .PARAMETER Content
-Add some slides with New-PWFCarouselItem
+Add some slides with New-WEBCarouselItem
 .EXAMPLE
-New-PWFCarouselContainer -Content { New-PWFCarouselItem}
+New-WEBCarouselContainer -Content { New-WEBCarouselItem}
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

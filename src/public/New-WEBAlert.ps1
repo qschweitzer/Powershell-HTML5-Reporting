@@ -1,4 +1,4 @@
-﻿Function New-PWFAlert {
+﻿Function New-WEBAlert {
     <#
 .SYNOPSIS
 Create a new HTML alert.
@@ -9,7 +9,7 @@ Your text in alert.
 .PARAMETER ContextualColor
 A color from the validate set.
 .EXAMPLE
-New-PWFAlert -YourText "Your computer isn't up to date" -ContextualColor warning
+New-WEBAlert -YourText "Your computer isn't up to date" -ContextualColor warning
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

@@ -1,4 +1,4 @@
-﻿Function New-PWFList {
+﻿Function New-WEBList {
         <#
 .SYNOPSIS
 Create a new HTML list.
@@ -9,7 +9,7 @@ Your array.
 .PARAMETER Numbered
 Create a numbered list.
 .EXAMPLE
-New-PWFList -List $myarray
+New-WEBList -List $myarray
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

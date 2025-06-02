@@ -1,4 +1,4 @@
-# New-PWFBadge
+# New-WEBBadge
 
 ## Description
 Create an alert HTML object.
@@ -6,18 +6,18 @@ Examples: https://getbootstrap.com/docs/4.0/components/badge/
 
 ## SYNTAX
 ``` powershell
-New-PWFBadge -YourText <string> [-Type <string>] [-PillMode <switch>]
+New-WEBBadge -YourText <string> [-Type <string>] [-PillMode <switch>]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFBadge -YourText "1" -Type Success
+New-WEBBadge -YourText "1" -Type Success
 ```
 ### EXAMPLE 2
 ```powershell
-New-PWFBadge -YourText "5" -Type Danger -PillMode
+New-WEBBadge -YourText "5" -Type Danger -PillMode
 ```
 
 ## PARAMETERS

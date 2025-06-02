@@ -1,18 +1,18 @@
-# New-PWFIcon
+# New-WEBIcon
 
 ## Description
 Create a new icon based on Google Material icons database.
 
 ## SYNTAX
 ``` powershell
-New-PWFIcon -IconName <string> [-SizeInPixel <string>]
+New-WEBIcon -IconName <string> [-SizeInPixel <string>]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFIcon -IconName Settings -SizeInPixel 24
+New-WEBIcon -IconName Settings -SizeInPixel 24
 ```
 
 ## PARAMETERS

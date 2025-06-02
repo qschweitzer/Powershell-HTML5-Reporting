@@ -1,31 +1,31 @@
-﻿Function New-PWFCardHeader {
+﻿Function New-WEBRow {
     <#
 .SYNOPSIS
-Create a new HTML <header>.
+Create a new HTML div with Row class.
 .DESCRIPTION
-Create a new HTML <header>.
+Create a new HTML div with Row class.
 .PARAMETER Content
 The Content is a scriptblock that will contain next blocks parts.
 .EXAMPLE
-New-PWFCardHeader -Content { ... }
+New-WEBRow -Content { ... }
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, Position = 0)]
         $Content,
-
-        [Parameter(Mandatory = $false)]
-        [string]$BackgroundColor,
-        [switch]$Center
+        [switch]$AutoSize
     )
+
     $output = @"
-    <div class="card-header">
+    <div class="cards-grid">
 "@
     $(try { $output += .$Content } catch { $_.Exception.Message })
 
     $output += @"
     </div>
 "@
+
     return $output
+
 }

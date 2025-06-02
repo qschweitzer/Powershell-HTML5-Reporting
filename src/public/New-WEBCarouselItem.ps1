@@ -1,9 +1,9 @@
-﻿Function New-PWFCarouselItem {
+﻿Function New-WEBCarouselItem {
     <#
 .SYNOPSIS
 Create a new Carousel item.
 .DESCRIPTION
-Create a new Carousel item to add into New-PWFCarouselContainer.
+Create a new Carousel item to add into New-WEBCarouselContainer.
 .PARAMETER Content
 Add what you want in the content. Image, charts...
 .EXAMPLE

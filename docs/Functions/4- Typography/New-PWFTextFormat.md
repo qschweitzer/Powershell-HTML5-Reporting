@@ -1,23 +1,23 @@
-# New-PWFTextFormat
+# New-WEBTextFormat
 
 ## Description
 Create a new HTML text with customized format. You can use multiple format options at the same time.
 
 ## SYNTAX
 ``` powershell
-New-PWFTextFormat -YourText <string> [-ColorHexa <string>] [[-Abbreviation <switch>] [-HighLight <switch>] [-Bold <switch>] [-Strikethrough <switch>] [-Italic <switch>] [-Deleted <switch>] [-Subtext <switch>] [-Suptext <switch>] [-Inserted <switch>] [-Keyboard <switch>] [-Underline <switch>]
+New-WEBTextFormat -YourText <string> [-ColorHexa <string>] [[-Abbreviation <switch>] [-HighLight <switch>] [-Bold <switch>] [-Strikethrough <switch>] [-Italic <switch>] [-Deleted <switch>] [-Subtext <switch>] [-Suptext <switch>] [-Inserted <switch>] [-Keyboard <switch>] [-Underline <switch>]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFTextFormat -YourText "My Text is Awesome" -ColorHexa "#D94020" -Bold -Underline
+New-WEBTextFormat -YourText "My Text is Awesome" -ColorHexa "#D94020" -Bold -Underline
  
 ```
 ### EXAMPLE 2
 ```powershell
-New-PWFTextFormat -YourText "My Text is Awesome" -Italic
+New-WEBTextFormat -YourText "My Text is Awesome" -Italic
  ```
 
 ## PARAMETERS

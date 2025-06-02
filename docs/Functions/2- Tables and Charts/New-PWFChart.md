@@ -1,24 +1,24 @@
-# New-PWFChart
+# New-WEBChart
 
 ## Description
 Create a new Chart. Enter your data and tadaaa.
 
 ## SYNTAX
 ``` powershell
-New-PWFChart -ChartTitle <string> -ChartType <string> [-Stacked <switch>] [-ChartLabels <array>] [-ChartValues <array>] [-Legends <array>] [-Horizontal <switch>] [-ChartColors <array>] [-LightMode <switch>] [-DontShowTitle <switch>] [-StackedContent <scriptblock>]
+New-WEBChart -ChartTitle <string> -ChartType <string> [-Stacked <switch>] [-ChartLabels <array>] [-ChartValues <array>] [-Legends <array>] [-Horizontal <switch>] [-ChartColors <array>] [-LightMode <switch>] [-DontShowTitle <switch>] [-StackedContent <scriptblock>]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFChart -ChartTitle "Line Chart 1" -ChartType "line" -ChartLabels $ChartDataset.Name -ChartValues ($ChartDataset | select -ExpandProperty count)
+New-WEBChart -ChartTitle "Line Chart 1" -ChartType "line" -ChartLabels $ChartDataset.Name -ChartValues ($ChartDataset | select -ExpandProperty count)
 ```
 ### EXAMPLE 2
 ```powershell
-New-PWFChart -Stacked -ChartTitle "Stacked Bars" -ChartType "bar" -Legends "Janvier;Fevrier;Mars;Avril" -StackedContent {
-  New-PWFChartStackedDataset -Name "Dataset1" -Values "1;2;3;4"
-  New-PWFChartStackedDataset -Name "Dataset2" -Values "4;3;2;1"
+New-WEBChart -Stacked -ChartTitle "Stacked Bars" -ChartType "bar" -Legends "Janvier;Fevrier;Mars;Avril" -StackedContent {
+  New-WEBChartStackedDataset -Name "Dataset1" -Values "1;2;3;4"
+  New-WEBChartStackedDataset -Name "Dataset2" -Values "4;3;2;1"
 }
 ```
 

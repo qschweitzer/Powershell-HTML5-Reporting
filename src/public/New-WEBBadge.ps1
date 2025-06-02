@@ -1,4 +1,4 @@
-﻿Function New-PWFBadge {
+﻿Function New-WEBBadge {
     <#
 .SYNOPSIS
 Insert a badge.
@@ -9,7 +9,7 @@ The text to display.
 .PARAMETER Type
 Type of badge: Primary, Secondary, Success, Danger, Warning, Info, Light, Dark. Default is Primary.
 .EXAMPLE
-New-PWFBadge -YourText "Hello" -Type Success
+New-WEBBadge -YourText "Hello" -Type Success
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

@@ -1,4 +1,4 @@
-# New-PWFAlert
+# New-WEBAlert
 
 ## Description
 Create an alert HTML object.
@@ -6,18 +6,18 @@ Examples: https://getbootstrap.com/docs/4.0/components/alerts/
 
 ## SYNTAX
 ``` powershell
-New-PWFAlert -YourText <string> [-ContextualColor <string>]
+New-WEBAlert -YourText <string> [-ContextualColor <string>]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFAlert -YourText "Your disk capacity is under 10% free." -ContextualColor danger
+New-WEBAlert -YourText "Your disk capacity is under 10% free." -ContextualColor danger
 ```
 ### EXAMPLE 2
 ```powershell
-New-PWFAlert -YourText "You're connected to Internet."
+New-WEBAlert -YourText "You're connected to Internet."
 ```
 
 ## PARAMETERS

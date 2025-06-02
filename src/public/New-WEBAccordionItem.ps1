@@ -1,4 +1,4 @@
-Function New-PWFAccordionItem {
+Function New-WEBAccordionItem {
     <#
 .SYNOPSIS
 Create a new Accordion Item.
@@ -9,7 +9,7 @@ The primary title of the item.
 .PARAMETER ItemContent
 The content of your item.
 .EXAMPLE
-New-PWFAccordionItem -ItemTitle "Test 1" -ItemContent "SubHeading 1"
+New-WEBAccordionItem -ItemTitle "Test 1" -ItemContent "SubHeading 1"
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

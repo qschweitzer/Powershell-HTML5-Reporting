@@ -1,4 +1,4 @@
-﻿Function New-PWFPage {
+﻿Function New-WEBPage {
     <#
 .SYNOPSIS
 Create a new HTML page.
@@ -15,7 +15,7 @@ Choose your Web Charset encoding.
 .PARAMETER Container
 If added, this parameter will configure the page to have a Container div. Refer to Materialize to understand all the concept of container. https://materializecss.com/getting-started.html
 .EXAMPLE
-New-PWFPage -Title "TEST" -Chartset UTF8 -Content { New-PWFRow -Content {}}
+New-WEBPage -Title "TEST" -Chartset UTF8 -Content { New-WEBRow -Content {}}
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
@@ -61,8 +61,8 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
         "#E91E63"
     )
     $Content = . $Content
-    $AllCSS = Get-ChildItem "$((Get-Module POSHTML5).ModuleBase)\assets\css" -Filter *.css
-    $JSCode = Get-Content ("$((Get-Module POSHTML5).ModuleBase)\assets\js\pwf.js") -Raw
+    $AllCSS = Get-ChildItem "$((Get-Module PSReport).ModuleBase)\assets\css" -Filter *.css
+    $JSCode = Get-Content ("$((Get-Module PSReport).ModuleBase)\assets\js\pwf.js") -Raw
     $output = @"
 <!DOCTYPE html>
 $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="light" lang="en">'})
@@ -84,7 +84,7 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
         }
         else{
             "<script>
-                $(Get-Content ("$((Get-Module POSHTML5).ModuleBase)\assets\js\chart.min.js") -Raw) $(write-output `r`n)
+                $(Get-Content ("$((Get-Module PSReport).ModuleBase)\assets\js\chart.min.js") -Raw) $(write-output `r`n)
             </script>"
         })
         <title>$($title)</title>

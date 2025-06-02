@@ -1,4 +1,4 @@
-﻿Function New-PWFProgressBar {
+﻿Function New-WEBProgressBar {
     <#
 .SYNOPSIS
 Insert a progress bar.
@@ -9,7 +9,7 @@ The value of the progress.
 .PARAMETER MaxValue
 The maximum value. Max value is 100% of the progress.
 .EXAMPLE
-New-PWFProgressBar -CurrentValue 25 -MaxValue 200
+New-WEBProgressBar -CurrentValue 25 -MaxValue 200
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

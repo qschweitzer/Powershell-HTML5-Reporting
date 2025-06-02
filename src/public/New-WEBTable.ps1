@@ -1,4 +1,4 @@
-﻿Function New-PWFTable {
+﻿Function New-WEBTable {
     <#
 .SYNOPSIS
 Create a table from object.
@@ -33,7 +33,7 @@ Color the table's rows
 .PARAMETER ColorForEverySecondRow
 Color the table's rows each second line with another color (better visibility)
 .EXAMPLE
-New-PWFTable -ToTable (Get-Process | Group-Object -Property Name -NoElement | Sort-Object Count -Descending | select Name, Count) -SelectProperties "Name,Count" -EnableConditionnalFormat -ConditionProperties "Count,Name" -ConditionOperators "-gt,-match" -ConditionValues "2,svchost" -ConditionBackgroundColors "#ff0000,#FFFF00"
+New-WEBTable -ToTable (Get-Process | Group-Object -Property Name -NoElement | Sort-Object Count -Descending | select Name, Count) -SelectProperties "Name,Count" -EnableConditionnalFormat -ConditionProperties "Count,Name" -ConditionOperators "-gt,-match" -ConditionValues "2,svchost" -ConditionBackgroundColors "#ff0000,#FFFF00"
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

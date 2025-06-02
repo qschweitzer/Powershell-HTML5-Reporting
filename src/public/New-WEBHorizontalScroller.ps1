@@ -1,4 +1,4 @@
-﻿Function New-PWFHorizontalScroller {
+﻿Function New-WEBHorizontalScroller {
     <#
 .SYNOPSIS
 Create a new HTML figure without class.
@@ -8,7 +8,7 @@ See more at: https://picocss.com/docs/#scroller
 .PARAMETER Content
 The Content is a scriptblock that will contain next blocks parts.
 .EXAMPLE
-New-PWFHorizontalScroller -Content { ... }
+New-WEBHorizontalScroller -Content { ... }
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

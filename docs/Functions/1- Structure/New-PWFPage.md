@@ -1,27 +1,27 @@
-# New-PWFPage
+# New-WEBPage
 
 ## Description
 Build the main code of the HTML5 page. Contains all the necessary for your next steps.
 Page will **contains all next code**.  
 Store it in a variable to export it at the end.  
-POSHTML5 generate a **full string output**, an **HTML** page.
+PSReport generate a **full string output**, an **HTML** page.
 
 ## SYNTAX
 ``` powershell
-New-PWFPage -Title <string> -Content <ScriptBlock> [-Chartset <String>] [-Container]
+New-WEBPage -Title <string> -Content <ScriptBlock> [-Chartset <String>] [-Container]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-$PageVar = New-PWFPage -Title "MY FIRST TEST" -Content {
+$PageVar = New-WEBPage -Title "MY FIRST TEST" -Content {
     .. SOME CODE ..
 }
 ```
 ### EXAMPLE 2
 ```powershell
-$PageVar = New-PWFPage -Title "MY FIRST TEST" -Chartset "UTF8" -Container -Content {
+$PageVar = New-WEBPage -Title "MY FIRST TEST" -Chartset "UTF8" -Container -Content {
     .. SOME CODE ..
 }
 ```

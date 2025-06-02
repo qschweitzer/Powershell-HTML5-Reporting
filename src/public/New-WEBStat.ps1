@@ -1,4 +1,4 @@
-﻿Function New-PWFStat {
+﻿Function New-WEBStat {
         <#
 .SYNOPSIS
 Create a new HTML <article>.
@@ -9,7 +9,7 @@ The Content is a scriptblock that will contain next blocks parts.
 .PARAMETER BackgroundColor
 The Content background.
 .EXAMPLE
-New-PWFCard -Content { ... } -BackgroundColor "#f9fafb"
+New-WEBCard -Content { ... } -BackgroundColor "#f9fafb"
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

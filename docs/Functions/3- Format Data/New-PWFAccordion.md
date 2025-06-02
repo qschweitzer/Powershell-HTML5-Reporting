@@ -1,11 +1,11 @@
-﻿# New-PWFAccordion
+﻿# New-WEBAccordion
 
 ## Description
 Create a new Accordion element to organize your content.
 
 ## SYNTAX
 ``` powershell
-New-PWFAccordion -AccordionItems {
+New-WEBAccordion -AccordionItems {
     <scriptblock>
 } [-Alwaysopen <switch>]
 ```
@@ -14,10 +14,10 @@ New-PWFAccordion -AccordionItems {
 
 ### EXAMPLE 1
 ```powershell
-New-PWFAccordion -AccordionItems {
-    New-PWFAccordionItem -ItemTitle "Test 1" -ItemContent "SubHeading 1"
-    New-PWFAccordionItem -ItemTitle "Test 2" -ItemContent "SubHeading 2"
-    New-PWFAccordionItem -ItemTitle "Test 3" -ItemContent "SubHeading 3"
+New-WEBAccordion -AccordionItems {
+    New-WEBAccordionItem -ItemTitle "Test 1" -ItemContent "SubHeading 1"
+    New-WEBAccordionItem -ItemTitle "Test 2" -ItemContent "SubHeading 2"
+    New-WEBAccordionItem -ItemTitle "Test 3" -ItemContent "SubHeading 3"
 }
 ```
 

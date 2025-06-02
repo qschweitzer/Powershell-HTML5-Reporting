@@ -1,13 +1,13 @@
-﻿Function New-PWFTabContainer {
+﻿Function New-WEBTabContainer {
     <#
 .SYNOPSIS
 Create a new Tab navigation bar with tabs.
 .DESCRIPTION
 Create a new Tab navigation bar with tabs.
 .PARAMETER Tabs
-Create a new tab with New-PWFTabs
+Create a new tab with New-WEBTabs
 .EXAMPLE
-New-PWFTabContainer -Tabs { New-PWFTabs -Name "Tab1" -Content {}}
+New-WEBTabContainer -Tabs { New-WEBTabs -Name "Tab1" -Content {}}
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

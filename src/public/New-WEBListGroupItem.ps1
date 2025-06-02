@@ -1,4 +1,4 @@
-﻿Function New-PWFListGroupItem {
+﻿Function New-WEBListGroupItem {
     <#
 .SYNOPSIS
 Create a new ListGroup Item.
@@ -15,7 +15,7 @@ Select the color of the badge.
 .PARAMETER ContextualColor
 Select the color of the Item.
 .EXAMPLE
-New-PWFListGroupItem -ItemContent "Test 3" -SubHeading "SubHeading 3" -BadgeContent "156"
+New-WEBListGroupItem -ItemContent "Test 3" -SubHeading "SubHeading 3" -BadgeContent "156"
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

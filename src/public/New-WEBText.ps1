@@ -1,4 +1,4 @@
-﻿Function New-PWFText {
+﻿Function New-WEBText {
     <#
 .SYNOPSIS
 Create a text.
@@ -9,7 +9,7 @@ Type the text you want to display in your report. Support string or single array
 .PARAMETER Center
 Move your text to the center of the web page. It's a switch option.
 .EXAMPLE
-New-PWFText -YourText "My text" -Center
+New-WEBText -YourText "My text" -Center
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

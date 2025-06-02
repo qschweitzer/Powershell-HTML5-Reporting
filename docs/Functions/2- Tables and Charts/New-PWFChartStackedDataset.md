@@ -1,18 +1,18 @@
-# New-PWFChartStackedDataset
+# New-WEBChartStackedDataset
 
 ## Description
 Create a new chart Dataset for stacked chart only.
 
 ## SYNTAX
 ``` powershell
-New-PWFChartStackedDataset -Name <string> -Values <object> [-Color <string>]
+New-WEBChartStackedDataset -Name <string> -Values <object> [-Color <string>]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFChartStackedDataset -Name "January" -Values 1..31
+New-WEBChartStackedDataset -Name "January" -Values 1..31
 ```
 
 ## PARAMETERS

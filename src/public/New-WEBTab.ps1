@@ -1,15 +1,15 @@
-﻿Function New-PWFTab {
+﻿Function New-WEBTab {
     <#
 .SYNOPSIS
 Create a new Tab.
 .DESCRIPTION
 Create a new Tab. Create this tab in the TabContainer.
 .PARAMETER Name
-Create a new tab with New-PWFTabs
+Create a new tab with New-WEBTabs
 .PARAMETER Content
 Add a Content like a scriptblock.
 .EXAMPLE
-New-PWFTabs -Name "Tab1" -Content {...}
+New-WEBTabs -Name "Tab1" -Content {...}
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

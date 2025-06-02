@@ -1,4 +1,4 @@
-﻿Function New-PWFIcon {
+﻿Function New-WEBIcon {
     <#
 .SYNOPSIS
 Create a new icon.
@@ -9,7 +9,7 @@ The name of the icon. Choose it here: https://fonts.google.com/icons?selected=Ma
 .PARAMETER Size
 The size of the icon. (18,24,36,48 are defaults about Material guidelines)
 .EXAMPLE
-New-PWFIcon -IconName Settings -SizeInPixel 24
+New-WEBIcon -IconName Settings -SizeInPixel 24
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

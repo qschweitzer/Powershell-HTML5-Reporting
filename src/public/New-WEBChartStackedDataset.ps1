@@ -1,4 +1,4 @@
-﻿Function New-PWFChartStackedDataset {
+﻿Function New-WEBChartStackedDataset {
     <#
 .SYNOPSIS
 Create a new chart Dataset for stacked chart only.
@@ -11,7 +11,7 @@ The [int] values of your dataset. You have to use an array.
 .PARAMETER Color
 The color to color your data set in the chart. Default is colors generated automatically from thecolorapi.com.
 .EXAMPLE
-New-PWFChartStackedDataset -Name "January" -Values 1..31
+New-WEBChartStackedDataset -Name "January" -Values 1..31
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>

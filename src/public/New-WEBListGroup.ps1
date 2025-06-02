@@ -1,4 +1,4 @@
-﻿Function New-PWFListGroup {
+﻿Function New-WEBListGroup {
     <#
 .SYNOPSIS
 Create a new ListGroup.
@@ -9,10 +9,10 @@ Scriptblock containing ListGroupItems
 .PARAMETER Numbered
 Create a numbered list.
 .EXAMPLE
-New-PWFListGroup -Numbered -GroupItems {
-    New-PWFListGroupItem -ItemContent "Test 1" -SubHeading "SubHeading 1" -BadgeContent "2"
-    New-PWFListGroupItem -ItemContent "Test 2" -SubHeading "SubHeading 2" -BadgeContent "4"
-    New-PWFListGroupItem -ItemContent "Test 3" -SubHeading "SubHeading 3" -BadgeContent "156"
+New-WEBListGroup -Numbered -GroupItems {
+    New-WEBListGroupItem -ItemContent "Test 1" -SubHeading "SubHeading 1" -BadgeContent "2"
+    New-WEBListGroupItem -ItemContent "Test 2" -SubHeading "SubHeading 2" -BadgeContent "4"
+    New-WEBListGroupItem -ItemContent "Test 3" -SubHeading "SubHeading 3" -BadgeContent "156"
 }
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting

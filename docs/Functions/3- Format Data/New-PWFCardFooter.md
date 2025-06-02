@@ -1,18 +1,18 @@
-# New-PWFCardFooter
+# New-WEBCardFooter
 
 ## Description
 Create a card footer.
 
 ## SYNTAX
 ``` powershell
-New-PWFCardFooter -Content <scriptblock>
+New-WEBCardFooter -Content <scriptblock>
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFCardFooter -Content { ... }
+New-WEBCardFooter -Content { ... }
 ```
 
 ## PARAMETERS
