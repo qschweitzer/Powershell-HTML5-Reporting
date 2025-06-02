@@ -1,4 +1,4 @@
-# New-PWFColumn
+# New-WEBColumn
 
 ## Description
 New column wich contains what you want.
@@ -6,14 +6,14 @@ Column's width are auto-sized. If you have two, each of them will be 50% width o
 
 ## SYNTAX
 ``` powershell
-New-PWFColumn -Content <scriptblock>
+New-WEBColumn -Content <scriptblock>
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFColumn -Content {
+New-WEBColumn -Content {
     ...SOMECODE...
 }
 ```

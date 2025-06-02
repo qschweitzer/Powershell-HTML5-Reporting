@@ -1,18 +1,18 @@
-# New-PWFBlockQuote
+# New-WEBBlockQuote
 
 ## Description
 Create a blockquote.
 
 ## SYNTAX
 ``` powershell
-New-PWFBlockQuote -YourText <string>
+New-WEBBlockQuote -YourText <string>
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFBlockQuote -YourText "My text in a blockquote"
+New-WEBBlockQuote -YourText "My text in a blockquote"
 ```
 
 ## PARAMETERS

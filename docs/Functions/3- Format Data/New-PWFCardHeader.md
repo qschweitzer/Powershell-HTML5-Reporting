@@ -1,22 +1,22 @@
-# New-PWFCardHeader
+# New-WEBCardHeader
 
 ## Description
 Create a card header.
 
 ## SYNTAX
 ``` powershell
-New-PWFCardHeader -Content <scriptblock> [-BackgroundColor <string>] [-Center <switch>]
+New-WEBCardHeader -Content <scriptblock> [-BackgroundColor <string>] [-Center <switch>]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFCardHeader -Content { ... } -BackgroundColor "#f9fafb"
+New-WEBCardHeader -Content { ... } -BackgroundColor "#f9fafb"
 ```
 ### EXAMPLE 2
 ```powershell
-New-PWFCardHeader -Content { ... } -Center
+New-WEBCardHeader -Content { ... } -Center
 ```
 
 ## PARAMETERS

@@ -1,18 +1,18 @@
-# New-PWFTabs
+# New-WEBTabs
 
 ## Description
 A new tab to add to your main TabContainer with your content.
 
 ## SYNTAX
 ``` powershell
-New-PWFTabs -Name <string> -Content <scriptblock>
+New-WEBTabs -Name <string> -Content <scriptblock>
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFTabs -Name "Tab1" -Content {
+New-WEBTabs -Name "Tab1" -Content {
     ...SOMECODE...
 }
 ```

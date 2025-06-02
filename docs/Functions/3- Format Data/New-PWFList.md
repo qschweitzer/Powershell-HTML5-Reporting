@@ -1,22 +1,22 @@
-# New-PWFList
+# New-WEBList
 
 ## Description
 Create a list of data, numbered or not.
 
 ## SYNTAX
 ``` powershell
-New-PWFList -List [-Numbered <switch>]
+New-WEBList -List [-Numbered <switch>]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFList -List "Test1","Test2"
+New-WEBList -List "Test1","Test2"
 ```
 ### EXAMPLE 2
 ```powershell
-New-PWFList -List $myarray -Numbered
+New-WEBList -List $myarray -Numbered
 ```
 
 ## PARAMETERS

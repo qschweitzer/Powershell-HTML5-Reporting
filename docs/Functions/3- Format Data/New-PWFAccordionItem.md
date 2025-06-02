@@ -1,18 +1,18 @@
-﻿# New-PWFAccordionItem
+﻿# New-WEBAccordionItem
 
 ## Description
 Create a new Accordion Item (new collapse item).
 
 ## SYNTAX
 ``` powershell
-New-PWFAccordionItem -ItemTitle <string> -ItemContent <string>
+New-WEBAccordionItem -ItemTitle <string> -ItemContent <string>
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFAccordionItem -ItemTitle "Test 1" -ItemContent "SubHeading 1"
+New-WEBAccordionItem -ItemTitle "Test 1" -ItemContent "SubHeading 1"
 ```
 
 ## PARAMETERS

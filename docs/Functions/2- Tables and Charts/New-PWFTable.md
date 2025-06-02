@@ -1,18 +1,18 @@
-# New-PWFTable
+# New-WEBTable
 
 ## Description
 Create a table from a powershell object.
 
 ## SYNTAX
 ``` powershell
-New-PWFTable -ToTable <object> [-SelectProperties <array>] [-EnableSearch <switch>] [-Exportbuttons <switch>] [-EnableConditionnalFormat <switch>] [-ConditionProperties <array>] [-ConditionOperators <array>] [-ConditionValues <array>] [-ConditionBackgroundColors <array>] [-Pagination <switch>] [-ShowTooltip <switch>] [-DetailsOnClick <switch>] [-SortByColumn <switch>] [-Striped <switch>] [-Dark <switch>] [-Small <switch>] [-ContextualColor <string> ValidateSet]
+New-WEBTable -ToTable <object> [-SelectProperties <array>] [-EnableSearch <switch>] [-Exportbuttons <switch>] [-EnableConditionnalFormat <switch>] [-ConditionProperties <array>] [-ConditionOperators <array>] [-ConditionValues <array>] [-ConditionBackgroundColors <array>] [-Pagination <switch>] [-ShowTooltip <switch>] [-DetailsOnClick <switch>] [-SortByColumn <switch>] [-Striped <switch>] [-Dark <switch>] [-Small <switch>] [-ContextualColor <string> ValidateSet]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFTable -ToTable (Get-Process | Group-Object -Property Name -NoElement | Sort-Object Count -Descending) -SelectProperties "Name,Count" -EnableConditionnalFormat -ConditionProperties "Count,Name" -ConditionOperators ">,match" -ConditionValues "2,svchost" -ConditionBackgroundColors "#ff0000,yellow"
+New-WEBTable -ToTable (Get-Process | Group-Object -Property Name -NoElement | Sort-Object Count -Descending) -SelectProperties "Name,Count" -EnableConditionnalFormat -ConditionProperties "Count,Name" -ConditionOperators ">,match" -ConditionValues "2,svchost" -ConditionBackgroundColors "#ff0000,yellow"
 ```
 
 ## PARAMETERS

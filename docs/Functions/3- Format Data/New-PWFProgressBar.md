@@ -1,18 +1,18 @@
-# New-PWFProgressBar
+# New-WEBProgressBar
 
 ## Description
 Insert a progress bar.
 
 ## SYNTAX
 ``` powershell
-New-PWFProgressBar -CurrentValue <int> [-MaxValue <int>]
+New-WEBProgressBar -CurrentValue <int> [-MaxValue <int>]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFProgressBar -CurrentValue 25 -MaxValue 200
+New-WEBProgressBar -CurrentValue 25 -MaxValue 200
 ```
 
 ## PARAMETERS

@@ -1,18 +1,18 @@
-# New-PWFImage
+# New-WEBImage
 
 ## Description
 INsert an image a set the size.
 
 ## SYNTAX
 ``` powershell
-New-PWFImage -ImageURL <string> [-WidthInPercent <int>]
+New-WEBImage -ImageURL <string> [-WidthInPercent <int>]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFImage -ImageURL "https://myimage.." -WidthInPercent 50
+New-WEBImage -ImageURL "https://myimage.." -WidthInPercent 50
 ```
 
 ## PARAMETERS

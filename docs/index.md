@@ -1,6 +1,6 @@
 ![Logo](medias/logo2.png)
 # Welcome
-Hi and welcome to my project. POSHTML5 was created in his first version a few years ago as "Powershell Web Framework". That's why all functions of POSHTML5 starts with "PWF".
+Hi and welcome to my project. PSReport was created in his first version a few years ago as "Powershell Web Framework". That's why all functions of PSReport starts with "PWF".
 *The goal* of the project is to create a simple and fast tool to create awesome reporting, with last HTML5 technologies.
 I try to regulary update and fix issues.
 **No CSS, JS source files required. Functions use CDN files link.**
@@ -16,7 +16,7 @@ All functions were having a Content argument can contain some other functions an
 
 **This doc will be auto-updated when a new function will be available**
 
-## Tools used in POSHTML5
+## Tools used in PSReport
 * :material-language-css3: [PicoCSS](https://picocss.com/) for the major HTML5 and CSS structure
 * :fontawesome-brands-bootstrap: [BOOSTRAP 5](https://getbootstrap.com/) for Tables and other small features like alerts and badges
 * :material-chart-arc: [ChartJS](https://www.chartjs.org/) for....the charts !
@@ -36,4 +36,4 @@ All functions were having a Content argument can contain some other functions an
 ## NEWS
 
 * Offline mode is in progress.
-* POSHTML5 is now published on PowershellGallery. Look at Install page to know how to install it quickly.
+* PSReport is now published on PowershellGallery. Look at Install page to know how to install it quickly.

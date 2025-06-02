@@ -1,22 +1,22 @@
-# New-PWFText
+# New-WEBText
 
 ## Description
 Create a simple text div.
 
 ## SYNTAX
 ``` powershell
-New-PWFText -YourText <string> [-Center <switch>]
+New-WEBText -YourText <string> [-Center <switch>]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFText -YourText "My awesome text" -Center
+New-WEBText -YourText "My awesome text" -Center
 ```
 ### EXAMPLE 2
 ```powershell
-New-PWFText -YourText "My awesome text"
+New-WEBText -YourText "My awesome text"
 ```
 
 ## PARAMETERS

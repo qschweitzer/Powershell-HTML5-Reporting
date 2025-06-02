@@ -1,22 +1,22 @@
-# New-PWFCard
+# New-WEBCard
 
 ## Description
 Create a card wich can contains differents types of data.
 
 ## SYNTAX
 ``` powershell
-New-PWFCard -Content <scriptblock> [-BackgroundColor <string>]
+New-WEBCard -Content <scriptblock> [-BackgroundColor <string>]
 ```
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PWFCard -Content { ... } -BackgroundColor "#f9fafb"
+New-WEBCard -Content { ... } -BackgroundColor "#f9fafb"
 ```
 ### EXAMPLE 2
 ```powershell
-New-PWFCard -Content { ... }
+New-WEBCard -Content { ... }
 ```
 
 ## PARAMETERS
