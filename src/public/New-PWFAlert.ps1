@@ -18,8 +18,8 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
         $YourText,
 
         [Parameter(Mandatory = $false, Position = 1)]
-        [ValidateSet("default", "primary", "secondary", "success", "danger", "warning", "info", "light", "dark", IgnoreCase = $false)]
-        [string]$ContextualColor = "default"
+        [ValidateSet("primary", "success", "danger", "warning", "info", IgnoreCase = $false)]
+        [string]$ContextualColor = "primary"
     )
 
     $output = @"

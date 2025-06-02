@@ -24,7 +24,7 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     $output = @"
     <details name="$($RandomID_AccordionFlush)">
     <summary>$($ItemTitle)</summary>
-    <p>$(try { .$ItemContent } catch { $_.Exception.Message })</p>
+    $(try { .$ItemContent } catch { $_.Exception.Message })
     </details>
 "@
 

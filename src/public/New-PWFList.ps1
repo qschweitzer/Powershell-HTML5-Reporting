@@ -1,5 +1,5 @@
 ﻿Function New-PWFList {
-    <#
+        <#
 .SYNOPSIS
 Create a new HTML list.
 .DESCRIPTION
@@ -13,19 +13,40 @@ New-PWFList -List $myarray
 .LINK
 https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
-    param(
-        [Parameter(Mandatory = $true, Position = 0)]
-        $List,
+        param(
+                [Parameter(Mandatory = $true, Position = 0)]
+                $list,
+                $title,
+                [Parameter(Mandatory = $false, Position = 1)]
+                [switch]$numbered
+        )
+        [string]$output = @"
+        <div class="card">
+"@
+        if ($title) {
+                $output += @"
+                <div class="card-header">
+                        <h3 class="card-title">$($title | Convert-MDtoHTML)</h3>
+                </div>
+"@
+        }
 
-        [Parameter(Mandatory = $false, Position = 1)]
-        [switch]$Numbered
-    )
-
-    $output = @"
-<$(if($Numbered){"o"}else{"u"})l>
-    $($List | ForEach-Object{ "<li>$($_ | Convert-MDtoHTML)</li>"})
-</$(if($Numbered){"o"}else{"u"})l>
+        $output += @"
+                <div class="card-body $(if($statNumber){"stats-card"})">
+"@
+        try {
+                $output += @"
+                        <$(if($Numbered){"o"}else{"u"})l>
+                                $($List | ForEach-Object{ "<li>$($_ | Convert-MDtoHTML)</li>"})
+                        </$(if($Numbered){"o"}else{"u"})l>
 "@
 
-    return $output
+        }
+        catch { $_.Exception.Message }
+
+        $output += @"
+                </div>
+        </div>
+"@
+        return $output
 }

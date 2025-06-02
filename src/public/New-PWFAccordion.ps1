@@ -27,7 +27,6 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     $Script:RandomID_AccordionFlush = "AF$(Get-Random)" 
     $output = @"
         $(try { .$AccordionItems } catch { $_.Exception.Message })
-    <hr />
 "@
     return $output
 }

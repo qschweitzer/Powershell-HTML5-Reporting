@@ -21,12 +21,13 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     )
 
     if ($YourText -is [string]) {
-        $YourText = @($YourText -split '\n')
+        $YourText = @($YourText.trim() -split '\n')
     }
 
     $output = @"
     $(Foreach($line in $YourText){write-host $line; "$((Convert-MDtoHTML $line))"})
 "@
-    if ($output.trim() -match "^(\<.*\>)") { return $output }else { return "<p>$output</p>" }
+write-host ($output.trim())
+    if ($output.trim() -match "^(\<.*\>).*") { return ($output) }else { return "<p>$output</p>" }
 
 }

@@ -39,12 +39,9 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
 #>
     param(
         [Parameter(Mandatory = $true, Position = 0)]
-        $ToTable,
-
-        [Parameter(Mandatory = $false, Position = 1)]
-        [switch]$EnableSearch,
-        [switch]$Exportbuttons,
-
+        $toTable,
+        [Parameter(Position = 1)]
+        $title,
         [Parameter(Mandatory = $false,
             ParameterSetName = 'Conditionnal',
             HelpMessage = "Enable conditionnal format on certain values.",
@@ -60,12 +57,12 @@ https://github.com/qschweitzer/Powershell-HTML5-Reporting
     $RandomIDTable = -join ((65..90) + (97..122) | Get-Random -Count 10 | % {[char]$_})
     $AllColumnsHeader = ($ToTable | Get-Member -MemberType Properties).Name
 
-    [string]$script:allTableData += "window.$($randomIDTable)Data = JSON.parse(``$($ToTable | ConvertTo-Json)``);"
+    [string]$script:allTableData += "window.$($randomIDTable)Data = JSON.parse(``$($ToTable | ConvertTo-Json)``);`r`n"
     
     $output += @"
     <div class="table-container">
         <div class="table-header">
-            <h3 class="card-title">🔒 Analyse de sécurité</h3>
+            <h3 class="card-title">$title</h3>
             <div class="table-controls">
                 <input type="text" class="search-input table-control" id="$RandomIDTable-search" placeholder="🔍 Search in table..." oninput="filterTable('$RandomIDTable-table', this.value)"/>
                 <button class="table-control" onclick="exportToCSV('$RandomIDTable')">📄 CSV</button>
