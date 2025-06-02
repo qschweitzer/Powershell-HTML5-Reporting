@@ -90,15 +90,58 @@ class DataTable {
         this.data = [...data];
         this.originalData = [...data];
         this.columns = columns || Object.keys(data[0]); // Auto-detect
+        this.sortColumn = null;
+        this.sortDirection = 'asc';
         this.currentPage = 1;
         this.rowsPerPage = 10;
+        this.searchQuery = ''; // initialiser searchQuery
 
         this.renderTable();
+        this.attachSortHandlers();
+    }
+
+    attachSortHandlers() {
+        const table = document.getElementById(this.tableId);
+        if (!table) return;
+        const headers = table.querySelectorAll('thead th[data-sort]');
+
+        headers.forEach(header => {
+            header.style.cursor = 'pointer';
+            header.onclick = () => {
+                const column = header.getAttribute('data-sort');
+
+                if (this.sortColumn === column) {
+                    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+                } else {
+                    this.sortColumn = column;
+                    this.sortDirection = 'asc';
+                }
+
+                this.currentPage = 1;  // reset page
+                this.renderTable();
+            };
+        });
+    }
+
+    renderWrapper() {
+        const table = document.getElementById(this.tableId);
+        if (!table) return;
+
+        let wrapper = document.getElementById(`${this.tableId}-pagination`);
+        if (!wrapper) {
+            wrapper = document.createElement('div');
+            wrapper.id = `${this.tableId}-pagination`;
+            wrapper.classList.add('datatable-footer');
+            table.insertAdjacentElement('afterend', wrapper);
+        }
     }
 
     renderTable() {
         const table = document.getElementById(this.tableId);
+        if (!table) return;
         const tbody = table.querySelector('tbody');
+        if (!tbody) return;
+
         const pageData = this.getCurrentPageData();
 
         tbody.innerHTML = pageData.map(item => {
@@ -112,7 +155,75 @@ class DataTable {
                 </tr>
             `;
         }).join('');
+
+        this.renderWrapper();
+        this.renderPagination();
+        this.attachSortHandlers();
     }
+
+    renderPagination() {
+    const totalPages = Math.ceil(this.data.length / this.rowsPerPage);
+    const paginationContainer = document.getElementById(`${this.tableId}-pagination`);
+    if (!paginationContainer) return;
+
+    paginationContainer.innerHTML = '';
+
+    // ⚠️ Ne rien afficher si le tableau entier tient sur une page et pagination jamais nécessaire
+    const hasMultiplePagesInitially = this.data.length > 10; // ou toute valeur seuil pertinente
+    if (!hasMultiplePagesInitially) return;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'pagination-wrapper';
+
+    // Sélecteur de nombre de lignes
+    const rowsSelector = document.createElement('select');
+    rowsSelector.className = 'table-rows-selector';
+    const options = [10, 20, 50, 100];
+    const unique = [...new Set(options.filter(n => n < this.data.length))];
+    unique.push(this.data.length); // All
+
+    unique.forEach(val => {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.textContent = val === this.data.length ? 'All' : val;
+        if (val === this.rowsPerPage) opt.selected = true;
+        rowsSelector.appendChild(opt);
+    });
+
+    rowsSelector.addEventListener('change', (e) => {
+        this.rowsPerPage = parseInt(e.target.value, 10);
+        this.currentPage = 1;
+        this.renderTable();
+    });
+
+    const leftControls = document.createElement('div');
+    leftControls.className = 'pagination-left';
+    leftControls.appendChild(rowsSelector);
+    wrapper.appendChild(leftControls);
+
+    // Affiche les boutons de page seulement si +1 page
+    if (totalPages > 1) {
+        const rightControls = document.createElement('div');
+        rightControls.className = 'pagination-right';
+
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement('button');
+            btn.textContent = i;
+            btn.className = 'pagination-button' + (i === this.currentPage ? ' active' : '');
+            btn.addEventListener('click', () => {
+                this.currentPage = i;
+                this.renderTable();
+            });
+            rightControls.appendChild(btn);
+        }
+
+        wrapper.appendChild(rightControls);
+    }
+
+    paginationContainer.appendChild(wrapper);
+}
+
+
 
     formatCell(col, value) {
         if (col === 'status') {
@@ -126,12 +237,38 @@ class DataTable {
         return value;
     }
 
+    getFilteredData() {
+        if (!this.searchQuery) return this.data;
+        return this.data.filter(item =>
+            Object.values(item).some(val =>
+                String(val).toLowerCase().includes(this.searchQuery.toLowerCase())
+            )
+        );
+    }
+
     getCurrentPageData() {
+        const filtered = this.getFilteredData();
+
+        // Tri
+        if (this.sortColumn) {
+            filtered.sort((a, b) => {
+                const valA = String(a[this.sortColumn] ?? '').toLowerCase();
+                const valB = String(b[this.sortColumn] ?? '').toLowerCase();
+
+                if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
+                if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+        }
+
         const start = (this.currentPage - 1) * this.rowsPerPage;
-        const end = start + this.rowsPerPage;
-        return this.data.slice(start, end);
+        const end = this.rowsPerPage === this.data.length ? this.data.length : start + this.rowsPerPage;
+
+        return filtered.slice(start, end);
     }
 }
+
+
 
 function searchTables() {
     const input = document.getElementById('global-search');

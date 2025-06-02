@@ -168,4 +168,5 @@ $(if($DarkTheme){'<html data-theme="dark" lang="en">'}else{'<html data-theme="li
     }
     $Script:TabsNames = $null
     $script:AllCharts = $null
+    $script:allTableData = $null
 }
