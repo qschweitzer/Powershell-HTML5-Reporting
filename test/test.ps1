@@ -51,13 +51,9 @@ New-WEBCard -Title "Let''s create some charts - ==NEW== Stacked bars chart" -Con
                 $Chart2Dataset = Get-Process | Where-Object { $_.processname.length -lt 15 }  | Where-Object name -notmatch "-|,|;" | Group-Object -NoElement -Property Count, Name | Sort-Object Count -Descending | Select-Object Count, Name -First 10
                 New-WEBChart -ChartTitle "Line Chart 1" -ChartType "line" -ChartLabels $Chart2Dataset.Name -ChartValues ($Chart2Dataset | Select-Object -ExpandProperty count) -LightMode
             }
-            New-WEBTable -title "Conditional formated table" -ToTable (Get-Process  | Where-Object { $_.processname.length -lt 15 } | Group-Object -Property Name | Sort-Object Count -Descending | Select-Object -First 5 Name, Count)
+            New-WEBTable -title "Conditional formated table" -ToTable (Get-Process  | Where-Object { $_.processname.length -lt 15 } | Group-Object -Property Name | Sort-Object Count -Descending | Select-Object -First 50 Name, Count)
         }
-        New-WEBCard -Title "Search in table" -Content {
-            New-WEBText -YourText "Some options like export table, search, paginate, hide many columns and show details"
-            New-WEBTable -ToTable (Get-Process | Where-Object { $_.processname.length -lt 15 } | Group-Object -Property Name | Sort-Object Count -Descending | Select-Object Name, Count -first 20) 
-                
-        }
+        New-WEBTable -title "Search in table" -description "Some options like export table, search, paginate, hide many columns and show details" -ToTable (Get-Process | Where-Object { $_.processname.length -lt 15 } | Group-Object -Property Name | Sort-Object Count -Descending | Select-Object Name, Count -first 9)
     }
     New-WEBTab -Name "Second Tab" -Content {
         New-WEBRow -Content {
